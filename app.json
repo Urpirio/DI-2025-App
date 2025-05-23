@@ -20,13 +20,32 @@
         "foregroundImage": "./assets/IconLogo/IconoApp.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.urpiriodev.D2025App"
     },
     "web": {
       "favicon": "./assets/IconLogo/IconoApp.png"
     },
     "plugins": [
-      "expo-router"
-    ]
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "26877314-d692-4cef-8031-42d80eec4264"
+      }
+    }
   }
 }
