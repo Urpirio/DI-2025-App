@@ -1,4 +1,5 @@
-import { Button, FlatList, Image, StatusBar, Text, TouchableOpacity, View,ScrollView } from "react-native";
+import { Button, FlatList, Image, StatusBar, 
+Text, TouchableOpacity, View,ScrollView,VirtualizedList } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { router, useNavigation, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -13,6 +14,12 @@ export default function index() {
     const [StatusBack,setStatusBack] = useState(true);
     const [AllEvents,setAllEvents] = useState([]);
     const [StatusAllEvents,setStatusAllEvents] = useState(false);
+    const [IsFilter,setIsFilter] = useState(false);
+    const [RotateIconFilter,setRotateIconFilter] = useState(true);
+    const [IconBtnFilter,setIconBtnFilter] = useState({
+        Icon:require('../../assets/IconHome/ArrowDerecha.png')
+    });
+    const [StyleFiltros,setStyleFiltros] = useState(StyleHome.ContainerBtnFiltrosNotShow)
    
     useEffect(()=>{
         BackHandler.addEventListener('hardwareBackPress',()=>{
@@ -37,6 +44,22 @@ export default function index() {
         GetEvents();
     });
 
+    const DeployFilter = () => {
+        if(RotateIconFilter){
+            setIconBtnFilter({
+                Icon:require('../../assets/IconHome/ArrowAbajo.png')
+            });
+            setRotateIconFilter(!RotateIconFilter);
+            setStyleFiltros(StyleHome.ContainerBtnFiltrosShow);
+        }else{
+            setIconBtnFilter({
+                Icon:require('../../assets/IconHome/ArrowDerecha.png')
+            });
+            setRotateIconFilter(!RotateIconFilter);
+            setStyleFiltros(StyleHome.ContainerBtnFiltrosNotShow);
+        }
+    }
+
   if(!StatusAllEvents){
     return(
         <SafeAreaProvider style={{
@@ -58,23 +81,55 @@ export default function index() {
 
   return (
     <SafeAreaProvider style={{backgroundColor:'white'}}>
-        <View style={{height:60,justifyContent:'center',alignItems:'flex-end',paddingHorizontal:10}}>
-                <TouchableOpacity style={{borderWidth:1,paddingHorizontal:40,paddingVertical:10,borderRadius:10,position:'absolute'}}>
-                    <Text>Filtra Sala</Text>
+        
+        <ScrollView style={{padding:10}} >
+            <View style={StyleHome.ContainerFilter}>
+                <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
+                    onPress={DeployFilter}>
+                    <Text style={{color:'gray'}}>Filtra por Sala</Text>
+                    <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
                 </TouchableOpacity>
-                <View style={{opacity:0,height:"100%",width:'100%'}}>
-                    <Text>FFFFF</Text>
+                <View style={StyleFiltros}>
+                    <TouchableOpacity style={{
+                        backgroundColor:'white',
+                        borderBottomWidth:1,
+                        borderColor: '#ced4da',
+                        padding:5,
+                        borderRadius: 5,
+                    }}>
+                        <Text style={{color:'#023e8a',fontWeight:'600'}}>Sala A</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{
+                        backgroundColor:'white',
+                        borderBottomWidth:1,
+                        borderColor: '#ced4da',
+                        padding:5,
+                        borderRadius: 5,
+                    }}>
+                        <Text style={{color:'#023e8a',fontWeight:'600'}}>Sala A</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{
+                        backgroundColor:'white',
+                        borderBottomWidth:1,
+                        borderColor: '#ced4da',
+                        padding:5,
+                        borderRadius: 5,
+                    }}>
+                        <Text style={{color:'#023e8a',fontWeight:'600'}}>Sala A</Text>
+                    </TouchableOpacity>
                 </View>
-        </View>
-        <ScrollView style={{padding:10}}>
-            <View style={{paddingVertical:10}}>
-                <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>Eventos</Text>
             </View>
-            <FlatList
+            
+            <VirtualizedList
+            onTouchMove={()=>{
+                if(!RotateIconFilter){
+                    DeployFilter();}
+            }}
             style={{paddingBottom:15}}
             data={AllEvents}
             renderItem={({item})=>{
-                return(
+                if(!IsFilter){
+                    return(
                     <CardHomeEvents
                     NombreEvento={item.title}
                     Localizacion={item.room.location}
@@ -82,9 +137,15 @@ export default function index() {
                     HoraInicio={item.start_time.slice(12,16)}
                     HoraFinal={item.end_time.slice(12,16)}
                     IconBtn={require('../../assets/IconHome/caret-left.png')}
+                    
                     />
                 )
+                }
             }}
+            key={item => item.title}
+            getItem={(data,index)=>data[index]}
+            getItemCount={(data)=>data.length}
+
             />
         </ScrollView>
         <StatusBar barStyle={'default'} />
