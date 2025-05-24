@@ -2,10 +2,11 @@ import { StyleSheet } from "react-native";
 
 export const StyleHome = StyleSheet.create({
     ContainerFilter:{
-        height:60,
         justifyContent:'center',
         alignItems:'flex-start',
-        // flexDirection:'row'
+    },
+    ContainerNotFilter:{
+        display: 'none'
     },
     ContainerBtnFiltrosShow:{
         position:'absolute',
@@ -22,6 +23,16 @@ export const StyleHome = StyleSheet.create({
     },
     ContainerBtnFiltrosNotShow:{
         display:'none'
+    },
+    BtnSelectFilter:{
+        backgroundColor:'white',
+        borderBottomWidth:1,
+        borderColor: '#ced4da',
+        padding:5,
+        borderRadius: 5,
+    },
+    TextBtnSelectFilter:{
+        color:'#023e8a',fontWeight:'600'
     },
     BtnFilterDeploy:{
         borderWidth:1,
