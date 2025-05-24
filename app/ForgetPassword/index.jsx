@@ -2,6 +2,7 @@ import {  View,Image, TextInput,TouchableOpacity,Text} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useState } from "react";
 import { StyleForgetPassword } from "../../style/StyleForgetPassword";
+import { StatusBar } from "expo-status-bar";
 
 export default function index() {
 
@@ -48,6 +49,7 @@ export default function index() {
                 </TouchableOpacity>
              </View>
         </View>
+        <StatusBar style="auto"/>
     </SafeAreaProvider>
   )
 }
