@@ -1,8 +1,9 @@
-import { Text, View,TouchableOpacity,Image, TextInput, Pressable, StatusBar} from "react-native";
+import { Text, View,TouchableOpacity,Image, TextInput, Pressable} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useState } from "react";
 import { StyleLoginForm } from "../style/StyleLoginForm";
 import { router, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 export default function LoginForm() {
 
@@ -104,7 +105,7 @@ export default function LoginForm() {
             </View>
           </View>
         </View>
-        <StatusBar barStyle={'default'}/>
+       <StatusBar style="auto"/>
     </SafeAreaProvider>
   )
 };
