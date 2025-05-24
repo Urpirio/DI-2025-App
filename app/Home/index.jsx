@@ -1,5 +1,6 @@
-import { Button, FlatList, Image, StatusBar, 
-Text, TouchableOpacity, View,ScrollView,VirtualizedList } from "react-native";
+import { Button, FlatList, Image, 
+Text, TouchableOpacity, View,ScrollView,VirtualizedList, 
+TextInput} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { router, useNavigation, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -7,6 +8,9 @@ import { BackHandler } from "react-native";
 import { DataApis } from "../../Data/DataApi";
 import { StyleHome } from "../../style/StyleHome";
 import CardHomeEvents from "../../Components/CardHomeEvents";
+import { CheckMenuPerfil,funcionChangeStateMenuPerfil } from "../_layout";
+import { StatusBar } from "expo-status-bar";
+import ModalCerrarSesion from "../../Components/ModalCerrarSesion";
 
 export default function index() {
 
@@ -14,12 +18,33 @@ export default function index() {
     const [StatusBack,setStatusBack] = useState(true);
     const [AllEvents,setAllEvents] = useState([]);
     const [StatusAllEvents,setStatusAllEvents] = useState(false);
+
+
+
+
+
+    // Filter
     const [IsFilter,setIsFilter] = useState(false);
     const [RotateIconFilter,setRotateIconFilter] = useState(true);
     const [IconBtnFilter,setIconBtnFilter] = useState({
         Icon:require('../../assets/IconHome/ArrowDerecha.png')
     });
-    const [StyleFiltros,setStyleFiltros] = useState(StyleHome.ContainerBtnFiltrosNotShow)
+    const [StyleContainerFilter,setStyleContainerFilter] = useState(StyleHome.ContainerFilter)
+    const [StyleFiltros,setStyleFiltros] = useState(StyleHome.ContainerBtnFiltrosNotShow);
+
+    // Search
+    const [ContadorTransition, setContadorTransition] = useState(15);
+    const [DisplayTexInput,setDisplayTexInput] = useState('none');
+    const [StatusSearch,setStatusSearch] = useState(true);
+    const [IconSearch,setIconSearch] = useState(
+        require('../../assets/IconHome/search-big.png')
+    );
+
+    //Status ModalCerrarSesion
+    useEffect(()=>{
+
+    })
+
    
     useEffect(()=>{
         BackHandler.addEventListener('hardwareBackPress',()=>{
@@ -58,7 +83,22 @@ export default function index() {
             setRotateIconFilter(!RotateIconFilter);
             setStyleFiltros(StyleHome.ContainerBtnFiltrosNotShow);
         }
-    }
+    };
+
+    const TransitionBuscador = () =>{
+            setStatusSearch(!StatusSearch);
+            if(StatusSearch){
+                setContadorTransition(100)
+                setDisplayTexInput('flex');
+                setStyleContainerFilter(StyleHome.ContainerNotFilter);
+                setIconSearch(require('../../assets/IconHome/x.png'))
+            }else{
+                setContadorTransition(15)
+                setDisplayTexInput('none');
+                setStyleContainerFilter(StyleHome.ContainerFilter)
+                setIconSearch(require('../../assets/IconHome/search-big.png'))
+            };
+    };
 
   if(!StatusAllEvents){
     return(
@@ -83,47 +123,55 @@ export default function index() {
     <SafeAreaProvider style={{backgroundColor:'white'}}>
         
         <ScrollView style={{padding:10}} >
-            <View style={StyleHome.ContainerFilter}>
+           <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
+             <View style={StyleContainerFilter}>
                 <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
                     onPress={DeployFilter}>
                     <Text style={{color:'gray'}}>Filtra por Sala</Text>
                     <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
                 </TouchableOpacity>
                 <View style={StyleFiltros}>
-                    <TouchableOpacity style={{
-                        backgroundColor:'white',
-                        borderBottomWidth:1,
-                        borderColor: '#ced4da',
-                        padding:5,
-                        borderRadius: 5,
-                    }}>
-                        <Text style={{color:'#023e8a',fontWeight:'600'}}>Sala A</Text>
+                    <TouchableOpacity style={StyleHome.BtnSelectFilter}>
+                        <Text style={StyleHome.TextBtnSelectFilter}>Sala A</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{
-                        backgroundColor:'white',
-                        borderBottomWidth:1,
-                        borderColor: '#ced4da',
-                        padding:5,
-                        borderRadius: 5,
-                    }}>
-                        <Text style={{color:'#023e8a',fontWeight:'600'}}>Sala A</Text>
+                    <TouchableOpacity style={StyleHome.BtnSelectFilter}>
+                        <Text style={StyleHome.TextBtnSelectFilter}>Sala A</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{
-                        backgroundColor:'white',
-                        borderBottomWidth:1,
-                        borderColor: '#ced4da',
-                        padding:5,
-                        borderRadius: 5,
-                    }}>
-                        <Text style={{color:'#023e8a',fontWeight:'600'}}>Sala A</Text>
+                    <TouchableOpacity style={StyleHome.BtnSelectFilter}>
+                        <Text style={StyleHome.TextBtnSelectFilter}>Sala A</Text>
                     </TouchableOpacity>
                 </View>
             </View>
+                <View style={{
+                    borderWidth:1,
+                    borderRadius:10,
+                    height:50,
+                    flexDirection:'row',
+                    borderColor:'#ced4da',
+                    width:`${ContadorTransition}%`
+                }}>
+                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} onPress={TransitionBuscador}>
+                        <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
+                    </TouchableOpacity>
+                    <TextInput style={{
+                        fontSize:16,
+                        width:`85%`,
+                        borderTopRightRadius:10,
+                        borderBottomRightRadius:10,
+                        display: `${DisplayTexInput}`
+
+                    }} placeholder="Search"/>
+                </View>
+           </View>
             
             <VirtualizedList
             onTouchMove={()=>{
                 if(!RotateIconFilter){
-                    DeployFilter();}
+                    DeployFilter();
+                };
+                if(!CheckMenuPerfil){
+                    funcionChangeStateMenuPerfil();
+                };
             }}
             style={{paddingBottom:15}}
             data={AllEvents}
@@ -148,7 +196,11 @@ export default function index() {
 
             />
         </ScrollView>
-        <StatusBar barStyle={'default'} />
+
+        <ModalCerrarSesion/>
+
+
+        <StatusBar style="auto"/>
     </SafeAreaProvider>
   )
 }
