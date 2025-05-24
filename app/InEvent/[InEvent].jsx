@@ -1,6 +1,7 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View,Text, TouchableOpacity, Image } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 export default function InEvent() {
   const local = useLocalSearchParams();
@@ -40,6 +41,7 @@ export default function InEvent() {
             </TouchableOpacity>
 
         </View>
+        <StatusBar style="auto"/>
     </SafeAreaProvider>
   )
 }
