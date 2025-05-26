@@ -1,16 +1,19 @@
 import { Button, FlatList, Image, 
 Text, TouchableOpacity, View,ScrollView,VirtualizedList, 
-TextInput} from "react-native";
+TextInput,
+ActivityIndicator} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { router, useNavigation, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { router, useRouter } from "expo-router";
+import { useEffect, useState, useCallback  } from "react";
 import { BackHandler } from "react-native";
 import { DataApis } from "../../Data/DataApi";
 import { StyleHome } from "../../style/StyleHome";
 import CardHomeEvents from "../../Components/CardHomeEvents";
-import { CheckMenuPerfil,funcionChangeStateMenuPerfil } from "../_layout";
+import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS} from "../_layout";
 import { StatusBar } from "expo-status-bar";
 import ModalCerrarSesion from "../../Components/ModalCerrarSesion";
+import { RefreshControl } from "react-native";
+import useRefresh from "../../hooks/useRefresh";
 
 export default function index() {
 
@@ -40,17 +43,17 @@ export default function index() {
         require('../../assets/IconHome/search-big.png')
     );
 
-    //Status ModalCerrarSesion
-    useEffect(()=>{
+    //Refresh
+    const { StateRefresh, ScreenRefresHome} = useRefresh();
 
+
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+        if(StatusModalCerrarS === true){
+            return(true)
+        }else{
+            return(false)
+        }
     })
-
-   
-    useEffect(()=>{
-        BackHandler.addEventListener('hardwareBackPress',()=>{
-        return(StatusBack)
-        });
-    },[StatusBack]);
 
     useEffect(()=>{
         const GetEvents = () =>{
@@ -85,6 +88,9 @@ export default function index() {
         }
     };
 
+
+    //Esto es parte fundamental para el funcionamiendo de buscador.
+    
     const TransitionBuscador = () =>{
             setStatusSearch(!StatusSearch);
             if(StatusSearch){
@@ -100,6 +106,20 @@ export default function index() {
             };
     };
 
+    const CloseBuscador = () =>{
+        if(!StatusSearch){
+            setContadorTransition(15)
+            setDisplayTexInput('none');
+            setStyleContainerFilter(StyleHome.ContainerFilter)
+            setIconSearch(require('../../assets/IconHome/search-big.png'))
+            setStatusSearch(!StatusSearch);
+        }
+    };
+
+    
+
+
+
   if(!StatusAllEvents){
     return(
         <SafeAreaProvider style={{
@@ -108,21 +128,24 @@ export default function index() {
             backgroundColor:'white',
         }}>
             <View>
-                <Text>
-                    cargando...
-                </Text>
+                <ActivityIndicator size="large" />
             </View>
         </SafeAreaProvider>
     )
-  }
+  };
 
     
     
 
   return (
     <SafeAreaProvider style={{backgroundColor:'white'}}>
+
         
-        <ScrollView style={{padding:10}} >
+
+        <ScrollView style={{padding:10}}  
+            refreshControl={
+            <RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>
+            }>
            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
              <View style={StyleContainerFilter}>
                 <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
@@ -160,7 +183,7 @@ export default function index() {
                         borderBottomRightRadius:10,
                         display: `${DisplayTexInput}`
 
-                    }} placeholder="Search"/>
+                    }} placeholder="Buscador" placeholderTextColor={'#adb5bd'}/>
                 </View>
            </View>
             
@@ -172,6 +195,8 @@ export default function index() {
                 if(!CheckMenuPerfil){
                     funcionChangeStateMenuPerfil();
                 };
+
+                CloseBuscador();
             }}
             style={{paddingBottom:15}}
             data={AllEvents}
@@ -197,8 +222,13 @@ export default function index() {
             />
         </ScrollView>
 
-        <ModalCerrarSesion/>
-
+        
+        <ModalCerrarSesion
+        StatusModal={StatusModalCerrarS}
+        FuncionGoBack={()=>{
+            setStatusBack(!StatusBack)
+        }}
+        />
 
         <StatusBar style="auto"/>
     </SafeAreaProvider>
