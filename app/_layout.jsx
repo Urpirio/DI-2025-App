@@ -1,21 +1,18 @@
-import { Stack, useRouter } from "expo-router";
+import { router, Stack, useRouter } from "expo-router";
 import { Image, View,TouchableOpacity,Text, StatusBar } from "react-native";
 import { StyleLayoutEvent } from "../style/StyleLayoutEvents";
 import MenuProfile from "../Components/MenuProfile";
 import { StyleLayoutHome } from "../style/StyleLayoutHome";
 import useDeployPerfil from "../hooks/useDeployPerfil";
 import useDeployCerrarSesion from "../hooks/useDeployCerrarSesion";
-import useModalRefresh from "../hooks/useModalRefresh";
+import useRefresh from "../hooks/useRefresh";
+// import useModalRefresh from "../hooks/useModalRefresh";
 
 export let CheckMenuPerfil;
 export let funcionChangeStateMenuPerfil;
 
 export let StatusModalCerrarS;
 export let funcionCancelarCerrarSesion;
-
-export let StateRefreshScanner;
-export let funcionRefreshScanner;
-export let ModalRefresh;
 
 export default function _layout() {
 
@@ -30,10 +27,6 @@ export default function _layout() {
   CheckMenuPerfil = StatusMenuProfile;
   funcionChangeStateMenuPerfil = DeployMenuPerfil;
 
-  const { ScreenScannerRefresh , StateRefresh, ModalStateRefresh} = useModalRefresh()
-  StateRefreshScanner = StateRefresh;
-  funcionRefreshScanner = ScreenScannerRefresh;
-  ModalRefresh = ModalStateRefresh;
 
 
   return (
@@ -113,8 +106,10 @@ export default function _layout() {
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutEvent.Header}>
                             <TouchableOpacity onPress={()=>{
-                                Router.back()
-                                DeployMenuPerfil();
+                                Router.back();
+                                if(!StatusMenuProfile){
+                                    DeployMenuPerfil();
+                                }
                             }}>
                                 <Image style={StyleLayoutEvent.IconBack} 
                                 source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
@@ -136,7 +131,10 @@ export default function _layout() {
                         <MenuProfile
                         StyleMenuProfile={StyleMenuProfile}
                         DeployProfileMenu={DeployMenuPerfil}
-                        FCerrarSesion={DeployModalCerrarS}
+                        FCerrarSesion={()=>{
+                            router.back();
+                            DeployModalCerrarS();
+                        }}
                         />
                     </View>
                 )
@@ -168,7 +166,7 @@ export default function _layout() {
             },
         }}/>
         <Stack.Screen name="Participantes/ListaPart" options={{
-            header:()=>{
+            header:({route})=>{
                 return(
                     <View style={{
                         alignItems:'center',
@@ -181,13 +179,12 @@ export default function _layout() {
                         }}>
                         <TouchableOpacity onPress={()=>{
                             Router.back();
-                            ScreenScannerRefresh();
                         }}>
                             <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
                             source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
                         </TouchableOpacity>
                         <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>
-                            Participantes
+                            {route.params.NameLista}
                         </Text>
                     </View>
                 )  
