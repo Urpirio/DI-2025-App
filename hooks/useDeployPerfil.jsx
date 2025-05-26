@@ -9,6 +9,7 @@ const useDeployPerfil = () => {
     const [StatusMenuProfile,setStatusMenuProfile] = useState(true);
 
     const Deploy = () =>{
+        // alert('funciona')
         if(StatusMenuProfile){
         SetStyleMenuProfile(StylesLayoutHome.MenuProfileShow);
         setStatusMenuProfile(!StatusMenuProfile);
