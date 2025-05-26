@@ -18,14 +18,15 @@ export default function index() {
             IconInputEmail: StyleForgetPassword.IconInputEmailBLue,
             TextInput_Email: StyleForgetPassword.TextInput_EmailBLue,
           });
-      };
+    };
 
   return (
     <SafeAreaProvider style={{backgroundColor:'white'}}>
         <View style={{alignItems:'center',gap:10,height:'100%',paddingHorizontal:20}}>
             <View style={{alignItems:'center',justifyContent:'center'}} >
               <View style={{backgroundColor:'#ced4da',width:200,height:200,justifyContent:'center',alignItems:'center',padding:20,borderRadius:'100%'}}>
-                <Image source={require('../../assets/ForgetPass/ImgCandado.png')} style={{height:100,width:100,objectFit:'contain'}} />
+                <Image source={require('../../assets/ForgetPass/ImgCandado.png')} 
+                  style={{height:100,width:100,objectFit:'contain'}} />
                 <View style={{backgroundColor:'#669bbc',height:30,width:30,position:'absolute',marginTop:80,marginLeft:40,borderRadius:30,justifyContent:'center',alignItems:'center'}}>
                   <Text style={{color:'white',fontWeight:'600',fontSize:20}}>?</Text>
                 </View>
