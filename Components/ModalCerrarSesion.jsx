@@ -1,11 +1,13 @@
 import { Modal,Text,TouchableOpacity,View,Pressable } from "react-native";
 import { StyleSheet } from "react-native";
-import { funcionCancelarCerrarSesion, StatusModalCerrarS } from "../app/_layout";
+import { funcionCancelarCerrarSesion } from "../app/_layout";
+import { funcionChangeStateMenuPerfil } from "../app/_layout";
+import { router } from "expo-router";
 
-export default function ModalCerrarSesion() {
+export default function ModalCerrarSesion({StatusModal,FuncionGoBack}) {
 
   return (
-    <Modal visible={StatusModalCerrarS} transparent={true}>
+    <Modal visible={StatusModal} transparent={true}>
         <View style={style.BodyContainer}>
             <Pressable style={{
                 backgroundColor:'white', 
@@ -20,11 +22,18 @@ export default function ModalCerrarSesion() {
                     ¿Estás seguro de que deseas cerrar sesión?
                 </Text>
                 <View style={style.containerBtns}>
-                    <TouchableOpacity style={style.btnCerrarSesion}>
+                    <TouchableOpacity style={style.btnCerrarSesion} onPress={()=>{
+                        // FuncionGoBack();
+                        funcionChangeStateMenuPerfil();
+                        funcionCancelarCerrarSesion();
+                        
+                        router.back();
+                        
+                    }}>
                         <Text style={{color:'white',fontWeight:'500'}}>Cerrar sesión</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.btnCancelar} 
-                        onPress={funcionCancelarCerrarSesion}>
+                        onPress={()=>{funcionCancelarCerrarSesion()}}>
                         <Text style={{color:'white',fontWeight:'500'}}>Cancelar</Text>
                     </TouchableOpacity>
                 </View>
