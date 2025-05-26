@@ -1,0 +1,70 @@
+import { StyleSheet } from "react-native";
+
+export const StyleCardParticipantes = StyleSheet.create({
+    BodyCard:{
+        borderWidth:1,
+        borderColor:'#ced4da',
+        padding:10,
+        borderRadius:10,
+        boxShadow:'0px 0px 1px 0px gray',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginBottom:10,
+    },
+    ImageContainer:{
+        width:'30%'
+    },
+    PerfilImg:{
+        height:100,
+        width:100,
+        objectFit:'cover',
+        borderRadius:5,
+    },
+    MainContainer:{
+        width:'65%',
+        gap:5,
+    },
+    Section1C:{
+        flexDirection:'row',
+        gap:10,
+        flexWrap:'wrap'
+    },
+    TextNombre:{
+        fontWeight:'600'
+    },
+    TextId:{
+        color:'gray'
+    },
+     Section2C:{
+         width:'100%',
+    },
+    TextInscrito:{
+        color:'green',
+        fontWeight:'500'
+    },
+    TextNotInscrito:{
+        color:'red',
+        fontWeight:'500'
+    },
+     Section3C:{
+        width:'100%',
+    },
+    btnAgregar:{
+        alignItems:'center',
+        padding:5,
+        width:'100%',
+        borderRadius:5,
+        backgroundColor:'#008000'
+    },
+    BtnConfirmarAsistencia:{
+       alignItems:'center',
+        padding:5,
+        width:'100%',
+        borderRadius:5,
+        backgroundColor:'#023e8a' 
+    },
+    TextBtns:{
+        color:'white'   
+    }
+
+})
