@@ -1,13 +1,16 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { CameraView,useCameraPermissions,CameraType,Camera } from "expo-camera";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TouchableOpacity,View,Text, Modal, Pressable, Image} from "react-native";
 import { useRouter } from "expo-router";
 import Modal_IngresarCodigo from "../../Components/Modal_IngresarCodigo";
 import { StatusBar } from "expo-status-bar";
 import QR_Mask from "../../Components/QR_Mask";
 import { StyleCheckIn } from "../../style/StyleCheckIn";
-import { funcionRefreshScanner, ModalRefresh, StateRefreshScanner } from "../_layout";
+import { reload } from "expo-router/build/global-state/routing";
+import { RefreshControl } from "react-native";
+import Modalloading from "../../Components/Modalloading";
+import ModalParticipante from "../../Components/ModalParticipante";
 
 export default function CheckIn() {
 
@@ -16,12 +19,10 @@ export default function CheckIn() {
     const [WhatCamera,setWhatCamera] = useState('back');
     const [HavePermission,setHavePermission] = useCameraPermissions();
     const [StatusModalIngCodigo,setStatusModalIngCodigo] = useState(false);
+    const [Loading, setLoading] = useState(false);
+    const [ StatusPar,setStatusPar] = useState(false);
 
-
-    // const Refresh = () => {
-
-    // }
-
+  
     if(!HavePermission){
         return(
             <View/>
@@ -67,7 +68,15 @@ export default function CheckIn() {
 
     return (
         <SafeAreaProvider>
-        {StateRefreshScanner ? <CameraView facing={WhatCamera}  onBarcodeScanned={(Data)=>{}} style={{flex:1}} Flash = "auto" /> : <View/>}
+            
+            <CameraView facing={WhatCamera} onBarcodeScanned={(Data)=>{
+                setLoading(true)
+                setTimeout(()=>{
+                    setLoading(false);
+                    setStatusPar(true);
+                },2000)
+                }} style={{flex:1}} Flash = "auto" />
+                
                 <QR_Mask/>
 
                 <View style={StyleCheckIn.containerBtns}>
@@ -80,7 +89,9 @@ export default function CheckIn() {
 
                     <TouchableOpacity style={StyleCheckIn.BtnVerparticipantes} 
                         onPress={()=>{
-                            router.navigate('Participantes/ListaPart')
+                            router.navigate({pathname: 'Participantes/ListaPart',params:{
+                                NameLista:'Participantes',WhatList: true,
+                            }});
                         }}>
                         <Text style={StyleCheckIn.TextBtnVerparticipantes}>Ver participantes</Text>
                     </TouchableOpacity>
@@ -90,32 +101,20 @@ export default function CheckIn() {
 
                 <Modal_IngresarCodigo
                 StatusModal={StatusModalIngCodigo}
-                FunctionCloseModal={()=>{setStatusModalIngCodigo(!StatusModalIngCodigo)}}
+                FunctionCloseModal={()=>{
+                    setStatusModalIngCodigo(!StatusModalIngCodigo)
+                }}
                 />
 
-                <Modal visible={ModalRefresh} transparent={true}>
-                    <View style={{
-                        flex:1,
-                        alignItems:'center',
-                        justifyContent:'center',
-                    }}>
-                        <View style={{height:'100%',width:'100%',zIndex:10}}>
+                <Modalloading StatusLoading={Loading}/>
+                
+                <ModalParticipante 
+                    StatusModal={StatusPar}
+                    FuncionCancelar={()=>{
+                        setStatusPar(false)
+                    }}
+                />
 
-                        </View>
-                        <Pressable style={{
-                            borderWidth:1,
-                            borderColor:'#ced4da',
-                            borderRadius:100,
-                            padding:10,
-                            position:'absolute',
-                            backgroundColor:'white',
-                            zIndex:30,
-                            boxShadow:'0px 0px 1px 0px gray'
-                        }} onPress={()=>{funcionRefreshScanner();router.navigate('Check-In/CheckIn')}}>
-                            <Image style={{height:50,width:50,objectFit:'contain'}} source={require('../../assets/IconEvent/refresh-ccw.png')}/>
-                        </Pressable>
-                    </View>
-                </Modal>
                <StatusBar style="auto"/>
         </SafeAreaProvider>
     ) 
