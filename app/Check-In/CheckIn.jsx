@@ -113,6 +113,7 @@ export default function CheckIn() {
                     FuncionCancelar={()=>{
                         setStatusPar(false)
                     }}
+                    
                 />
 
                <StatusBar style="auto"/>
