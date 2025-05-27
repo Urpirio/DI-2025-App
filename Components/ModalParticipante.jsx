@@ -2,7 +2,8 @@ import { Image, Modal, TouchableOpacity, View,Text } from "react-native";
 
 export default function ModalParticipante({
     StatusModal,
-    FuncionCancelar
+    FuncionCancelar,
+    Data,
 }) {
   return (
     <Modal visible={StatusModal} transparent={true}>
@@ -35,7 +36,6 @@ export default function ModalParticipante({
                 </View>
                 <View style={{gap:10}}>
                     <TouchableOpacity style={{
-                    // borderWidth:1,
                     alignItems:'center',
                     padding:10,
                     borderRadius:5,
@@ -44,7 +44,6 @@ export default function ModalParticipante({
                     <Text style={{color:'white',fontWeight:'600'}}>Confirmar Asitencia</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{
-                    // borderWidth:1,
                     alignItems:'center',
                     padding:10,
                     borderRadius:5,
