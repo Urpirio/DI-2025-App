@@ -2,10 +2,10 @@ import { Modal,Text,TouchableOpacity,View,Pressable } from "react-native";
 import { StyleSheet } from "react-native";
 import { funcionCancelarCerrarSesion } from "../app/_layout";
 import { funcionChangeStateMenuPerfil } from "../app/_layout";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 
 export default function ModalCerrarSesion({StatusModal,FuncionGoBack}) {
-
+const prueba = useNavigation();
   return (
     <Modal visible={StatusModal} transparent={true}>
         <View style={style.BodyContainer}>
@@ -27,7 +27,8 @@ export default function ModalCerrarSesion({StatusModal,FuncionGoBack}) {
                         funcionChangeStateMenuPerfil();
                         funcionCancelarCerrarSesion();
                         
-                        router.back();
+                        prueba.goBack();
+                        
                         
                     }}>
                         <Text style={{color:'white',fontWeight:'500'}}>Cerrar sesión</Text>
