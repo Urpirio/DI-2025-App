@@ -3,7 +3,7 @@ Text, TouchableOpacity, View,ScrollView,VirtualizedList,
 TextInput,
 ActivityIndicator} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { router, useRouter } from "expo-router";
+import { router, useNavigation, useRouter } from "expo-router";
 import { useEffect, useState, useCallback  } from "react";
 import { BackHandler } from "react-native";
 import { DataApis } from "../../Data/DataApi";
@@ -53,7 +53,13 @@ export default function index() {
         }else{
             return(false)
         }
-    })
+    });
+
+
+    // const navegacion = useNavigation();
+    // navegacion.addListener('beforeRemove',()=>{
+
+    // })
 
     useEffect(()=>{
         const GetEvents = () =>{
