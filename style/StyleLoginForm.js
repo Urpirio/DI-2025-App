@@ -10,7 +10,7 @@ export const StyleLoginForm = StyleSheet.create({
         textAlign:'center'
     },
     SectionForm:{
-        padding:20,gap:20
+        padding:20,
     },
     InputEmail:{
         flexDirection:'row',
@@ -128,7 +128,14 @@ export const StyleLoginForm = StyleSheet.create({
     TextBtnSignIn:{
         fontSize: 18,
         color:'white'
+    },
+    CredentialErrorNotShow:{
+        display:'none'
+    },
+    CredentialErrorShow:{
+        paddingVertical:5
     }
+
 
 
 
