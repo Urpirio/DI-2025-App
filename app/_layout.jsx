@@ -5,23 +5,28 @@ import MenuProfile from "../Components/MenuProfile";
 import { StyleLayoutHome } from "../style/StyleLayoutHome";
 import useDeployPerfil from "../hooks/useDeployPerfil";
 import useDeployCerrarSesion from "../hooks/useDeployCerrarSesion";
-import useRefresh from "../hooks/useRefresh";
-// import useModalRefresh from "../hooks/useModalRefresh";
 
 export let CheckMenuPerfil;
 export let funcionChangeStateMenuPerfil;
 
 export let StatusModalCerrarS;
 export let funcionCancelarCerrarSesion;
+export let CerrarSesion;
+export let funcionCSesion;
 
 export default function _layout() {
 
   const Router = useRouter();
   const LogoOgtic = require('../assets/Login/Capa_1 (7).png');
 
-  const { DeployModalCerrarS, StateCerrarS } = useDeployCerrarSesion();
+  
+
+  const { DeployModalCerrarS, StateCerrarS,CS,cerrarSesion } = useDeployCerrarSesion();
   StatusModalCerrarS = StateCerrarS;
   funcionCancelarCerrarSesion = DeployModalCerrarS;
+  CerrarSesion = cerrarSesion;
+  funcionCSesion = CS;
+  
 
   const { StyleMenuProfile,StatusMenuProfile,DeployMenuPerfil} = useDeployPerfil();
   CheckMenuPerfil = StatusMenuProfile;
@@ -75,7 +80,12 @@ export default function _layout() {
             
         }}/>
         <Stack.Screen name="Home/index" options={{
-            header:()=>{
+            header:({route})=>{
+                // const LocalData = useLocalSearchParams();
+                const FirstName = route.params.FirstName.split(" ");
+                const LastName = route.params.LastName.split(" ");
+
+                // console.log(LastName)
                 return(
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutHome.Header}>
@@ -84,7 +94,7 @@ export default function _layout() {
                         </View>
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutHome.ImgProfile}
-                                    source={{uri:'https://i.pinimg.com/736x/17/fb/fe/17fbfe03a124f2abd5bae716cc753a6a.jpg'}}/>
+                                    source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`}}/>
                             </TouchableOpacity>
                         </View>
 
@@ -92,6 +102,8 @@ export default function _layout() {
                         StyleMenuProfile={StyleMenuProfile}
                         DeployProfileMenu={DeployMenuPerfil}
                         FCerrarSesion={DeployModalCerrarS}
+                        FirstName={FirstName}
+                        LastName={LastName}
                         />
                     </View>
                 )
@@ -101,10 +113,14 @@ export default function _layout() {
             header:({route})=>{
 
                 const ArrayNombreEvento = route.params.NombreEvento.split('');
+                const FirstName = route.params.FirstName.split(" ");
+                const LastName = route.params.LastName.split(" ");
 
                 return(
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutEvent.Header}>
+
+                            {'Boton para volver atras'}
                             <TouchableOpacity onPress={()=>{
                                 Router.back();
                                 if(!StatusMenuProfile){
@@ -122,9 +138,10 @@ export default function _layout() {
                                     route.params.NombreEvento.slice(0,16)
                                 }
                             </Text>
+                            {'Imagen de perfil'}
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutEvent.ImgProfile}
-                                    source={{uri:'https://i.pinimg.com/736x/17/fb/fe/17fbfe03a124f2abd5bae716cc753a6a.jpg'}}/>
+                                    source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`}}/>
                             </TouchableOpacity>
 
                         </View>
@@ -135,6 +152,8 @@ export default function _layout() {
                             router.back();
                             DeployModalCerrarS();
                         }}
+                        FirstName={FirstName}
+                        LastName = {LastName}
                         />
                     </View>
                 )
