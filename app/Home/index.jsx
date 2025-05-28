@@ -1,12 +1,8 @@
-import { Button, FlatList, Image, 
-Text, TouchableOpacity, View,ScrollView,VirtualizedList, 
-TextInput,
-ActivityIndicator} from "react-native";
+import { Image,Text, TouchableOpacity, View,ScrollView,VirtualizedList, 
+TextInput,ActivityIndicator} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { router, useNavigation, useRouter } from "expo-router";
-import { useEffect, useState, useCallback  } from "react";
+import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
-import { DataApis } from "../../Data/DataApi";
 import { StyleHome } from "../../style/StyleHome";
 import CardHomeEvents from "../../Components/CardHomeEvents";
 import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS} from "../_layout";
@@ -14,119 +10,49 @@ import { StatusBar } from "expo-status-bar";
 import ModalCerrarSesion from "../../Components/ModalCerrarSesion";
 import { RefreshControl } from "react-native";
 import useRefresh from "../../hooks/useRefresh";
+import { useHome } from "../../func/Home/useFilterHome";
+import { useGetEvents } from "../../func/Home/useGetEvents";
+import { CerrarSesion } from "../_layout";
 
 export default function index() {
 
-    const Router = useRouter();
     const [StatusBack,setStatusBack] = useState(true);
-    const [AllEvents,setAllEvents] = useState([]);
-    const [StatusAllEvents,setStatusAllEvents] = useState(false);
 
+    const {GetEvents,Loading,AllEvents} = useGetEvents();
 
+    //Hook de Estilos del filtro y el buscador 
+    const {
+        DeployFilter,
+        TransitionBuscador,
+        CloseBuscador,
+        IsFilter,
+        IconBtnFilter,
+        StyleContainerFilter,
+        StyleFiltros,
+        ContadorTransition,
+        DisplayTexInput,
+        IconSearch,
+        RotateIconFilter,
+        
+    } = useHome();
 
-
-
-    // Filter
-    const [IsFilter,setIsFilter] = useState(false);
-    const [RotateIconFilter,setRotateIconFilter] = useState(true);
-    const [IconBtnFilter,setIconBtnFilter] = useState({
-        Icon:require('../../assets/IconHome/ArrowDerecha.png')
-    });
-    const [StyleContainerFilter,setStyleContainerFilter] = useState(StyleHome.ContainerFilter)
-    const [StyleFiltros,setStyleFiltros] = useState(StyleHome.ContainerBtnFiltrosNotShow);
-
-    // Search
-    const [ContadorTransition, setContadorTransition] = useState(15);
-    const [DisplayTexInput,setDisplayTexInput] = useState('none');
-    const [StatusSearch,setStatusSearch] = useState(true);
-    const [IconSearch,setIconSearch] = useState(
-        require('../../assets/IconHome/search-big.png')
-    );
-
-    //Refresh
+    //Hook global para refrescar la lista
     const { StateRefresh, ScreenRefresHome} = useRefresh();
 
 
-    BackHandler.addEventListener('hardwareBackPress',()=>{
-        if(StatusModalCerrarS === true){
-            return(true)
-        }else{
-            return(false)
-        }
-    });
-
-
-    // const navegacion = useNavigation();
-    // navegacion.addListener('beforeRemove',()=>{
-
-    // })
+    useEffect(()=>{
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+        return(CerrarSesion)
+        });
+    },[CerrarSesion])
 
     useEffect(()=>{
-        const GetEvents = () =>{
-            fetch(DataApis[0].ApiEvent)
-            .then(respuesta => respuesta.json())
-            .then((Data)=>{
-                setAllEvents(Data.data);
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-            .finally(()=>{
-                setStatusAllEvents(true);
-            })
-        };
-        GetEvents();
+        GetEvents()
     });
 
-    const DeployFilter = () => {
-        if(RotateIconFilter){
-            setIconBtnFilter({
-                Icon:require('../../assets/IconHome/ArrowAbajo.png')
-            });
-            setRotateIconFilter(!RotateIconFilter);
-            setStyleFiltros(StyleHome.ContainerBtnFiltrosShow);
-        }else{
-            setIconBtnFilter({
-                Icon:require('../../assets/IconHome/ArrowDerecha.png')
-            });
-            setRotateIconFilter(!RotateIconFilter);
-            setStyleFiltros(StyleHome.ContainerBtnFiltrosNotShow);
-        }
-    };
 
 
-    //Esto es parte fundamental para el funcionamiendo de buscador.
-    
-    const TransitionBuscador = () =>{
-            setStatusSearch(!StatusSearch);
-            if(StatusSearch){
-                setContadorTransition(100)
-                setDisplayTexInput('flex');
-                setStyleContainerFilter(StyleHome.ContainerNotFilter);
-                setIconSearch(require('../../assets/IconHome/x.png'))
-            }else{
-                setContadorTransition(15)
-                setDisplayTexInput('none');
-                setStyleContainerFilter(StyleHome.ContainerFilter)
-                setIconSearch(require('../../assets/IconHome/search-big.png'))
-            };
-    };
-
-    const CloseBuscador = () =>{
-        if(!StatusSearch){
-            setContadorTransition(15)
-            setDisplayTexInput('none');
-            setStyleContainerFilter(StyleHome.ContainerFilter)
-            setIconSearch(require('../../assets/IconHome/search-big.png'))
-            setStatusSearch(!StatusSearch);
-        }
-    };
-
-    
-
-
-
-  if(!StatusAllEvents){
+  if(!Loading){
     return(
         <SafeAreaProvider style={{
             alignItems:'center',
