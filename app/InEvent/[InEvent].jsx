@@ -5,14 +5,15 @@ import { StatusBar } from "expo-status-bar";
 import { StyleInEvent } from "../../style/StylesInEvent";
 
 export default function InEvent() {
-  const local = useLocalSearchParams();
+
+  const LocalData = useLocalSearchParams();
 
   return (
     <SafeAreaProvider style={StyleInEvent.Body}>
         <View style={StyleInEvent.MainContainer}>
             <View style={StyleInEvent.Section1}>
               <Text style={StyleInEvent.TextNombreEvent}>
-                {local.NombreEvento}
+                {LocalData.NombreEvento}
               </Text>
               <Text style={StyleInEvent.TextParticipantesEvent}>
                 80/100
@@ -21,7 +22,12 @@ export default function InEvent() {
             <View style={StyleInEvent.Section2}>
               <TouchableOpacity style={StyleInEvent.BtnRegistrarEntrada} 
               onPress={()=>{
-                router.navigate('/Check-In/CheckIn')
+                router.navigate({
+                  pathname:'/Check-In/CheckIn',
+                  params:{
+                    TokenAccess: LocalData.TokenAccess,
+                  }
+                })
               }}>
               <Text style={StyleInEvent.TextBtnResgistrarEntrada}>
                 Registrar Entrada
@@ -30,7 +36,7 @@ export default function InEvent() {
 
             <TouchableOpacity style={StyleInEvent.BtnNuevoParticipante} onPress={()=>{
               router.navigate({pathname:'/Participantes/ListaPart',params:{
-                NameLista:'Lista General',WhatList: false,
+                NameLista:'Lista General',WhatList: false,TokenAccess: LocalData.TokenAccess,
               }})
             }}>
               <Text style={StyleInEvent.TextBtnNuevoParticipante}>
