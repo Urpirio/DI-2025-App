@@ -1,16 +1,16 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { CameraView,useCameraPermissions,CameraType,Camera } from "expo-camera";
-import { useEffect, useState } from "react";
-import { TouchableOpacity,View,Text, Modal, Pressable, Image} from "react-native";
-import { useRouter } from "expo-router";
+import { CameraView,useCameraPermissions,CameraType } from "expo-camera";
+import { useState } from "react";
+import { TouchableOpacity,View,Text} from "react-native";
+import { useRouter,useLocalSearchParams } from "expo-router";
 import Modal_IngresarCodigo from "../../Components/Modal_IngresarCodigo";
 import { StatusBar } from "expo-status-bar";
 import QR_Mask from "../../Components/QR_Mask";
 import { StyleCheckIn } from "../../style/StyleCheckIn";
-import { reload } from "expo-router/build/global-state/routing";
-import { RefreshControl } from "react-native";
 import Modalloading from "../../Components/Modalloading";
 import ModalParticipante from "../../Components/ModalParticipante";
+import useValidate from "../../func/CheckIn/useValidate";
+
 
 export default function CheckIn() {
 
@@ -19,9 +19,11 @@ export default function CheckIn() {
     const [WhatCamera,setWhatCamera] = useState('back');
     const [HavePermission,setHavePermission] = useCameraPermissions();
     const [StatusModalIngCodigo,setStatusModalIngCodigo] = useState(false);
-    const [Loading, setLoading] = useState(false);
-    const [ StatusPar,setStatusPar] = useState(false);
+    
+    const LocalData = useLocalSearchParams();
+    const { CodeScanned,Loading,StatusPar,ResetStatusPar,DataUsers } = useValidate();
 
+  
   
     if(!HavePermission){
         return(
@@ -70,11 +72,7 @@ export default function CheckIn() {
         <SafeAreaProvider>
             
             <CameraView facing={WhatCamera} onBarcodeScanned={(Data)=>{
-                setLoading(true)
-                setTimeout(()=>{
-                    setLoading(false);
-                    setStatusPar(true);
-                },2000)
+                CodeScanned({DataScanned:Data,TokenUser: LocalData.TokenAccess})
                 }} style={{flex:1}} Flash = "auto" />
                 
                 <QR_Mask/>
@@ -90,7 +88,7 @@ export default function CheckIn() {
                     <TouchableOpacity style={StyleCheckIn.BtnVerparticipantes} 
                         onPress={()=>{
                             router.navigate({pathname: 'Participantes/ListaPart',params:{
-                                NameLista:'Participantes',WhatList: true,
+                                NameLista:'Participantes',WhatList: true,TokenAccess: LocalData.TokenAccess,
                             }});
                         }}>
                         <Text style={StyleCheckIn.TextBtnVerparticipantes}>Ver participantes</Text>
@@ -110,9 +108,8 @@ export default function CheckIn() {
                 
                 <ModalParticipante 
                     StatusModal={StatusPar}
-                    FuncionCancelar={()=>{
-                        setStatusPar(false)
-                    }}
+                    FuncionCancelar={ResetStatusPar}
+                    Data={DataUsers}
                     
                 />
 
