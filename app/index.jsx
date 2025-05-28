@@ -1,70 +1,46 @@
-import { Text, View,TouchableOpacity,Image, TextInput, Pressable} from "react-native";
+import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleLoginForm } from "../style/StyleLoginForm";
 import { router, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { GetLogin } from "../func/Login/useLogin";
+import { useStyleLogin } from "../func/Login/useStyleLogin";
+import { CerrarSesion, funcionCSesion } from "./_layout";
+
 
 export default function LoginForm() {
 
   const Router = useRouter();
 
-  const [isCheck,setIsCheck] = useState(false);
-  const [ShowPassword,setShowPassword] = useState(true);
-  const [IconEyePassWord,setIconEyePassword] = useState(require('../assets/IconInputs/eye-slash.png'));
+  const [TextEmail,setTextEmail] = useState(String);
+  const [TextPassword,setTextPassword] = useState(String);
 
-  const [ChangesColorEmail,setChangesColorEmail]= useState({
-    InputEmail: StyleLoginForm.InputEmail,
-    IconInputEmail: StyleLoginForm.IconInputEmail,
-    TextInput_Email: StyleLoginForm.TextInput_Email,
-  });
+  const {PostUserCredential, LoadingLOGIN,Token} = GetLogin();
 
-  const [ChangesColorPassword,setChangesColorPassword] = useState({
-    InputPassword:StyleLoginForm.InputPassword,
-    IconInputPassWord: StyleLoginForm.IconInputPassWord,
-    TextInput_PassWord: StyleLoginForm.TextInput_PassWord,
-    PressablePassWordIcon: StyleLoginForm.PressablePassWordIcon,
-  })
+ const {
+   ChangeVisibilidyPassword,
+   ChangeColorInput,
+   ChangeColorInputP2,
+   CredentialShow,
+   ChangesColorPassword,
+   ChangesColorEmail,
+   IconEyePassWord, 
+   ShowPassword,
+   CredentialErrorStyle,
+  } = useStyleLogin();
 
-  const [StatusColorInputs,setStatusColorInputs] = useState(null);
+ 
+  const SignIn = ()=>{
+    PostUserCredential({Email:TextEmail,Password:TextPassword,ErrorFunction: CredentialShow})
 
-  const ChangeColorInput = () =>{
-    
-      setChangesColorEmail({
-        InputEmail:StyleLoginForm.InputEmailBLue,
-        IconInputEmail: StyleLoginForm.IconInputEmailBLue,
-        TextInput_Email: StyleLoginForm.TextInput_EmailBLue,
-      });
-      setChangesColorPassword({
-        InputPassword:StyleLoginForm.InputPassword,
-        IconInputPassWord: StyleLoginForm.IconInputPassWord,
-        TextInput_PassWord: StyleLoginForm.TextInput_PassWord,
-        PressablePassWordIcon: StyleLoginForm.PressablePassWordIcon,
-      });
-  };
+    if(!CerrarSesion){
+      funcionCSesion();
+    };
+  
+  }
 
-  const ChangeColorInputP2 = () =>{
-      setChangesColorPassword({
-        InputPassword:StyleLoginForm.InputPasswordBLue,
-        IconInputPassWord: StyleLoginForm.IconInputPassWordBLue,
-        TextInput_PassWord: StyleLoginForm.TextInput_PassWordBLue,
-        PressablePassWordIcon: StyleLoginForm.PressablePassWordIconBLue,
-      });
-      setChangesColorEmail({
-        InputEmail: StyleLoginForm.InputEmail,
-        IconInputEmail: StyleLoginForm.IconInputEmail,
-        TextInput_Email: StyleLoginForm.TextInput_Email,
-      });
-  };
-
-  const ChangeVisibilidyPassword = () =>{
-    setShowPassword(!ShowPassword);
-    if(ShowPassword){
-      setIconEyePassword(require('../assets/IconInputs/eye-slash.png'))
-    }else{
-      setIconEyePassword(require('../assets/IconInputs/eye.png'))
-    }
-  };
+ 
 
   return (
     <SafeAreaProvider style={{backgroundColor: 'white'}}>
@@ -73,35 +49,43 @@ export default function LoginForm() {
             {/* <Text style={StyleLoginForm.TextSection1}>Inicie sesión en su cuenta de staff</Text> */}
           </View>
           <View style={StyleLoginForm.SectionForm}>
-            <View style={ChangesColorEmail.InputEmail}> 
+            <View style={{gap:20}}>
+              <View style={ChangesColorEmail.InputEmail}> 
               <Image source={require('../assets/IconInputs/envelope-alt (1).png')}
                 style={ChangesColorEmail.IconInputEmail}/>
               <TextInput placeholder="Email" placeholderTextColor={'#ced4da'}  
                 style={ChangesColorEmail.TextInput_Email} 
-                onPress={ChangeColorInput}/>
-            </View>
+                onPress={ChangeColorInput} onChangeText={setTextEmail} value={TextEmail}/>
+                
+              </View>
 
-            <View style={ChangesColorPassword.InputPassword}>
-              <Image source={require('../assets/IconInputs/lock.png')}
-                style={ChangesColorPassword.IconInputPassWord}/>
-              <TextInput placeholder="Password" placeholderTextColor={'#ced4da'} 
-                secureTextEntry={ShowPassword} style={ChangesColorPassword.TextInput_PassWord} 
-                  onPress={ChangeColorInputP2}/>
-                <Pressable onPress={ChangeVisibilidyPassword}>
-                 <Image source={IconEyePassWord}
-                  style={ChangesColorPassword.PressablePassWordIcon}/>
-                </Pressable>
+              <View style={ChangesColorPassword.InputPassword}>
+                <Image source={require('../assets/IconInputs/lock.png')}
+                  style={ChangesColorPassword.IconInputPassWord}/>
+                <TextInput placeholder="Password" placeholderTextColor={'#ced4da'} 
+                  secureTextEntry={ShowPassword} style={ChangesColorPassword.TextInput_PassWord} 
+                    onPress={ChangeColorInputP2} onChangeText={setTextPassword} value={TextPassword}/>
+                  <Pressable onPress={ChangeVisibilidyPassword}>
+                    <Image source={IconEyePassWord}
+                      style={ChangesColorPassword.PressablePassWordIcon}/>
+                  </Pressable>
+              </View>
             </View>
-            <View style={StyleLoginForm.ContainerForgetPassword}>
+            <View style={CredentialErrorStyle}>
+              <Text style={{color:'red',fontWeight:'600'}}>Credenciales incorrectas</Text>
+            </View>
+            <View style={{gap:20,paddingVertical:10}}>
+              <View style={StyleLoginForm.ContainerForgetPassword}>
                 <TouchableOpacity onPress={()=>{Router.navigate('/ForgetPassword')}}>
                     <Text style={{color:'#023e8a',fontWeight:'600'}}>Forget the password?</Text>
                 </TouchableOpacity>
-            </View>
-            <View style={StyleLoginForm.ContainerBtnSignIn}>
-              <TouchableOpacity style={StyleLoginForm.BtnSignIn} 
-                onPress={()=>{router.navigate('/Home')}}>
-                <Text style={StyleLoginForm.TextBtnSignIn}>Sign In</Text>
-              </TouchableOpacity>
+              </View>
+              <View style={StyleLoginForm.ContainerBtnSignIn}>
+                <TouchableOpacity style={StyleLoginForm.BtnSignIn} 
+                  onPress={SignIn}>
+                  {LoadingLOGIN ? <ActivityIndicator size={'small'} color={"white"}/> : <Text style={StyleLoginForm.TextBtnSignIn}>Sign In</Text>}
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
