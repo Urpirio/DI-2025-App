@@ -1,11 +1,12 @@
-import { Text, View,TouchableOpacity,Image,TextInput, TouchableNativeFeedback, ScrollView, FlatList, RefreshControl } from "react-native";
+import { Text, View,TouchableOpacity,Image,TextInput, TouchableNativeFeedback, ScrollView, FlatList, RefreshControl, ActivityIndicator } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleParticipantes } from "../../style/StyleParticipantes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardParticipante from "../../Components/CardParticipante";
 import { DataPrueba } from "../../Data/DataPrueba";
 import { useLocalSearchParams } from "expo-router";
 import useRefresh from "../../hooks/useRefresh";
+import { useRenderPart } from "../../func/ListaPart/useRenderPart";
 
 export default function ListaPart() {
 
@@ -15,8 +16,13 @@ export default function ListaPart() {
         Icon:require('../../assets/IconHome/ArrowDerecha.png')
     });
     const LocalData = useLocalSearchParams();
-    const { ScreenRefresHome,StateRefresh} = useRefresh();
+    const { ScreenRefresHome,StateRefresh} = useRefresh(false);
 
+    const {GetGeneralParticipant,Loading,DataParticipant} = useRenderPart();
+
+    useEffect(()=>{
+      GetGeneralParticipant({TokenAcces: LocalData.TokenAccess})
+    },[StateRefresh])
 
 
     const DeployFilter = () => {
@@ -34,6 +40,9 @@ export default function ListaPart() {
                 setRotateIconFilter(!RotateIconFilter);
             }
   };
+
+
+  
 
 
   return (
@@ -66,20 +75,20 @@ export default function ListaPart() {
               </View>
             </View>
 
-          <FlatList 
-            data={DataPrueba} 
+            {Loading ? <FlatList 
+            data={DataParticipant} 
             renderItem={({item})=>{
             return(   
             <CardParticipante 
-            Nombre={item.Nombre}
-            Apellido={item.Apellido}
-            IdPersona={item.ID}
-            Email={item.Email}
-            ImgPerfil={item.ImgPerfil}
+            first_name={item.first_name}
+            last_name={item.last_name}
+            IdPersona={item.id.slice(30,36)}
+            Email={item.email}
+            ImgPerfil={item.profile_picture}
             CheckIn={LocalData.NameLista == 'Lista General' ? true : false}
             />
             )
-          }}/>
+          }}/> : <ActivityIndicator size={'large'} />}
 
         </ScrollView>
     </SafeAreaProvider>
