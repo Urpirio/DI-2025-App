@@ -19,7 +19,9 @@ export const StyleLayoutEvent = StyleSheet.create({
         tintColor:'#023e8a'
     },
     TitlesHeader:{
-        color: '',fontSize:20
+        color: '#023e8a',
+        fontSize:20,
+        fontWeight:'500'
     },
     ImgProfile:{
         height:50,width:50,borderRadius: 100
