@@ -1,13 +1,23 @@
 import { StyleSheet } from "react-native"
 import { View,Pressable,TouchableOpacity,Text } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 
-export default function MenuProfile({StyleMenuProfile,DeployProfileMenu,FCerrarSesion}) {
+export default function MenuProfile({
+    StyleMenuProfile,
+    DeployProfileMenu,
+    FCerrarSesion,
+    FirstName,
+    LastName,
+}) {
+
+    
+
   return (
     <View style={StyleMenuProfile}>
             <Pressable style={Style.PressableMenuProfile} onPress={DeployProfileMenu}>
                 <View style={Style.ContainerBtnMenuProfile}>
                     <TouchableOpacity style={Style.BtnMyProfile}>
-                        <Text style={{color:'#023e8a'}}>Mi perfil</Text>
+                        <Text style={{color:'#023e8a'}}>{FirstName[0]+ " " + LastName[0]}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={Style.BtnCloseSesion} onPress={FCerrarSesion}>
                         <Text style={{color:'#d00000'}}>Cerrar sesion</Text>
