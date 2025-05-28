@@ -1,8 +1,7 @@
 import { View,Text,TouchableOpacity,Image } from 'react-native'
 import { StyleHome } from '../style/StyleHome';
 import { useRouter } from 'expo-router';
-import { setParams } from 'expo-router/build/global-state/routing';
-// import { getNavOptions } from 'expo-router/build/views/Sitemap';
+import { useLocalSearchParams } from 'expo-router';
 
 export default function CardHomeEvents({
     Localizacion,
@@ -12,9 +11,9 @@ export default function CardHomeEvents({
     FechaEvento,
     IconBtn,
 }) {
-    
-    const Router = useRouter();
 
+    const Router = useRouter();
+    const LocalData = useLocalSearchParams();
 
   return (
     <View style={StyleHome.CardEvent}>
@@ -29,9 +28,10 @@ export default function CardHomeEvents({
         <View style={StyleHome.CardEventBtns}>
             <TouchableOpacity style={StyleHome.BtnInCardEvent} onPress={()=>{
                 Router.navigate({pathname: 'InEvent/[InEvente]',params:{
-                    NombreEvento: NombreEvento
+                    NombreEvento: NombreEvento,TokenAccess: LocalData.TokenAccess,
+                    profile_picture: LocalData.profile_picture, FirstName: LocalData.FirstName,
+                    LastName: LocalData.LastName,
                 }})
-                
             }}>
                 <Image style={StyleHome.IconBtnInCardEvent} 
                     source={IconBtn}/>
