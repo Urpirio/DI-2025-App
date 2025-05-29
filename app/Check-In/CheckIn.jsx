@@ -10,6 +10,7 @@ import { StyleCheckIn } from "../../style/StyleCheckIn";
 import Modalloading from "../../Components/Modalloading";
 import ModalParticipante from "../../Components/ModalParticipante";
 import useValidate from "../../func/CheckIn/useValidate";
+import ModalNoMatch from "../../Components/ModalNoMatch";
 
 
 export default function CheckIn() {
@@ -21,7 +22,8 @@ export default function CheckIn() {
     const [StatusModalIngCodigo,setStatusModalIngCodigo] = useState(false);
     
     const LocalData = useLocalSearchParams();
-    const { CodeScanned,Loading,StatusPar,ResetStatusPar,DataUsers } = useValidate();
+    const { CodeScanned,Loading,StatusPar,
+            ResetStatusPar,DataUsers,NoMatchUser,CloseError } = useValidate();
 
   
   
@@ -72,7 +74,7 @@ export default function CheckIn() {
         <SafeAreaProvider>
             
             <CameraView facing={WhatCamera} onBarcodeScanned={(Data)=>{
-                CodeScanned({DataScanned:Data,TokenUser: LocalData.TokenAccess})
+                CodeScanned({DataScanned:Data,TokenUser: LocalData.TokenAccess,EventId: LocalData.IDEvents})
                 }} style={{flex:1}} Flash = "auto" />
                 
                 <QR_Mask/>
@@ -89,6 +91,7 @@ export default function CheckIn() {
                         onPress={()=>{
                             router.navigate({pathname: 'Participantes/ListaPart',params:{
                                 NameLista:'Participantes',WhatList: true,TokenAccess: LocalData.TokenAccess,
+                                IDEvents: LocalData.IDEvents
                             }});
                         }}>
                         <Text style={StyleCheckIn.TextBtnVerparticipantes}>Ver participantes</Text>
@@ -111,6 +114,15 @@ export default function CheckIn() {
                     FuncionCancelar={ResetStatusPar}
                     Data={DataUsers}
                     
+                />
+
+                <ModalNoMatch 
+                StatusModal={NoMatchUser}
+                CloseModal={CloseError}
+                OpenIngresarCodigo={()=>{
+                    CloseError();
+                    setStatusModalIngCodigo(!StatusModalIngCodigo);
+                }}
                 />
 
                <StatusBar style="auto"/>
