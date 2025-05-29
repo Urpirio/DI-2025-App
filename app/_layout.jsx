@@ -209,6 +209,31 @@ export default function _layout() {
                 )  
             }
         }}/>
+        <Stack.Screen name="Participantes/ListGeneral" options={{
+            header:({route})=>{
+                return(
+                    <View style={{
+                        alignItems:'center',
+                        paddingHorizontal: 10,
+                        justifyContent:'Flex-end',
+                        backgroundColor:'white',
+                        flexDirection:'row',
+                        gap: 20,
+                        paddingTop: StatusBar.currentHeight,
+                        }}>
+                        <TouchableOpacity onPress={()=>{
+                            Router.back();
+                        }}>
+                            <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
+                            source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
+                        </TouchableOpacity>
+                        <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>
+                            {route.params.NameLista}
+                        </Text>
+                    </View>
+                )  
+            }
+        }}/>
     </Stack>
   )
 };
