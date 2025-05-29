@@ -8,6 +8,7 @@ export default function InEvent() {
 
   const LocalData = useLocalSearchParams();
 
+
   return (
     <SafeAreaProvider style={StyleInEvent.Body}>
         <View style={StyleInEvent.MainContainer}>
@@ -25,7 +26,7 @@ export default function InEvent() {
                 router.navigate({
                   pathname:'/Check-In/CheckIn',
                   params:{
-                    TokenAccess: LocalData.TokenAccess,
+                    TokenAccess: LocalData.TokenAccess,IDEvents: LocalData.IDEvents
                   }
                 })
               }}>
@@ -35,8 +36,8 @@ export default function InEvent() {
             </TouchableOpacity>
 
             <TouchableOpacity style={StyleInEvent.BtnNuevoParticipante} onPress={()=>{
-              router.navigate({pathname:'/Participantes/ListaPart',params:{
-                NameLista:'Lista General',WhatList: false,TokenAccess: LocalData.TokenAccess,
+              router.navigate({pathname:'/Participantes/ListGeneral',params:{
+                NameLista:'Lista General',WhatList: false,TokenAccess: LocalData.TokenAccess,IDEvents: LocalData.IDEvents
               }})
             }}>
               <Text style={StyleInEvent.TextBtnNuevoParticipante}>
