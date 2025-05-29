@@ -9,6 +9,11 @@ import { useStyleLogin } from "../func/Login/useStyleLogin";
 import { CerrarSesion, funcionCSesion } from "./_layout";
 
 
+//Cosas para trabajar -> bug del QR,BUG del Login que te permite regresar sin cerrar sesion, Optimizacion de codigo,Crear los filtros dinamico
+//Corregir el error de que solo se llama a la funcion general para filtrar, crear un estado para que se llame a la general solo 
+//cuando se este en la lista general
+
+
 export default function LoginForm() {
 
   const Router = useRouter();
