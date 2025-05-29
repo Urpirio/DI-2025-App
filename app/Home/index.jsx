@@ -131,7 +131,7 @@ export default function index() {
                 CloseBuscador();
             }}
             style={{paddingBottom:15}}
-            data={AllEvents}
+            data={AllEvents.DataEvent}
             renderItem={({item})=>{
                 if(!IsFilter){
                     return(
@@ -142,7 +142,7 @@ export default function index() {
                     HoraInicio={item.start_time.slice(12,16)}
                     HoraFinal={item.end_time.slice(12,16)}
                     IconBtn={require('../../assets/IconHome/caret-left.png')}
-                    
+                    IDEvents={item.id}
                     />
                 )
                 }
