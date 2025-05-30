@@ -1,5 +1,6 @@
 import { Image,Text, TouchableOpacity, View,ScrollView,VirtualizedList, 
-TextInput,ActivityIndicator} from "react-native";
+TextInput,ActivityIndicator,
+FlatList} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
@@ -13,19 +14,21 @@ import useRefresh from "../../hooks/useRefresh";
 import { useHome } from "../../func/Home/useFilterHome";
 import { useGetEvents } from "../../func/Home/useGetEvents";
 import { CerrarSesion } from "../_layout";
+import { useSalaEvent } from "../../func/Home/useSalaEvent";
 
 export default function index() {
 
     const [StatusBack,setStatusBack] = useState(true);
 
     const {GetEvents,Loading,AllEvents} = useGetEvents();
+    const [SearchText,setSearchText] = useState();
 
     //Hook de Estilos del filtro y el buscador 
     const {
         DeployFilter,
         TransitionBuscador,
         CloseBuscador,
-        IsFilter,
+        // IsFilter,
         IconBtnFilter,
         StyleContainerFilter,
         StyleFiltros,
@@ -35,6 +38,17 @@ export default function index() {
         RotateIconFilter,
         
     } = useHome();
+
+    const { GetSalaEvent ,
+            DataSala ,
+            SelectName ,
+            ChangeSelected ,
+            LoadingF ,
+            IsFilter,
+            IsSearch,
+            ChangetoSearch,
+
+    } = useSalaEvent();
 
     //Hook global para refrescar la lista
     const { StateRefresh, ScreenRefresHome} = useRefresh();
@@ -47,8 +61,24 @@ export default function index() {
     },[CerrarSesion])
 
     useEffect(()=>{
-        GetEvents()
+        GetEvents();
+        GetSalaEvent();
     });
+
+    const IsScrolling = ()=>{
+        if(!RotateIconFilter){
+            DeployFilter();
+        };
+        if(!CheckMenuPerfil){
+            funcionChangeStateMenuPerfil();
+        };
+
+        if(SearchText ==  undefined){
+            CloseBuscador();
+            ChangetoSearch();
+        }
+    }
+
 
 
 
@@ -74,27 +104,34 @@ export default function index() {
 
         
 
-        <ScrollView style={{padding:10}}  
-            refreshControl={
+        <ScrollView style={{padding:10}}  refreshControl={
             <RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>
-            }>
+        }>
            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
              <View style={StyleContainerFilter}>
                 <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
                     onPress={DeployFilter}>
-                    <Text style={{color:'gray'}}>Filtra por Sala</Text>
+                    <Text style={{color:'gray'}}>{SelectName}</Text>
                     <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
                 </TouchableOpacity>
                 <View style={StyleFiltros}>
-                    <TouchableOpacity style={StyleHome.BtnSelectFilter}>
-                        <Text style={StyleHome.TextBtnSelectFilter}>Sala A</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={StyleHome.BtnSelectFilter}>
-                        <Text style={StyleHome.TextBtnSelectFilter}>Sala A</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={StyleHome.BtnSelectFilter}>
-                        <Text style={StyleHome.TextBtnSelectFilter}>Sala A</Text>
-                    </TouchableOpacity>
+
+                    {LoadingF ? <FlatList 
+                    data={DataSala}
+                    renderItem={({item})=>{
+                        return(
+                        <TouchableOpacity style={StyleHome.BtnSelectFilter} onPress={()=>{
+                            ChangeSelected({Selected: item});
+                            if(!RotateIconFilter){
+                                DeployFilter();
+                            };
+                        }}>
+                            <Text style={StyleHome.TextBtnSelectFilter}>{item}</Text>
+                        </TouchableOpacity>
+                        )
+                    }}
+                    /> : <ActivityIndicator size={'small'}/>}
+
                 </View>
             </View>
                 <View style={{
@@ -105,7 +142,13 @@ export default function index() {
                     borderColor:'#ced4da',
                     width:`${ContadorTransition}%`
                 }}>
-                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} onPress={TransitionBuscador}>
+                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} 
+                        onPress={()=>{
+                            TransitionBuscador(); 
+                            ChangeSelected({Selected: 'No filtrar'})
+                            ChangetoSearch();
+                            
+                        }}>
                         <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
                     </TouchableOpacity>
                     <TextInput style={{
@@ -115,25 +158,16 @@ export default function index() {
                         borderBottomRightRadius:10,
                         display: `${DisplayTexInput}`
 
-                    }} placeholder="Buscador" placeholderTextColor={'#adb5bd'}/>
+                    }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'}/>
                 </View>
            </View>
             
-            <VirtualizedList
-            onTouchMove={()=>{
-                if(!RotateIconFilter){
-                    DeployFilter();
-                };
-                if(!CheckMenuPerfil){
-                    funcionChangeStateMenuPerfil();
-                };
-
-                CloseBuscador();
-            }}
+            <FlatList
+            onTouchMove={IsScrolling}
             style={{paddingBottom:15}}
             data={AllEvents.DataEvent}
             renderItem={({item})=>{
-                if(!IsFilter){
+                    // console.log(IsFilter)
                     return(
                     <CardHomeEvents
                     NombreEvento={item.title}
@@ -143,15 +177,12 @@ export default function index() {
                     HoraFinal={item.end_time.slice(12,16)}
                     IconBtn={require('../../assets/IconHome/caret-left.png')}
                     IDEvents={item.id}
-                    />
-                )
-                }
-            }}
-            key={item => item.title}
-            getItem={(data,index)=>data[index]}
-            getItemCount={(data)=>data.length}
-
-            />
+                    FilterSelected = {SelectName}
+                    IsFilter={IsSearch}
+                    SearchText={SearchText}
+                    />)
+                
+            }}/>
         </ScrollView>
 
         
