@@ -18,10 +18,13 @@ export default function ListaPart() {
     const LocalData = useLocalSearchParams();
     const { ScreenRefresHome,StateRefresh} = useRefresh(false);
 
-    const {GetGeneralParticipant,Loading,DataParticipant} = useRenderPart();
+    const {Loading,DataParticipant,GetParticipant} = useRenderPart();
 
     useEffect(()=>{
-      GetGeneralParticipant({TokenAcces: LocalData.TokenAccess})
+      
+        GetParticipant({Event:LocalData.IDEvents,
+        TokenAcces: LocalData.TokenAccess})
+
     },[StateRefresh])
 
 
@@ -57,7 +60,8 @@ export default function ListaPart() {
                   <TextInput style={StyleParticipantes.TextInputSearch} 
                     placeholder="Buscador" placeholderTextColor={'#adb5bd'}/>
             </View>
-            <View style={StyleParticipantes.ContainerFilter}>
+            <View>
+              <View style={StyleParticipantes.ContainerFilter}>
               <TouchableOpacity style={StyleParticipantes.BtnDeployFilter} 
                 onPress={DeployFilter}>
                 <Text style={{color:'gray'}}>Filtrar busqueda por</Text>
@@ -74,6 +78,7 @@ export default function ListaPart() {
                 </TouchableOpacity>
               </View>
             </View>
+            </View>
 
             {Loading ? <FlatList 
             data={DataParticipant} 
@@ -85,7 +90,7 @@ export default function ListaPart() {
             IdPersona={item.id.slice(30,36)}
             Email={item.email}
             ImgPerfil={item.profile_picture}
-            CheckIn={LocalData.NameLista == 'Lista General' ? true : false}
+            CheckIn={item.checkin}
             />
             )
           }}/> : <ActivityIndicator size={'large'} />}
