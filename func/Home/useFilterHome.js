@@ -4,7 +4,7 @@ import { StyleHome } from "../../style/StyleHome";
 export const useHome = () => {
 
         // Filter
-        const [IsFilter,setIsFilter] = useState(false);
+       
         const [RotateIconFilter,setRotateIconFilter] = useState(true);
         const [IconBtnFilter,setIconBtnFilter] = useState({
             Icon:require('../../assets/IconHome/ArrowDerecha.png')
@@ -65,7 +65,7 @@ export const useHome = () => {
             DeployFilter: DeployFilter,
             TransitionBuscador: TransitionBuscador,
             CloseBuscador: CloseBuscador,
-            IsFilter: IsFilter,
+            // IsFilter: IsFilter,
             IconBtnFilter: IconBtnFilter,
             StyleContainerFilter: StyleContainerFilter,
             StyleFiltros: StyleFiltros,
