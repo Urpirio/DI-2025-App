@@ -13,7 +13,11 @@ export const useGetEvents = () => {
             fetch(ApiEvent)
             .then(respuesta => respuesta.json())
             .then((Data)=>{
-                setAllEvents(Data.data);
+                setAllEvents({
+                    DataEvent: Data.data,
+                });
+               
+              
             })
             .catch((err)=>{
                 console.log(err)
