@@ -5,7 +5,7 @@ export const StyleParticipantes = StyleSheet.create({
         backgroundColor:'white',
     },
     MainContainer:{
-        paddingHorizontal:10,
+        paddingHorizontal:5,
     },
     SearchContainer:{
         borderWidth:1,
