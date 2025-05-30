@@ -27,11 +27,11 @@ export default function CardParticipante({
                     </View>
                     <View style={StyleCardParticipantes.Section2C}>
                          <Text>{Email}</Text>
-                         <Text style={CheckIn ? StyleCardParticipantes.TextNotInscrito : StyleCardParticipantes.TextInscrito}>{CheckIn ? 'No Evento' : 'Evento'}</Text>
+                         <Text style={CheckIn ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{CheckIn ? 'Registrado' : 'No registrado'}</Text>
                     </View>
                     <View style={StyleCardParticipantes.Section3C}>
-                        <TouchableOpacity style={CheckIn ? StyleCardParticipantes.btnAgregar : StyleCardParticipantes.BtnConfirmarAsistencia}>
-                            <Text style={StyleCardParticipantes.TextBtns}>{CheckIn ? 'Agregar a Evento' : 'Confirmar Asistencia'}</Text>
+                        <TouchableOpacity style={StyleCardParticipantes.BtnConfirmarAsistencia}>
+                            <Text style={StyleCardParticipantes.TextBtns}>{'Confirmar Asistencia'}</Text>
                         </TouchableOpacity>
                     </View>
               </View>
