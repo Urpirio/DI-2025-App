@@ -41,26 +41,43 @@ export const StyleParticipantes = StyleSheet.create({
     BtnDeployFilter:{
         borderWidth:1,
         borderColor:'#ced4da',
-        paddingHorizontal:10,
+        paddingHorizontal:16,
         paddingVertical:5,
         borderRadius:10,
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between'
     },
-    SelectContainerFilter:{
+    SelectContainerFilterS:{
         borderWidth:1,
+        borderColor:'#ced4da',
         paddingHorizontal:5,
         paddingVertical:5,
         borderRadius:10,
-        width:'52%',
+        width:'100%',
         gap:5,
         position:'absolute',
         marginTop:50,
         zIndex:20,
         backgroundColor:'white'
     },
-    SelectContainerFilterHidden:{
+    SelectContainerFilterHiddenS:{
+        display:'none'
+    },
+    SelectContainerFilterR:{
+        borderWidth:1,
+        borderColor:'#ced4da',
+        paddingHorizontal:5,
+        paddingVertical:5,
+        borderRadius:10,
+        width:'100%',
+        gap:5,
+        position:'absolute',
+        marginTop:50,
+        zIndex:20,
+        backgroundColor:'white'
+    },
+    SelectContainerFilterHiddenR:{
         display:'none'
     },
     SelectBtnForFilter:{
