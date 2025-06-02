@@ -7,6 +7,8 @@ export const useRenderPartG = () => {
     const [DataParticipant,setDataParticipant] = useState([]);
     const [ArrayUserId,setArrayUserId] = useState([])
     const [Loading,setLoading] = useState(false);
+    const [TextSearch,setTextSearch] = useState();
+    const [FiltroBusqueda,setFiltroBusqueda] = useState('Nombre')
 
 
     const GetGeneralParticipant = ({TokenAcces,EventId}) => {
@@ -53,10 +55,32 @@ export const useRenderPartG = () => {
             });
 
             if(Array != []){
-                setDataParticipant(Array)
-            }else{
-                
-            };
+                const ArraySearch = [];
+
+                if(TextSearch == undefined){
+                    setDataParticipant(Array)
+                }else if(FiltroBusqueda == 'Nombre'){
+                    Array.forEach(D =>{
+                        if(D.first_name.toUpperCase().includes(TextSearch.toUpperCase())){
+                            ArraySearch.push(D);
+                        }
+                    });
+
+                    if(ArraySearch != []){
+                        setDataParticipant(ArraySearch)
+                    };
+                }else if(FiltroBusqueda == 'Email'){
+                    Array.forEach(D =>{
+                        if(D.email.toUpperCase().includes(TextSearch.toUpperCase())){
+                            ArraySearch.push(D);
+                        }
+                    });
+
+                    if(ArraySearch != []){
+                        setDataParticipant(ArraySearch)
+                    };
+                }
+            }
 
 
         })
@@ -73,5 +97,9 @@ export const useRenderPartG = () => {
         GetGeneralParticipant: GetGeneralParticipant,
         Loading: Loading,
         DataParticipant: DataParticipant,
+        TextSearch: TextSearch,
+        setTextSearch: setTextSearch,
+        FiltroBusqueda: FiltroBusqueda,
+        setFiltroBusqueda: setFiltroBusqueda,
     })
 }
