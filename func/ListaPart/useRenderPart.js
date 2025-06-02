@@ -8,6 +8,9 @@ export const useRenderPart = () => {
     const [DataParticipant,setDataParticipant] = useState([]);
     const [ArrayUserId,setArrayUserId] = useState([])
     const [Loading,setLoading] = useState(false);
+    const [FiltroBusqueda,setFiltroBusqueda] = useState('Nombre');
+    const [FiltroEstado,setFiltroEstado] = useState('Todos');
+    const [TextSearch,setTextSearch] = useState()
     
 
 
@@ -25,12 +28,20 @@ export const useRenderPart = () => {
             Data.data.forEach((data) =>{
 
             if(Event == data.event_id){
-                ArrayUserId.push(data)
-            }
+                if(data.checkin == null && FiltroEstado == 'Todos'){
+                    ArrayUserId.push(data);
+                }else if(data.checkin != null && FiltroEstado == 'Registrados'){
+                    ArrayUserId.push(data);
+                }else if(data.checkin == null && FiltroEstado == 'No registrados'){
+                    ArrayUserId.push(data);
+                };
+            };
             
             
             });
+
             if(ArrayUser != []){
+                console.log('funciona')
                 setArrayUserId(ArrayUser)
                 Users({TokenAccess:TokenAcces})
             }
@@ -54,11 +65,13 @@ export const useRenderPart = () => {
         .then(respuestas => respuestas.json())
         .then((Data)=>{
             const ArrayUser = [];
+
             ArrayUserId.forEach((Dt) => {
                 Data.data.forEach((DataUser)=>{
                 
                 if(DataUser.id == Dt.user_id){
                    if(ArrayUser.filter((e) => e.id === DataUser.id).length == 0){
+                    //no recuerdo la razon de esto, recordar...
                         DataUser.checkin = Dt.checkin;
                         ArrayUser.push(DataUser)
                    }
@@ -67,48 +80,51 @@ export const useRenderPart = () => {
             })
 
             if(ArrayUser != []){
-                setDataParticipant(ArrayUser);  
+                const ArraySearch = [];
+
+                if(TextSearch == undefined){
+                    setDataParticipant(ArrayUser);  
+                }else if(FiltroBusqueda == 'Nombre'){
+                    ArrayUser.forEach(D =>{
+                        if(D.first_name.toUpperCase().includes(TextSearch.toUpperCase())){
+                            ArraySearch.push(D);
+                        }
+                    });
+
+                    if(ArraySearch != []){
+                        setDataParticipant(ArraySearch)
+                    };
+                }else if(FiltroBusqueda == 'Email'){
+                    ArrayUser.forEach(D =>{
+                        if(D.email.toUpperCase().includes(TextSearch.toUpperCase())){
+                            ArraySearch.push(D);
+                        }
+                    });
+
+                    if(ArraySearch != []){
+                        setDataParticipant(ArraySearch)
+                    };
+                }
             };
         })
         .catch(()=>{
 
         })
         .finally(()=>{
+            // console.log('funciona')
             setLoading(true)
         })
-    }
-
-    // const GetGeneralParticipant = ({TokenAcces}) => {
-    //     fetch(ApiGeneralEvent,{
-    //         method: 'GET',
-    //         headers: {
-    //             'Authorization': `Bearer ${TokenAcces}`
-    //         }
-    //     })
-    //     .then(respuestas => respuestas.json())
-    //     .then((Data)=>{
-    //         const ArrayUser = [];
-    //         Data.data.forEach(Data =>{
-    //             ArrayUser.push(Data);
-    //         });
-
-    //         if(ArrayUser != []){
-    //             setDataParticipant(ArrayUser)
-    //         };
-    //         console.log(Data)
-    //     })
-    //     .catch((error)=>{
-    //         console.error(error)
-    //     })
-    //     .finally(()=>{
-    //         setLoading(true)
-    //     });
-    // };
+    };
 
     return({
-        // GetGeneralParticipant: GetGeneralParticipant,
         GetParticipant: GetParticipant,
         Loading: Loading,
         DataParticipant: DataParticipant,
+        FiltroBusqueda: FiltroBusqueda,
+        TextSearch: TextSearch,
+        setTextSearch: setTextSearch,
+        setFiltroBusqueda: setFiltroBusqueda,
+        setFiltroEstado: setFiltroEstado,
+        FiltroEstado: FiltroEstado,
     })
 }
