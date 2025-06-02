@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { funcionCancelarCerrarSesion, funcionCSesion } from "../app/_layout";
 import { funcionChangeStateMenuPerfil } from "../app/_layout";
 import { router, useNavigation } from "expo-router";
+import { funcionRefresh } from "../app/Home";
 
 export default function ModalCerrarSesion({StatusModal,FuncionGoBack}) {
 const prueba = useNavigation();
@@ -37,7 +38,7 @@ const prueba = useNavigation();
                         <Text style={{color:'white',fontWeight:'500'}}>Cerrar sesión</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.btnCancelar} 
-                        onPress={()=>{funcionCancelarCerrarSesion()}}>
+                        onPress={()=>{funcionCancelarCerrarSesion();funcionRefresh();}}>
                         <Text style={{color:'white',fontWeight:'500'}}>Cancelar</Text>
                     </TouchableOpacity>
                 </View>
