@@ -17,11 +17,18 @@ export default function ListGeneral() {
     const LocalData = useLocalSearchParams();
     const { ScreenRefresHome,StateRefresh} = useRefresh(false);
 
-    const {GetGeneralParticipant ,Loading,DataParticipant} = useRenderPartG();
+    const {GetGeneralParticipant ,
+          Loading,
+          DataParticipant,
+          TextSearch,
+          setTextSearch,
+          FiltroBusqueda,
+          setFiltroBusqueda,
+        } = useRenderPartG();
 
     useEffect(()=>{
         GetGeneralParticipant({TokenAcces: LocalData.TokenAccess,EventId: LocalData.IDEvents})
-    },[StateRefresh])
+    },[StateRefresh,TextSearch])
 
 
     const DeployFilter = () => {
@@ -54,7 +61,8 @@ export default function ListGeneral() {
                         source={require('../../assets/IconParticipantes/search-big.png')}/>
                   </TouchableOpacity>
                   <TextInput style={StyleParticipantesGeneral.TextInputSearch} 
-                    placeholder="Buscador" placeholderTextColor={'#adb5bd'}/>
+                    placeholder={`Buscador por ${FiltroBusqueda}`} placeholderTextColor={'#adb5bd'} value={TextSearch} 
+                    onChangeText={setTextSearch}/>
             </View>
             <View style={StyleParticipantesGeneral.ContainerFilter}>
               <TouchableOpacity style={StyleParticipantesGeneral.BtnDeployFilter} 
@@ -65,10 +73,16 @@ export default function ListGeneral() {
               </TouchableOpacity>
 
               <View style={DeploySelect}>
-                <TouchableOpacity style={StyleParticipantesGeneral.SelectBtnForFilter} onPress={()=>{console.log(LocalData)}}>
+                <TouchableOpacity style={StyleParticipantesGeneral.SelectBtnForFilter} onPress={()=>{
+                  setFiltroBusqueda('Email');
+                  DeployFilter();
+                  }}>
                   <Text>Email</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={StyleParticipantesGeneral.SelectBtnForFilter}>
+                <TouchableOpacity style={StyleParticipantesGeneral.SelectBtnForFilter} onPress={()=>{
+                  setFiltroBusqueda('Nombre');
+                  DeployFilter();
+                }}>
                   <Text>Nombre</Text>
                 </TouchableOpacity>
               </View>
