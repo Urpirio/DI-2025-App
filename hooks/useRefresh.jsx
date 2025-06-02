@@ -9,7 +9,7 @@ export default function useRefresh() {
         setStateRefresh(true);
          setTimeout(()=>{
             setStateRefresh(false);
-           },1000);
+           },100);
       },[]);
 
   return ({
