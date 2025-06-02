@@ -6,7 +6,7 @@ import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
 import { StyleHome } from "../../style/StyleHome";
 import CardHomeEvents from "../../Components/CardHomeEvents";
-import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS} from "../_layout";
+import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS,funcionCancelarCerrarSesion} from "../_layout";
 import { StatusBar } from "expo-status-bar";
 import ModalCerrarSesion from "../../Components/ModalCerrarSesion";
 import { RefreshControl } from "react-native";
@@ -14,21 +14,39 @@ import useRefresh from "../../hooks/useRefresh";
 import { useHome } from "../../func/Home/useFilterHome";
 import { useGetEvents } from "../../func/Home/useGetEvents";
 import { CerrarSesion } from "../_layout";
-import { useSalaEvent } from "../../func/Home/useSalaEvent";
+
+
+// export let StatusRefreshHome;
+export let funcionRefresh;
 
 export default function index() {
 
     const [StatusBack,setStatusBack] = useState(true);
 
-    const {GetEvents,Loading,AllEvents} = useGetEvents();
-    const [SearchText,setSearchText] = useState();
+    const {
+        GetEvents,
+        Loading,
+        AllEvents,
+        GetSalaEvent,
+        DataSala,
+        SelectName,
+        ChangeSelected,
+        LoadingF,
+        ChangetoSearch,
+        SearchText,
+        setSearchText,
+        } = useGetEvents();
+
+
+
+
+   
 
     //Hook de Estilos del filtro y el buscador 
     const {
         DeployFilter,
         TransitionBuscador,
         CloseBuscador,
-        // IsFilter,
         IconBtnFilter,
         StyleContainerFilter,
         StyleFiltros,
@@ -39,31 +57,18 @@ export default function index() {
         
     } = useHome();
 
-    const { GetSalaEvent ,
-            DataSala ,
-            SelectName ,
-            ChangeSelected ,
-            LoadingF ,
-            IsFilter,
-            IsSearch,
-            ChangetoSearch,
-
-    } = useSalaEvent();
-
     //Hook global para refrescar la lista
     const { StateRefresh, ScreenRefresHome} = useRefresh();
+    StatusRefreshHome = StateRefresh;
+    funcionRefresh = ScreenRefresHome;
 
-
-    useEffect(()=>{
-        BackHandler.addEventListener('hardwareBackPress',()=>{
-        return(CerrarSesion)
-        });
-    },[CerrarSesion])
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+     return(true)
+    });
 
     useEffect(()=>{
         GetEvents();
-        GetSalaEvent();
-    });
+    },[SearchText,SelectName,CerrarSesion,StateRefresh,StatusModalCerrarS]);
 
     const IsScrolling = ()=>{
         if(!RotateIconFilter){
@@ -110,7 +115,7 @@ export default function index() {
            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
              <View style={StyleContainerFilter}>
                 <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
-                    onPress={DeployFilter}>
+                    onPress={()=>{DeployFilter(); GetSalaEvent();}}>
                     <Text style={{color:'gray'}}>{SelectName}</Text>
                     <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
                 </TouchableOpacity>
@@ -162,12 +167,11 @@ export default function index() {
                 </View>
            </View>
             
-            <FlatList
+           <FlatList
             onTouchMove={IsScrolling}
             style={{paddingBottom:15}}
             data={AllEvents.DataEvent}
             renderItem={({item})=>{
-                    // console.log(IsFilter)
                     return(
                     <CardHomeEvents
                     NombreEvento={item.title}
@@ -177,19 +181,17 @@ export default function index() {
                     HoraFinal={item.end_time.slice(12,16)}
                     IconBtn={require('../../assets/IconHome/caret-left.png')}
                     IDEvents={item.id}
-                    FilterSelected = {SelectName}
-                    IsFilter={IsSearch}
-                    SearchText={SearchText}
                     />)
                 
             }}/>
+            {/* } */}
         </ScrollView>
 
         
         <ModalCerrarSesion
         StatusModal={StatusModalCerrarS}
         FuncionGoBack={()=>{
-            setStatusBack(!StatusBack)
+            setStatusBack(!StatusBack);
         }}
         />
 
