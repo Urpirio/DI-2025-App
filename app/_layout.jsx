@@ -5,6 +5,7 @@ import MenuProfile from "../Components/MenuProfile";
 import { StyleLayoutHome } from "../style/StyleLayoutHome";
 import useDeployPerfil from "../hooks/useDeployPerfil";
 import useDeployCerrarSesion from "../hooks/useDeployCerrarSesion";
+import { funcionRefresh } from "./Home";
 
 export let CheckMenuPerfil;
 export let funcionChangeStateMenuPerfil;
@@ -101,7 +102,10 @@ export default function _layout() {
                         <MenuProfile
                         StyleMenuProfile={StyleMenuProfile}
                         DeployProfileMenu={DeployMenuPerfil}
-                        FCerrarSesion={DeployModalCerrarS}
+                        FCerrarSesion={()=>{
+                            DeployModalCerrarS();
+                            funcionRefresh();
+                        }}
                         FirstName={FirstName}
                         LastName={LastName}
                         />
@@ -125,6 +129,7 @@ export default function _layout() {
                                 Router.back();
                                 if(!StatusMenuProfile){
                                     DeployMenuPerfil();
+                                    
                                 }
                             }}>
                                 <Image style={StyleLayoutEvent.IconBack} 
