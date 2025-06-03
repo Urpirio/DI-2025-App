@@ -3,14 +3,15 @@ import { CameraView,useCameraPermissions,CameraType } from "expo-camera";
 import { useState } from "react";
 import { TouchableOpacity,View,Text} from "react-native";
 import { useRouter,useLocalSearchParams } from "expo-router";
-import Modal_IngresarCodigo from "../../Components/Modal_IngresarCodigo";
+import Modal_IngresarCodigo from "../../Components/Modales/Modal_IngresarCodigo";
 import { StatusBar } from "expo-status-bar";
-import QR_Mask from "../../Components/QR_Mask";
+import QR_Mask from "../../Components/Masks/QR_Mask";
 import { StyleCheckIn } from "../../style/StyleCheckIn";
-import Modalloading from "../../Components/Modalloading";
-import ModalParticipante from "../../Components/ModalParticipante";
+import Modalloading from "../../Components/Modales/Modalloading";
+import ModalParticipante from "../../Components/Modales/ModalParticipante";
+import ModalNoMatch from "../../Components/Modales/ModalNoMatch";
 import useValidate from "../../func/CheckIn/useValidate";
-import ModalNoMatch from "../../Components/ModalNoMatch";
+import ModalNotInEvent from "../../Components/Modales/ModalNotInEvent";
 
 
 export default function CheckIn() {
