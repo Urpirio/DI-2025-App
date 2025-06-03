@@ -5,15 +5,16 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
 import { StyleHome } from "../../style/StyleHome";
-import CardHomeEvents from "../../Components/CardHomeEvents";
+import CardHomeEvents from "../../Components/Cards/CardHomeEvents";
 import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS,funcionCancelarCerrarSesion} from "../_layout";
 import { StatusBar } from "expo-status-bar";
-import ModalCerrarSesion from "../../Components/ModalCerrarSesion";
+import ModalCerrarSesion from "../../Components/Modales/ModalCerrarSesion";
 import { RefreshControl } from "react-native";
 import useRefresh from "../../hooks/useRefresh";
 import { useHome } from "../../func/Home/useFilterHome";
 import { useGetEvents } from "../../func/Home/useGetEvents";
 import { CerrarSesion } from "../_layout";
+import CardSkeleton from "../../Components/Cards/CardSkeleton";
 
 
 // export let StatusRefreshHome;
@@ -57,7 +58,6 @@ export default function index() {
         
     } = useHome();
 
-    //Hook global para refrescar la lista
     const { StateRefresh, ScreenRefresHome} = useRefresh();
     StatusRefreshHome = StateRefresh;
     funcionRefresh = ScreenRefresHome;
@@ -89,14 +89,70 @@ export default function index() {
 
   if(!Loading){
     return(
-        <SafeAreaProvider style={{
-            alignItems:'center',
-            justifyContent:'center',
-            backgroundColor:'white',
-        }}>
-            <View>
-                <ActivityIndicator size="large" />
+        <SafeAreaProvider style={{backgroundColor:'white'}}>
+            <ScrollView style={{padding:10}}>
+                        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
+             <View style={StyleContainerFilter}>
+                <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
+                    onPress={()=>{DeployFilter(); GetSalaEvent();}}>
+                    <Text style={{color:'gray'}}>{SelectName}</Text>
+                    <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
+                </TouchableOpacity>
+                <View style={StyleFiltros}>
+
+                    {LoadingF ? <FlatList 
+                    data={DataSala}
+                    renderItem={({item})=>{
+                        return(
+                        <TouchableOpacity style={StyleHome.BtnSelectFilter} onPress={()=>{
+                            ChangeSelected({Selected: item});
+                            if(!RotateIconFilter){
+                                DeployFilter();
+                            };
+                        }}>
+                            <Text style={StyleHome.TextBtnSelectFilter}>{item}</Text>
+                        </TouchableOpacity>
+                        )
+                    }}
+                    /> : <ActivityIndicator size={'small'}/>}
+
+                </View>
             </View>
+                <View style={{
+                    borderWidth:1,
+                    borderRadius:10,
+                    height:50,
+                    flexDirection:'row',
+                    borderColor:'#ced4da',
+                    width:`${ContadorTransition}%`
+                }}>
+                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} 
+                        onPress={()=>{
+                            TransitionBuscador(); 
+                            ChangeSelected({Selected: 'No filtrar'})
+                            ChangetoSearch();
+                            
+                        }}>
+                        <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
+                    </TouchableOpacity>
+                    <TextInput style={{
+                        fontSize:16,
+                        width:`85%`,
+                        borderTopRightRadius:10,
+                        borderBottomRightRadius:10,
+                        display: `${DisplayTexInput}`
+
+                    }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'}/>
+                </View>
+           </View>
+            <CardSkeleton/>
+            <CardSkeleton/>
+            <CardSkeleton/>
+            <CardSkeleton/>
+            <CardSkeleton/>
+            <CardSkeleton/>
+            <CardSkeleton/>
+        </ScrollView>
         </SafeAreaProvider>
     )
   };
