@@ -95,7 +95,9 @@ export const useGetEvents = () => {
                 console.log(err)
             })
             .finally(()=>{
-                setLoading(true)
+                // setTimeout(()=>{
+                    setLoading(true)
+                // },5000)
             })
         };
 
