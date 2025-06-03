@@ -1,7 +1,7 @@
 import { router, Stack, useRouter } from "expo-router";
 import { Image, View,TouchableOpacity,Text, StatusBar } from "react-native";
 import { StyleLayoutEvent } from "../style/StyleLayoutEvents";
-import MenuProfile from "../Components/MenuProfile";
+import MenuProfile from "../Components/Menus/MenuProfile";
 import { StyleLayoutHome } from "../style/StyleLayoutHome";
 import useDeployPerfil from "../hooks/useDeployPerfil";
 import useDeployCerrarSesion from "../hooks/useDeployCerrarSesion";
