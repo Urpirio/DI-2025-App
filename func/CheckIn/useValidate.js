@@ -7,12 +7,14 @@ const useValidate = () => {
     const [StatusPar,setStatusPar] = useState(false);
     const [NoMatchUser,setNoMatchUser] = useState(false);
 
-    const [DataUsers,setDataUsers] = useState({
+    const [DataUsers,setDataUsers] = useState(
+        {
         lastName: String,
         firstName: String,
         Id: String,
         Picture_Profile: String,
-    });
+    }
+);
 
     const CloseError = () => {
         setNoMatchUser(false)
@@ -32,6 +34,7 @@ const useValidate = () => {
          })
          .then(respuesta => respuesta.json()) 
          .then((Data)=>{
+            let B;
 
             if(Data.data.length  > 0){
                 Data.data.forEach((data)=>{
@@ -46,8 +49,14 @@ const useValidate = () => {
                             TokenUser: TokenUser,
                             EventId: EventId,
                         });
+                        B = true;
                     }
                 });
+
+                if(!B){
+                setLoading(false)
+                setNoMatchUser(true)
+                };
 
                 
             }else{
@@ -57,9 +66,7 @@ const useValidate = () => {
          .catch((error)=>{
             console.error(error)
          })
-         .finally(()=>{
-            setLoading(false);
-         })
+
     };
 
     const Validando = ({firstName,lastName,Id,Picture_Profile,TokenUser,EventId}) =>{
@@ -71,6 +78,9 @@ const useValidate = () => {
         })
         .then(respuestas => respuestas.json())
         .then((Data)=>{
+
+           
+
             Data.data.forEach((data)=>{
                 if(data.user_id == Id){
                    setDataUsers({
@@ -80,8 +90,13 @@ const useValidate = () => {
                     Picture_Profile: Picture_Profile,
                    });
                    setStatusPar(true);
+                   
                 }
             });
+
+            
+
+            
         })
         .catch((error)=>{
             console.error(error);
