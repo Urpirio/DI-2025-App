@@ -2,7 +2,7 @@ import { Text, View,TouchableOpacity,Image,TextInput, ScrollView, FlatList, Refr
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleParticipantes } from "../../style/StyleParticipantes";
 import { useEffect } from "react";
-import CardParticipante from "../../Components/CardParticipante";
+import CardParticipante from "../../Components/Cards/CardParticipante";
 import { useLocalSearchParams } from "expo-router";
 import useRefresh from "../../hooks/useRefresh";
 import { useRenderPart } from "../../func/ListaPart/useRenderPart";
