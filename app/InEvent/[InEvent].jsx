@@ -3,11 +3,21 @@ import { View,Text, TouchableOpacity, Image } from "react-native";
 import { useLocalSearchParams,router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { StyleInEvent } from "../../style/StylesInEvent";
+import { useInEvent } from "../../func/InEvent/UseInEvent";
+import {  Skeleton,LinearGradient } from "@rneui/themed";
+
+
+import { useEffect } from "react";
 
 export default function InEvent() {
 
   const LocalData = useLocalSearchParams();
 
+  const {GetPartInEvent,Loading,CantidadPart} = useInEvent();
+
+  useEffect(()=>{
+    GetPartInEvent({TokenAccess: LocalData.TokenAccess,IdEvent: LocalData.IDEvents});
+  })
 
   return (
     <SafeAreaProvider style={StyleInEvent.Body}>
@@ -16,9 +26,15 @@ export default function InEvent() {
               <Text style={StyleInEvent.TextNombreEvent}>
                 {LocalData.NombreEvento}
               </Text>
-              <Text style={StyleInEvent.TextParticipantesEvent}>
-                80/100
-              </Text>
+              {Loading ? <Text style={StyleInEvent.TextParticipantesEvent}>
+                {CantidadPart.InEvent}/{CantidadPart.PartInEvent}
+              </Text> : 
+              <Skeleton 
+              LinearGradientComponent={LinearGradient}
+              animation="wave"
+              width={100}
+              height={20}
+              />}
             </View>
             <View style={StyleInEvent.Section2}>
               <TouchableOpacity style={StyleInEvent.BtnRegistrarEntrada} 
