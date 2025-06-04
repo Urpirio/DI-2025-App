@@ -11,7 +11,9 @@ export const useGetEvents = () => {
     const [SelectName,setSelectName] = useState('Filtra por Sala');
     const [LoadingF,setLoadingF] = useState(false);
     const [IsFilter,setIsFilter] = useState(false);
-     const [SearchText,setSearchText] = useState('');
+    const [SearchText,setSearchText] = useState('');
+    const [EventosHoy,setEventosHoy] = useState(false);
+    const [NoEventos,setNoEventos] = useState(false);
     
     
         const [IsSearch,setIsSearch] = useState(false)
@@ -66,13 +68,17 @@ export const useGetEvents = () => {
             .then((Data)=>{
                 const ArrayP = [];
                 Data.data.forEach(Dt =>{
-                    if(Dt.room.location == SelectName){
+                    if(Dt.room.location == SelectName && !EventosHoy){
+                        setNoEventos(false)
                         ArrayP.push(Dt);
-                    }else if(SelectName == 'Filtra por Sala' && SelectName != Dt.room.location){
+                    }else if((SelectName == 'Filtra por Sala' && SelectName != Dt.room.location) && !EventosHoy ){
+                        setNoEventos(false)
                         ArrayP.push(Dt);
-                    }else if(SelectName == 'No filtrar' && !IsSearch){
+                    }else if((SelectName == 'No filtrar' && SearchText == '') && !EventosHoy){
+                        setNoEventos(false)
                         ArrayP.push(Dt);
-                    }else if(IsSearch){
+                    }else if(SearchText != ''){
+                        setNoEventos(false)
                         const Stext = SearchText.toUpperCase().split(' ');
                         
                         const NameEvent = Dt.title.toUpperCase();
@@ -81,10 +87,29 @@ export const useGetEvents = () => {
                                 ArrayP.push(Dt)
                             }
                         })
+                    }else if(EventosHoy){
+
+                        const FechaActual = new Date();
+                        const Mes = FechaActual.getMonth() + 1;
+                        const Dia = FechaActual.getDay() + 1;
+                        const Ano = FechaActual.getFullYear();
+
+                        const FA = Ano + '-' + `${Mes < 9 ? `0${Mes}` : Mes}-` + Dia;
+                        if(Dt.start_time.slice(1,10) === FA){
+                            ArrayP.push(Dt)
+                            
+                        } 
+                        
+                        if(!NoEventos && ArrayP.length === 0){
+                            setNoEventos(true);
+                        }
+
+                        
                     }
                 });
 
                 if(ArrayP != []){
+                    // console.log('El utimo funciona');
                     setAllEvents({
                             DataEvent: ArrayP,
                     });
@@ -95,9 +120,7 @@ export const useGetEvents = () => {
                 console.log(err)
             })
             .finally(()=>{
-                // setTimeout(()=>{
-                    setLoading(true)
-                // },5000)
+                setLoading(true)
             })
         };
 
@@ -114,5 +137,8 @@ export const useGetEvents = () => {
         ChangetoSearch: ChangetoSearch,
         SearchText:SearchText,
         setSearchText:setSearchText,
+        EventosHoy: EventosHoy,
+        setEventosHoy: setEventosHoy,
+        NoEventos:NoEventos
     })
 }
