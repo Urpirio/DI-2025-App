@@ -4,15 +4,41 @@ import { useState } from "react";
 export const useStyleLogin = () =>{
 
 
-  const [StatusCredentialError, setStatusCredentialError] = useState(false);
-  const [CredentialErrorStyle,setCredentialErrorStyle] = useState(StyleLoginForm.CredentialErrorNotShow);
- const [IconEyePassWord,setIconEyePassword] = useState(require('../../assets/IconInputs/eye-slash.png'));
- const [ShowPassword,setShowPassword] = useState(true);
+const [StatusCredentialError, setStatusCredentialError] = useState(false);
+const [CredentialErrorStyle,setCredentialErrorStyle] = useState(StyleLoginForm.CredentialErrorNotShow);
+const [IconEyePassWord,setIconEyePassword] = useState(require('../../assets/IconInputs/eye-slash.png'));
+const [ShowPassword,setShowPassword] = useState(true);
 
- const CredentialShow = () => {
-  if(StatusCredentialError === false){
+const [CamposVacios,setCamposVacios] = useState(StyleLoginForm.CamposVaciosNone);
+const [StatusCamposVacios,setStatusCamposVacios] = useState(false);
+
+const [CorreoInValido,setCorreoInValido] = useState(StyleLoginForm.CorreInvalidoNone);
+
+const camposVacios = ({Status}) =>{
+  if(!Status){
+    // setStatusCamposVacios(true);
+    setCamposVacios(StyleLoginForm.CamposVacios)
+  }else{
+    // setStatusCamposVacios(false);
+    setCamposVacios(StyleLoginForm.CamposVaciosNone)
+  };
+};
+
+const correoInvalido = ({Status}) =>{
+  if(!Status){
+    setCorreoInValido(StyleLoginForm.CorreInvalido)
+  }else{
+    setCorreoInValido(StyleLoginForm.CamposVaciosNone)
+  }
+};
+
+ const CredentialShow = ({Status}) => {
+  if(!Status){
     setCredentialErrorStyle(StyleLoginForm.CredentialErrorShow);
-    setStatusCredentialError(true);
+    // setStatusCredentialError(true);
+  }else{
+    setCredentialErrorStyle(StyleLoginForm.CredentialErrorNotShow);
+    // setStatusCredentialError(true);
   }
  };
 
@@ -78,5 +104,9 @@ export const useStyleLogin = () =>{
     IconEyePassWord: IconEyePassWord,
     ShowPassword: ShowPassword,
     CredentialErrorStyle: CredentialErrorStyle,
+    CamposVacios: CamposVacios,
+    camposVacios:camposVacios,
+    correoInvalido: correoInvalido,
+    CorreoInValido:CorreoInValido,
   })
 };
