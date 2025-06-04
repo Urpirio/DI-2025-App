@@ -54,13 +54,13 @@ export const StyleHome = StyleSheet.create({
 
     },
     CardEvent:{
-        flexDirection:'row',
+        // flexDirection:'row',
         borderWidth:1,
         justifyContent:'space-between',
         padding:5,
         marginBottom:10,
         borderRadius:10,
-        height:120,
+        gap:10,
         boxShadow:'0px 0px 1px 0px gray',
         borderColor:'#adb5bd',
         flexGrow: 1,
@@ -71,23 +71,26 @@ export const StyleHome = StyleSheet.create({
 
     },
     CardEventBtns:{
-        width:'20%',
+        width:'100%',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+
     },
     BtnInCardEvent:{
         borderRadius:10,
         width:'100%',
+        paddingVertical:6,
         flexGrow: 1,
         flexBasis:0,
         justifyContent:'center',
         alignItems:'center',
         backgroundColor:'#023e8a',
+        // borderWidth:1
     },
-    IconBtnInCardEvent:{
-        height:50,
-        width:50,
-        marginLeft:5,
-        tintColor:'white'
-    }
+    // IconBtnInCardEvent:{
+    //     height:50,
+    //     width:50,
+    //     marginLeft:5,
+    //     tintColor:'white'
+    // }
 });
