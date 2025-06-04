@@ -1,12 +1,13 @@
 import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { StyleLoginForm } from "../style/StyleLoginForm";
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GetLogin } from "../func/Login/useLogin";
 import { useStyleLogin } from "../func/Login/useStyleLogin";
-import { CerrarSesion, funcionCSesion } from "./_layout";
+import { useNetInfo } from "@react-native-community/netinfo";
+import ModalConectRed from "../Components/Modales/ModalConectRed";
 
 
 //Cosas para trabajar -> bug del QR,BUG del Login que te permite regresar sin cerrar sesion, Optimizacion de codigo,Crear los filtros dinamico
@@ -17,6 +18,9 @@ import { CerrarSesion, funcionCSesion } from "./_layout";
 export default function LoginForm() {
 
   const Router = useRouter();
+
+  const HaveInternet = useNetInfo();
+  const [StatusConnect,setStatusConnect] = useState(false);
 
   const [TextEmail,setTextEmail] = useState(String);
   const [TextPassword,setTextPassword] = useState(String);
@@ -33,17 +37,38 @@ export default function LoginForm() {
    IconEyePassWord, 
    ShowPassword,
    CredentialErrorStyle,
+   CamposVacios,
+   camposVacios,
+   correoInvalido,
+   CorreoInValido,
   } = useStyleLogin();
 
  
   const SignIn = ()=>{
-    PostUserCredential({Email:TextEmail,Password:TextPassword,ErrorFunction: CredentialShow})
 
-    if(!CerrarSesion){
-      funcionCSesion();
-    };
-  
-  }
+    if(!TextEmail.includes('@') && (TextEmail != '' && TextPassword != '')){
+      CredentialShow({Status:true});
+      camposVacios({Status:true});
+      correoInvalido({Status:false});
+    }else if(HaveInternet.isConnected && (TextEmail != '' && TextPassword != '') ){
+        camposVacios({Status:true});
+        correoInvalido({Status:true});
+        PostUserCredential({Email:TextEmail,Password:TextPassword,ErrorFunction: CredentialShow});
+      }else if(!HaveInternet.isConnected &&(TextEmail != '' && TextPassword != '')){
+        if(!StatusConnect){
+          setStatusConnect(true);
+        }else{
+          setStatusConnect(false)
+          setTimeout(()=>{
+            setStatusConnect(true)
+          },2000)
+        }
+      }else if(HaveInternet.isConnected && (TextEmail == '' && TextPassword == '')){
+        camposVacios({Status:false});
+        CredentialShow({Status:true});
+        correoInvalido({Status:true});
+      }
+  };
 
  
 
@@ -55,7 +80,8 @@ export default function LoginForm() {
           </View>
           <View style={StyleLoginForm.SectionForm}>
             <View style={{gap:20}}>
-              <View style={ChangesColorEmail.InputEmail}> 
+              <View>
+                <View style={ChangesColorEmail.InputEmail}> 
               <Image source={require('../assets/IconInputs/envelope-alt (1).png')}
                 style={ChangesColorEmail.IconInputEmail}/>
               <TextInput placeholder="Email" placeholderTextColor={'#ced4da'}  
@@ -63,7 +89,10 @@ export default function LoginForm() {
                 onPress={ChangeColorInput} onChangeText={setTextEmail} value={TextEmail}/>
                 
               </View>
-
+              <View style={CorreoInValido}>
+                  <Text style={{fontSize:12,color:'red'}}>Ingrese una dirección de correo electrónico válida.</Text>
+              </View>
+              </View>
               <View style={ChangesColorPassword.InputPassword}>
                 <Image source={require('../assets/IconInputs/lock.png')}
                   style={ChangesColorPassword.IconInputPassWord}/>
@@ -79,6 +108,9 @@ export default function LoginForm() {
             <View style={CredentialErrorStyle}>
               <Text style={{color:'red',fontWeight:'600'}}>Credenciales incorrectas</Text>
             </View>
+            <View style={CamposVacios}>
+              <Text style={{color:'#ffba08',fontWeight:'500'}}>Los campos no pueden estar vacíos.</Text>
+            </View>
             <View style={{gap:20,paddingVertical:10}}>
               <View style={StyleLoginForm.ContainerForgetPassword}>
                 <TouchableOpacity onPress={()=>{Router.navigate('/ForgetPassword')}}>
@@ -88,12 +120,28 @@ export default function LoginForm() {
               <View style={StyleLoginForm.ContainerBtnSignIn}>
                 <TouchableOpacity style={StyleLoginForm.BtnSignIn} 
                   onPress={SignIn}>
-                  {LoadingLOGIN ? <ActivityIndicator size={'small'} color={"white"}/> : <Text style={StyleLoginForm.TextBtnSignIn}>Sign In</Text>}
+                  {LoadingLOGIN ? 
+                  <ActivityIndicator size={'small'} color={"white"}/> 
+                  : 
+                  <Text style={StyleLoginForm.TextBtnSignIn}>Sign In</Text>
+                  }
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
+        <ModalConectRed
+        StatusModal={StatusConnect}
+        OnPress={()=>{
+          setStatusConnect(false);
+          if(TextEmail != '' && TextPassword != ''){
+            SignIn();
+          }
+        }}
+        OnCancel={()=>{
+          setStatusConnect(false);
+        }}
+        />
        <StatusBar style="auto"/>
     </SafeAreaProvider>
   )
