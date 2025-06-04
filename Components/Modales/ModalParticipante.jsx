@@ -8,6 +8,9 @@ export default function ModalParticipante({
     FuncionCancelar,
     Data,
 }) {
+    const ImageProfile = Data.Picture_Profile 
+    ? `https://directus-prueba.dominicanainnova.gob.do/assets/${Data.Picture_Profile}` 
+    : `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
   return (
     <Modal visible={StatusModal} transparent={true}>
         <View style={StyleModalParticipante.BodyContainer}>
@@ -15,7 +18,7 @@ export default function ModalParticipante({
 
             </View>
             <View style={StyleModalParticipante.MainContainer}>
-                <Image source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${Data ? Data.Picture_Profile : 'No disponible'}`}}
+                <Image source={{uri:ImageProfile}}
                 style={StyleModalParticipante.PictureImg}
                 />
                 <View style={StyleModalParticipante.ContainerText}>
