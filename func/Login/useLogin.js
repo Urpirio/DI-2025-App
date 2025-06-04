@@ -31,10 +31,11 @@ export const GetLogin = () => {
         .then((Data)=>{
             if(Data.errors){
                 setCredencial_No_Valida(true)
-                ErrorFunction()
+                ErrorFunction({Status: false})
             }else{
                 GetInfoUser({TokenAccess: Data.data.access_token});
                 setToken(Data.data.access_token);
+                ErrorFunction({Status: true})
             };
             
         })
