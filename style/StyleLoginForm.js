@@ -134,7 +134,20 @@ export const StyleLoginForm = StyleSheet.create({
     },
     CredentialErrorShow:{
         paddingVertical:5
+    },
+    CamposVacios:{
+        display:'flex'
+    },
+    CamposVaciosNone:{
+        display:'none'
+    },
+    CorreInvalido:{
+        display:'flex'
+    },
+    CorreInvalidoNone:{
+        display:'none'
     }
+
 
 
 
