@@ -6,6 +6,10 @@ export default function ModalNotInEvent({
     FuncionCancelar,
     Data,
 }) {
+
+    const ImageProfile = Data.Picture_Profile 
+    ? `https://directus-prueba.dominicanainnova.gob.do/assets/${Data.Picture_Profile}` 
+    : `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
   return (
     <Modal visible={StatusModal} transparent={true}>
         <View style={StyleModalNotInEvent.BodyContainer}>
@@ -13,7 +17,7 @@ export default function ModalNotInEvent({
 
             </View>
             <View style={StyleModalNotInEvent.MainContainer}>
-                <Image source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${Data ? Data.Picture_Profile : 'No disponible'}`}}
+                <Image source={{uri:ImageProfile}}
                 style={StyleModalNotInEvent.PictureImg}
                 />
                 <View style={StyleModalNotInEvent.ContainerText}>
