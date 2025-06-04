@@ -41,7 +41,7 @@ export const StyleModalNotInEvent = StyleSheet.create({
         alignItems:'center',
         padding:10,
         borderRadius:5,
-        backgroundColor:'#023e8a'
+        backgroundColor:'#008000'
     },
     TextbtnConfirmarAsistencia:{
         color:'white',
