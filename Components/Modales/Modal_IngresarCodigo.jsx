@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { TouchableOpacity,View,Text, Modal, Pressable, TextInput } from "react-native";
 
 
 export default function Modal_IngresarCodigo({
-    StatusModal,FunctionCloseModal
+    StatusModal,FunctionCloseModal,ValidarQR
 }) {
 
+    const [TextCd,setTextCd] = useState('')
 
     
   return (
@@ -58,7 +60,7 @@ export default function Modal_IngresarCodigo({
                                 borderRadius:10,
                                 borderColor:'#ced4da',
 
-                            }} placeholder="Codigo" placeholderTextColor={'#ced4da'} />
+                            }} placeholder="Codigo" placeholderTextColor={'#ced4da'} value={TextCd} onChangeText={setTextCd} maxLength={6}/>
                             <TouchableOpacity style={{
                                 width:'100%',
                                 alignItems:'center',
@@ -66,7 +68,7 @@ export default function Modal_IngresarCodigo({
                                 paddingVertical:10,
                                 borderRadius:10,
                                 backgroundColor:'#023e8a'
-                            }}>
+                            }} onPress={()=>{ValidarQR({TextCode: TextCd})}}>
                                 <Text style={{color:'white',fontSize:16}}>Validar</Text>
                                 {/* keyboardType="numeric" */}
                             </TouchableOpacity>
