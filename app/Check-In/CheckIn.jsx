@@ -20,11 +20,22 @@ export default function CheckIn() {
     const [DataQr,setDataQr] = useState(null);
     const [WhatCamera,setWhatCamera] = useState('back');
     const [HavePermission,setHavePermission] = useCameraPermissions();
-    const [StatusModalIngCodigo,setStatusModalIngCodigo] = useState(false);
+    
     
     const LocalData = useLocalSearchParams();
-    const { CodeScanned,Loading,StatusPar,
-            ResetStatusPar,DataUsers,NoMatchUser,CloseError } = useValidate();
+    const { 
+        CodeScanned,
+        Loading,
+        StatusPar,
+        ResetStatusPar,
+        DataUsers,
+        NoMatchUser,
+        CloseError,
+        NotInEvent,
+        setNotInEvent,
+        StatusModalIngCodigo,
+        setStatusModalIngCodigo,
+    } = useValidate();
 
   
   
@@ -106,6 +117,9 @@ export default function CheckIn() {
                 FunctionCloseModal={()=>{
                     setStatusModalIngCodigo(!StatusModalIngCodigo)
                 }}
+                ValidarQR={({TextCode})=>{
+                    CodeScanned({DataScanned: {data: TextCode},TokenUser: LocalData.TokenAccess,EventId: LocalData.IDEvents})
+                }}
                 />
 
                 <Modalloading StatusLoading={Loading}/>
@@ -124,6 +138,13 @@ export default function CheckIn() {
                     CloseError();
                     setStatusModalIngCodigo(!StatusModalIngCodigo);
                 }}
+                />
+                <ModalNotInEvent
+                    StatusModal={NotInEvent}
+                    FuncionCancelar={()=>{
+                        setNotInEvent(false);
+                    }}
+                    Data={DataUsers}
                 />
 
                <StatusBar style="auto"/>
