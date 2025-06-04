@@ -15,6 +15,8 @@ import { useHome } from "../../func/Home/useFilterHome";
 import { useGetEvents } from "../../func/Home/useGetEvents";
 import { CerrarSesion } from "../_layout";
 import CardSkeleton from "../../Components/Cards/CardSkeleton";
+import SwitchHome from "../../Components/Btn/SwitchHome";
+import { useSwitchHome } from "../../func/Home/useSwitchHome";
 
 
 // export let StatusRefreshHome;
@@ -23,6 +25,8 @@ export let funcionRefresh;
 export default function index() {
 
     const [StatusBack,setStatusBack] = useState(true);
+
+    const {SwitchStyle,StyleBtnHoy,StyleBtnTodos,StatusStyle} = useSwitchHome();
 
     const {
         GetEvents,
@@ -36,26 +40,20 @@ export default function index() {
         ChangetoSearch,
         SearchText,
         setSearchText,
+        EventosHoy,
+        setEventosHoy,
+        NoEventos,
         } = useGetEvents();
 
-
-
-
-   
 
     //Hook de Estilos del filtro y el buscador 
     const {
         DeployFilter,
-        TransitionBuscador,
         CloseBuscador,
         IconBtnFilter,
-        StyleContainerFilter,
         StyleFiltros,
-        ContadorTransition,
-        DisplayTexInput,
         IconSearch,
         RotateIconFilter,
-        
     } = useHome();
 
     const { StateRefresh, ScreenRefresHome} = useRefresh();
@@ -68,7 +66,7 @@ export default function index() {
 
     useEffect(()=>{
         GetEvents();
-    },[SearchText,SelectName,CerrarSesion,StateRefresh,StatusModalCerrarS]);
+    },[SearchText,SelectName,CerrarSesion,StateRefresh,StatusModalCerrarS,EventosHoy]);
 
     const IsScrolling = ()=>{
         if(!RotateIconFilter){
@@ -91,8 +89,8 @@ export default function index() {
     return(
         <SafeAreaProvider style={{backgroundColor:'white'}}>
             <ScrollView style={{padding:10}}>
-                        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-             <View style={StyleContainerFilter}>
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
+             <View style={StyleHome.ContainerFilter}>
                 <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
                     onPress={()=>{DeployFilter(); GetSalaEvent();}}>
                     <Text style={{color:'gray'}}>{SelectName}</Text>
@@ -124,24 +122,13 @@ export default function index() {
                     height:50,
                     flexDirection:'row',
                     borderColor:'#ced4da',
-                    width:`${ContadorTransition}%`
                 }}>
-                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} 
-                        onPress={()=>{
-                            TransitionBuscador(); 
-                            ChangeSelected({Selected: 'No filtrar'})
-                            ChangetoSearch();
-                            
-                        }}>
                         <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
-                    </TouchableOpacity>
                     <TextInput style={{
                         fontSize:16,
                         width:`85%`,
                         borderTopRightRadius:10,
                         borderBottomRightRadius:10,
-                        display: `${DisplayTexInput}`
-
                     }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'}/>
                 </View>
            </View>
@@ -168,8 +155,27 @@ export default function index() {
         <ScrollView style={{padding:10}}  refreshControl={
             <RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>
         }>
+            <View style={{
+                    borderWidth:1,
+                    borderRadius:10,
+                    height:50,
+                    flexDirection:'row',
+                    borderColor:'#ced4da',
+                    width:`100%`,
+                    marginBottom: 10,
+                }}>
+                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} >
+                        <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
+                    </TouchableOpacity>
+                    <TextInput style={{
+                        fontSize:16,
+                        width:`85%`,
+                        borderTopRightRadius:10,
+                        borderBottomRightRadius:10,
+                        }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'}/>
+            </View>
            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-             <View style={StyleContainerFilter}>
+             <View style={StyleHome.ContainerFilter}>
                 <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
                     onPress={()=>{DeployFilter(); GetSalaEvent();}}>
                     <Text style={{color:'gray'}}>{SelectName}</Text>
@@ -195,33 +201,26 @@ export default function index() {
 
                 </View>
             </View>
-                <View style={{
-                    borderWidth:1,
-                    borderRadius:10,
-                    height:50,
-                    flexDirection:'row',
-                    borderColor:'#ced4da',
-                    width:`${ContadorTransition}%`
-                }}>
-                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} 
-                        onPress={()=>{
-                            TransitionBuscador(); 
-                            ChangeSelected({Selected: 'No filtrar'})
-                            ChangetoSearch();
-                            
-                        }}>
-                        <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
-                    </TouchableOpacity>
-                    <TextInput style={{
-                        fontSize:16,
-                        width:`85%`,
-                        borderTopRightRadius:10,
-                        borderBottomRightRadius:10,
-                        display: `${DisplayTexInput}`
-
-                    }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'}/>
-                </View>
+            <SwitchHome
+                    StyleBtnTodos={StyleBtnTodos}
+                    FTodos={()=>{
+                    setEventosHoy(false)
+                    SwitchStyle()
+                    }}
+                    StyleBtnHoy={StyleBtnHoy}
+                    Fhoy={()=>{
+                    setEventosHoy(true)
+                    SwitchStyle()
+                    }}
+                />
            </View>
+
+           
+
+           {NoEventos ? <View style={{height:'100%',width:'100%',
+            alignItems:'center',justifyContent:'center'}}>
+            <Text style={{color:'gray'}}>No hay eventos</Text>
+           </View> : <View/>}
             
            <FlatList
             onTouchMove={IsScrolling}
@@ -240,7 +239,6 @@ export default function index() {
                     />)
                 
             }}/>
-            {/* } */}
         </ScrollView>
 
         
