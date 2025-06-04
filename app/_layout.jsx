@@ -111,7 +111,8 @@ export default function _layout() {
                         />
                     </View>
                 )
-            }
+            },
+            
         }} />
         <Stack.Screen name="InEvent/[InEvent]" options={{
             header:({route})=>{
