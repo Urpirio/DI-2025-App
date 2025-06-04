@@ -11,6 +11,7 @@
     "build": "npm run eas:android"
   },
   "dependencies": {
+    "@react-native-community/netinfo": "^11.4.1",
     "@rneui/base": "^0.0.0-edge.2",
     "@rneui/themed": "^0.0.0-edge.2",
     "expo": "~53.0.9",
