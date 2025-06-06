@@ -68,10 +68,10 @@ export const useGetEvents = () => {
             .then((Data)=>{
                 const ArrayP = [];
                 Data.data.forEach(Dt =>{
-                    if(Dt.room.location == SelectName && !EventosHoy){
+                    if(Dt.room ? Dt.room.location : SelectName == SelectName && !EventosHoy){
                         setNoEventos(false)
                         ArrayP.push(Dt);
-                    }else if((SelectName == 'Filtra por Sala' && SelectName != Dt.room.location) && !EventosHoy ){
+                    }else if((SelectName == 'Filtra por Sala' && SelectName != Dt.room ? Dt.room.location : '') && !EventosHoy ){
                         setNoEventos(false)
                         ArrayP.push(Dt);
                     }else if((SelectName == 'No filtrar' && SearchText == '') && !EventosHoy){

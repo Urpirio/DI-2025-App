@@ -230,7 +230,7 @@ export default function index() {
                     return(
                     <CardHomeEvents
                     NombreEvento={item.title}
-                    Localizacion={item.room.location}
+                    Localizacion={item.room === null ? '??' : item.room.location}
                     FechaEvento={item.start_time.slice(0,10)}
                     HoraInicio={item.start_time.slice(12,16)}
                     HoraFinal={item.end_time.slice(12,16)}
