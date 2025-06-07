@@ -12,13 +12,11 @@ export default function SwitchHome({
   return (
     <View style={StyleSwicthHome.constainerBtn}>
         <TouchableOpacity style={StyleBtnHoy.Btn} onPress={()=>{
-            // SwitchStyle();
             Fhoy();
         }}>
             <Text style={StyleBtnHoy.Text}>Hoy</Text>
         </TouchableOpacity>
         <TouchableOpacity style={StyleBtnTodos.Btn} onPress={()=>{
-            // SwitchStyle();
             FTodos();
         }}>
             <Text style={StyleBtnTodos.Text}>Todos</Text>
