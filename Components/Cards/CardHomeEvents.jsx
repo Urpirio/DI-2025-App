@@ -23,7 +23,7 @@ export default function CardHomeEvents({
         <View style={{width:'90%',gap:5}}>
             <Text style={{fontSize:16,fontWeight:'600'}}>{NombreEvento}</Text>
             
-            <View style={{flexDirection:'row',gap:10}}>
+            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <View style={{gap:5, padding:5,flexDirection:'row',borderRadius:10,alignItems:'center'}}>
                     <Image style={{
                         height:15,
