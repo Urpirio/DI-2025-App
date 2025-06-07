@@ -99,6 +99,9 @@ export default function ListGeneral() {
             Email={item.email}
             ImgPerfil={item.profile_picture}
             CheckIn={item.checkin}
+            EventID={LocalData.IDEvents}
+            userID={item.id}
+            TokenAccess = {LocalData.TokenAccess}
             />
             )
           }}/> : <ActivityIndicator size={'large'} />}
