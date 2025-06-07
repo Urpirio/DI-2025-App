@@ -8,7 +8,7 @@ export const useGetEvents = () => {
     const [Loading,setLoading] = useState(false);
     const [AllEvents,setAllEvents] = useState([]);
     const [DataSala, setDataSala] = useState([]);
-    const [SelectName,setSelectName] = useState('Filtra por Sala');
+    const [SelectName,setSelectName] = useState('No filtrar');
     const [LoadingF,setLoadingF] = useState(false);
     const [IsFilter,setIsFilter] = useState(false);
     const [SearchText,setSearchText] = useState('');
@@ -38,17 +38,20 @@ export const useGetEvents = () => {
                 const ArrayP = [];
     
                 Data.data.forEach(D =>{
-                    if(!ArrayP.includes(D.room.location)){
-                        if(SelectName != D.room.location){
-                            ArrayP.push(D.room.location)
+
+                    const Sala = D.room ? D.room.location : '';
+
+
+                    if(!ArrayP.includes(Sala)){
+                        if(Sala != ''){
+                            ArrayP.push(Sala)
                         }
-                    }
+                    };
+
                 });
     
                 if(ArrayP != []){
-                    if(SelectName != 'Filtra por Sala' && SelectName != 'No filtrar'){
-                        ArrayP.push('No filtrar')
-                    };
+                    ArrayP.push('No filtrar')
                     setDataSala(ArrayP);
                 };
     
@@ -68,51 +71,56 @@ export const useGetEvents = () => {
             .then((Data)=>{
                 const ArrayP = [];
                 Data.data.forEach(Dt =>{
-                    if(Dt.room ? Dt.room.location : SelectName == SelectName && !EventosHoy){
-                        setNoEventos(false)
-                        ArrayP.push(Dt);
-                    }else if((SelectName == 'Filtra por Sala' && SelectName != Dt.room ? Dt.room.location : '') && !EventosHoy ){
-                        setNoEventos(false)
-                        ArrayP.push(Dt);
-                    }else if((SelectName == 'No filtrar' && SearchText == '') && !EventosHoy){
-                        setNoEventos(false)
-                        ArrayP.push(Dt);
-                    }else if(SearchText != ''){
-                        setNoEventos(false)
-                        const Stext = SearchText.toUpperCase().split(' ');
-                        
-                        const NameEvent = Dt.title.toUpperCase();
-                        Stext.forEach( T =>{
-                            if(NameEvent.includes(T)){
-                                ArrayP.push(Dt)
-                            }
-                        })
-                    }else if(EventosHoy){
 
+
+                    if(Dt.room === null && !EventosHoy){
+                        ArrayP.push(Dt);
+                    }else if(EventosHoy){
+                       
                         const FechaActual = new Date();
                         const Mes = FechaActual.getMonth() + 1;
                         const Dia = FechaActual.getDay() + 1;
                         const Ano = FechaActual.getFullYear();
 
                         const FA = Ano + '-' + `${Mes < 9 ? `0${Mes}` : Mes}-` + Dia;
+
                         if(Dt.start_time.slice(1,10) === FA){
                             ArrayP.push(Dt)
-                            
-                        } 
+                        };
                         
                         if(!NoEventos && ArrayP.length === 0){
                             setNoEventos(true);
+                        };             
+                    }else if(Dt.room.location == SelectName && !EventosHoy){
+                        setNoEventos(false);
+                        ArrayP.push(Dt);
+                    }else if((SelectName == 'No filtrar' && SearchText == '') && !EventosHoy){
+                        setNoEventos(false);
+                        ArrayP.push(Dt);
+                    }else if(SearchText != ''){
+                        let IsIgual;
+                        setNoEventos(false);
+                        const Stext = SearchText.toUpperCase().split(' ');
+                        
+                        const NameEvent = Dt.title.toUpperCase().split(' ');
+
+                        for(let d = 0; d < NameEvent.length; d++){
+                            for(let x = 0; x < Stext.length ; x++){
+                                if(Stext[x] == NameEvent[d]){
+                                    IsIgual = true;
+                                }
+                            }
                         }
 
-                        
+                        if(IsIgual){
+                            ArrayP.push(Dt);
+                        }
+
                     }
                 });
 
-                if(ArrayP != []){
-                    // console.log('El utimo funciona');
-                    setAllEvents({
-                            DataEvent: ArrayP,
-                    });
+                if(ArrayP != []){       
+                    setAllEvents(ArrayP);
                 }
               
             })
