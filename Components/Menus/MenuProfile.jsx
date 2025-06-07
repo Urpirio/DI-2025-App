@@ -17,10 +17,10 @@ export default function MenuProfile({
             <Pressable style={Style.PressableMenuProfile} onPress={DeployProfileMenu}>
                 <View style={Style.ContainerBtnMenuProfile}>
                     <TouchableOpacity style={Style.BtnMyProfile}>
-                        <Text style={{color:'#023e8a'}}>{FirstName[0]+ " " + LastName[0]}</Text>
+                        <Text style={{color:'#023e8a',fontSize:18,fontWeight:'600'}}>{FirstName[0]+ " " + LastName[0]}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={Style.BtnCloseSesion} onPress={FCerrarSesion}>
-                        <Text style={{color:'#d00000'}}>Cerrar sesion</Text>
+                        <Text style={{color:'#d00000',}}>Cerrar sesion</Text>
                     </TouchableOpacity>
                 </View>
             </Pressable>
@@ -30,28 +30,33 @@ export default function MenuProfile({
 
 const Style = StyleSheet.create({
     PressableMenuProfile:{
-        width:'100%',alignItems:'flex-end'
+        width:'100%',
+        alignItems:'flex-end',
+        paddingRight:10,
     },
     ContainerBtnMenuProfile:{
         width:'50%',
-        marginTop:97,
-        backgroundColor:'#ffffff',
+        marginTop:95,
+        backgroundColor:'white',
         gap:5,
         borderWidth:1,
         borderColor:'#ced4da',
-        padding:5,
-        borderBottomLeftRadius: 5,
-        borderBottomRightRadius:5,
+        borderRadius:10,
     },
     BtnMyProfile:{
         width:'100%',
-        padding:10,
-        borderRadius:5 
+        paddingVertical:10,
+        borderRadius:5, 
+        alignItems:'center',
+        
     },
     BtnCloseSesion:{
         width:'100%',
         padding:10,
-        borderRadius:5
+        borderBottomRightRadius:5,
+        borderBottomLeftRadius: 5,
+        alignItems:'center',
+        // backgroundColor:'red'
     }
 })
 
