@@ -26,7 +26,7 @@ export default function index() {
 
     const [StatusBack,setStatusBack] = useState(true);
 
-    const {SwitchStyle,StyleBtnHoy,StyleBtnTodos,StatusStyle} = useSwitchHome();
+    const {SwitchStyle,StyleBtnHoy,StyleBtnTodos} = useSwitchHome();
 
     const {
         GetEvents,
@@ -172,13 +172,18 @@ export default function index() {
                         width:`85%`,
                         borderTopRightRadius:10,
                         borderBottomRightRadius:10,
-                        }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'}/>
+                        }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'} 
+                        onPress={()=>{
+                            if(!RotateIconFilter){
+                                DeployFilter();
+                            };
+                        }}/>
             </View>
            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
              <View style={StyleHome.ContainerFilter}>
                 <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
                     onPress={()=>{DeployFilter(); GetSalaEvent();}}>
-                    <Text style={{color:'gray'}}>{SelectName}</Text>
+                    <Text style={{color:'gray'}}>Filtrar por sala</Text>
                     <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
                 </TouchableOpacity>
                 <View style={StyleFiltros}>
@@ -194,6 +199,7 @@ export default function index() {
                             };
                         }}>
                             <Text style={StyleHome.TextBtnSelectFilter}>{item}</Text>
+                            <Text>{SelectName == item ? "✔️" : ""}</Text>
                         </TouchableOpacity>
                         )
                     }}
@@ -204,13 +210,19 @@ export default function index() {
             <SwitchHome
                     StyleBtnTodos={StyleBtnTodos}
                     FTodos={()=>{
-                    setEventosHoy(false)
-                    SwitchStyle()
+                    setEventosHoy(false);
+                    SwitchStyle({StatusStyle: false});
+                    if(!RotateIconFilter){
+                        DeployFilter();
+                    };
                     }}
                     StyleBtnHoy={StyleBtnHoy}
                     Fhoy={()=>{
-                    setEventosHoy(true)
-                    SwitchStyle()
+                    setEventosHoy(true);
+                    SwitchStyle({StatusStyle: true});
+                    if(!RotateIconFilter){
+                        DeployFilter();
+                    };
                     }}
                 />
            </View>
@@ -225,7 +237,7 @@ export default function index() {
            <FlatList
             onTouchMove={IsScrolling}
             style={{paddingBottom:15}}
-            data={AllEvents.DataEvent}
+            data={AllEvents}
             renderItem={({item})=>{
                     return(
                     <CardHomeEvents
