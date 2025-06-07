@@ -13,7 +13,7 @@ export const useSwitchHome = () => {
     });
     const [StatusStyle,setStatusStyle] = useState(true);
 
-    const SwitchStyle = () =>{
+    const SwitchStyle = ({StatusStyle}) =>{
         if(StatusStyle){
             setBtnTodos({
                 Btn: StyleSwicthHome.BtnTodos,
