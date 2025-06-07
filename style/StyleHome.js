@@ -30,6 +30,8 @@ export const StyleHome = StyleSheet.create({
         borderColor: '#ced4da',
         padding:5,
         borderRadius: 5,
+        flexDirection:'row',
+        justifyContent:'space-between'
     },
     TextBtnSelectFilter:{
         color:'#023e8a',fontWeight:'600'
