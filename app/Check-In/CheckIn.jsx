@@ -35,6 +35,7 @@ export default function CheckIn() {
         setNotInEvent,
         StatusModalIngCodigo,
         setStatusModalIngCodigo,
+        UserID,
     } = useValidate();
 
   
@@ -128,6 +129,9 @@ export default function CheckIn() {
                     StatusModal={StatusPar}
                     FuncionCancelar={ResetStatusPar}
                     Data={DataUsers}
+                    TokenAccess={LocalData.TokenAccess}
+                    EventId={LocalData.IDEvents}
+                    user_id={UserID}
                     
                 />
 
