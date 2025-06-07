@@ -8,6 +8,7 @@ const useValidate = () => {
     const [StatusPar,setStatusPar] = useState(false);
     const [NoMatchUser,setNoMatchUser] = useState(false);
     const [NotInEvent, setNotInEvent] = useState(false);
+    const [UserID,setUserID] = useState();
 
 
     const [DataUsers,setDataUsers] = useState(
@@ -42,7 +43,6 @@ const useValidate = () => {
          .then((Data)=>{
             let B;
 
-            
             const LargeDataScanned = DataScanned.data.split('')
 
             if(Data.data.length  > 0){
@@ -51,6 +51,7 @@ const useValidate = () => {
                     if(data.id == DataScanned.data && LargeDataScanned.length > 7){
                         const FirstName = data.first_name.split(' ');
                         const LastName = data.last_name.split(' ');
+                        setUserID(data.id)
                         Validando({
                             firstName: FirstName[0],
                             lastName: LastName[0],
@@ -150,6 +151,7 @@ const useValidate = () => {
         setNotInEvent: setNotInEvent,
         StatusModalIngCodigo: StatusModalIngCodigo,
         setStatusModalIngCodigo: setStatusModalIngCodigo,
+        UserID:UserID,
     })
 };
 export default useValidate
