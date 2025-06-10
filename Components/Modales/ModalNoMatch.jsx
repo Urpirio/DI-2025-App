@@ -34,7 +34,7 @@ export default function ModalNoMatch({
 
             }}>
                 <Image style={{height:100,width:100,objectFit:'contain',tintColor: 'red'}} source={require('../../assets/IconCheckIn/x-circle.png')}/>
-                <Text style={{fontWeight: '600',fontSize:18}}>Usuario no registrado en el evento</Text>
+                <Text style={{fontWeight: '600',fontSize:18}}>Usuario no encontrado</Text>
                 <View style={{width:'100%',gap:10}}>
                     <TouchableOpacity style={{
                         width:'100%',
@@ -46,16 +46,6 @@ export default function ModalNoMatch({
                     }} onPress={OpenIngresarCodigo}>
                         <Text style={{color:'white',fontWeight:'500'}}>Ingresar Codigo</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={{
-                        width:'100%',
-                        flexDirection:'row',
-                        justifyContent:'center',
-                        padding:10,
-                        borderRadius:10,
-                        backgroundColor:'#008000',
-                    }} onPress={OpenIngresarCodigo}>
-                        <Text style={{color:'white',fontWeight:'500'}}>Agregar y confirmar asistencia</Text>
-                    </TouchableOpacity> */}
                     <TouchableOpacity style={{
                         width:'100%',
                         flexDirection:'row',
