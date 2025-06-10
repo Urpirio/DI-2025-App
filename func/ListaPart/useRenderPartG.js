@@ -5,7 +5,6 @@ export const useRenderPartG = () => {
     const ApiGeneralEvent = 'https://directus-prueba.dominicanainnova.gob.do/users/';
     const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/?filter[event_id][_eq]='
     const [DataParticipant,setDataParticipant] = useState([]);
-    const [ArrayUserId,setArrayUserId] = useState([])
     const [Loading,setLoading] = useState(false);
     const [TextSearch,setTextSearch] = useState();
     const [FiltroBusqueda,setFiltroBusqueda] = useState('Nombre')
@@ -61,7 +60,8 @@ export const useRenderPartG = () => {
                     setDataParticipant(Array)
                 }else if(FiltroBusqueda == 'Nombre'){
                     Array.forEach(D =>{
-                        if(D.first_name.toUpperCase().includes(TextSearch.toUpperCase())){
+                        const NombreCompleto = D.first_name + ' ' + D.last_name;
+                        if(NombreCompleto.toUpperCase().includes(TextSearch.toUpperCase())){
                             ArraySearch.push(D);
                         }
                     });
