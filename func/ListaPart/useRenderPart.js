@@ -10,7 +10,8 @@ export const useRenderPart = () => {
     const [Loading,setLoading] = useState(false);
     const [FiltroBusqueda,setFiltroBusqueda] = useState('Nombre');
     const [FiltroEstado,setFiltroEstado] = useState('Todos');
-    const [TextSearch,setTextSearch] = useState()
+    const [TextSearch,setTextSearch] = useState();
+    // const [,setuserEventId] = useState();
     
 
 
@@ -28,7 +29,7 @@ export const useRenderPart = () => {
             Data.data.forEach((data) =>{
 
             if(Event == data.event_id){
-                if(data.checkin == null && FiltroEstado == 'Todos'){
+                if(FiltroEstado == 'Todos'){
                     ArrayUserId.push(data);
                 }else if(data.checkin != null && FiltroEstado == 'Registrados'){
                     ArrayUserId.push(data);
@@ -41,7 +42,6 @@ export const useRenderPart = () => {
             });
 
             if(ArrayUser != []){
-                console.log('funciona')
                 setArrayUserId(ArrayUser)
                 Users({TokenAccess:TokenAcces})
             }
@@ -71,7 +71,7 @@ export const useRenderPart = () => {
                 
                 if(DataUser.id == Dt.user_id){
                    if(ArrayUser.filter((e) => e.id === DataUser.id).length == 0){
-                    //no recuerdo la razon de esto, recordar...
+                        DataUser.userEventId = Dt.id;
                         DataUser.checkin = Dt.checkin;
                         ArrayUser.push(DataUser)
                    }
@@ -86,7 +86,8 @@ export const useRenderPart = () => {
                     setDataParticipant(ArrayUser);  
                 }else if(FiltroBusqueda == 'Nombre'){
                     ArrayUser.forEach(D =>{
-                        if(D.first_name.toUpperCase().includes(TextSearch.toUpperCase())){
+                        const NombreCompleto = D.first_name + ' ' + D.last_name;
+                        if(NombreCompleto.toUpperCase().includes(TextSearch.toUpperCase())){
                             ArraySearch.push(D);
                         }
                     });
