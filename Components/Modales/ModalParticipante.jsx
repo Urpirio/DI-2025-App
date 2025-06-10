@@ -10,9 +10,10 @@ export default function ModalParticipante({
     TokenAccess,
     EventId,
     user_id,
+    FuncionRegistrado
 }) {
 
-        const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/?filter[event_id][_eq]=';
+    const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
 
     const ImageProfile = Data.Picture_Profile 
     ? `https://directus-prueba.dominicanainnova.gob.do/assets/${Data.Picture_Profile}` 
@@ -20,47 +21,33 @@ export default function ModalParticipante({
 
 
     const ConfirmarAsistencia = () => {
-        const date = new Date();
-        const ActualDay = date.getDay() + 1;
-        const ActualMes = date.getMonth() + 1;
-        const ActualAno = date.getFullYear();
-        const ActualHora = date.getHours();
-        const ActualMinutos = date.getMinutes();
-        const ActualSegundos = date.getSeconds();
+        const date = new Date().toISOString();
 
-        const FechaActualC = ActualAno + "-" + `${(ActualMes > 1 && ActualMes < 9 ) ?
-        `0${ActualMes}` :  ActualMes }` + "-" + `${(ActualDay > 1 && ActualDay < 9) ?
-        `0${ActualDay}` : ActualDay}` + `T${ActualHora}:${ActualMinutos}:${ActualSegundos}`;
 
-        //En procesos para terminar desde quue cesar me responda.
-        fetch(ApiSpecificEvent + EventId,{
-            method: 'PATCH',
+        fetch(ApiSpecificEvent + user_id,{
+            method:'PATCH',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${TokenAccess}`
             },
-            body: JSON.stringify({
-                user_id: user_id,
-                checkin: FechaActualC,
-                date_updated: FechaActualC,
-            })
+            body: JSON.stringify({checkin: date})
         })
-        .then(respuesta => respuesta.json())
-        .then((Data)=>{
-           console.log(Data)
+        .then(respuesta => {
+            if(respuesta.ok){
+                FuncionRegistrado();
+            }else{
+
+            }
         })
         .catch((err)=>{
             console.error(err)
-        });
-        
-        
-    }
+        })     
+    };
 
   return (
     <Modal visible={StatusModal} transparent={true}>
         <View style={StyleModalParticipante.BodyContainer}>
-            <View style={StyleModalParticipante.Blur}>
-
-            </View>
+            <View style={StyleModalParticipante.Blur}></View>
             <View style={StyleModalParticipante.MainContainer}>
                 <Image source={{uri:ImageProfile}}
                 style={StyleModalParticipante.PictureImg}
