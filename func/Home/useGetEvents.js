@@ -77,15 +77,37 @@ export const useGetEvents = () => {
                         ArrayP.push(Dt);
                     }else if(EventosHoy){
                        
-                        const FechaActual = new Date();
-                        const Mes = FechaActual.getMonth() + 1;
-                        const Dia = FechaActual.getDay() + 1;
-                        const Ano = FechaActual.getFullYear();
+                        const FechaActual = new Date().toISOString();
+                    
+                        if(Dt.start_time === FechaActual){
+                            if(Dt.room === null && EventosHoy){
+                                ArrayP.push(Dt);
+                            }else if(Dt.room.location == SelectName && EventosHoy){
+                                setNoEventos(false);
+                                ArrayP.push(Dt);
+                            }else if((SelectName == 'No filtrar' && SearchText == '') && EventosHoy){
+                                setNoEventos(false);
+                                ArrayP.push(Dt);
+                            }else if(SearchText != ''){
+                                let IsIgual;
+                                setNoEventos(false);
+                                const Stext = SearchText.toUpperCase().split(' ');
+                        
+                                const NameEvent = Dt.title.toUpperCase().split(' ');
 
-                        const FA = Ano + '-' + `${Mes < 9 ? `0${Mes}` : Mes}-` + Dia;
+                                for(let d = 0; d < NameEvent.length; d++){
+                                    for(let x = 0; x < Stext.length ; x++){
+                                        if(Stext[x] == NameEvent[d]){
+                                            IsIgual = true;
+                                        }
+                                    }
+                                }
 
-                        if(Dt.start_time.slice(1,10) === FA){
-                            ArrayP.push(Dt)
+                                if(IsIgual){
+                                    ArrayP.push(Dt);
+                                }
+
+                            }
                         };
                         
                         if(!NoEventos && ArrayP.length === 0){
@@ -100,17 +122,11 @@ export const useGetEvents = () => {
                     }else if(SearchText != ''){
                         let IsIgual;
                         setNoEventos(false);
-                        const Stext = SearchText.toUpperCase().split(' ');
                         
-                        const NameEvent = Dt.title.toUpperCase().split(' ');
-
-                        for(let d = 0; d < NameEvent.length; d++){
-                            for(let x = 0; x < Stext.length ; x++){
-                                if(Stext[x] == NameEvent[d]){
-                                    IsIgual = true;
-                                }
-                            }
-                        }
+                        const NameEvent = Dt.title.toUpperCase();
+                        if(NameEvent.includes(SearchText.toUpperCase())){
+                            IsIgual = true;
+                        };
 
                         if(IsIgual){
                             ArrayP.push(Dt);
