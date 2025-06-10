@@ -1,7 +1,7 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { CameraView,useCameraPermissions,CameraType } from "expo-camera";
-import { useState } from "react";
-import { TouchableOpacity,View,Text} from "react-native";
+import { useState,useEffect } from "react";
+import { TouchableOpacity,View,Text, Image} from "react-native";
 import { useRouter,useLocalSearchParams } from "expo-router";
 import Modal_IngresarCodigo from "../../Components/Modales/Modal_IngresarCodigo";
 import { StatusBar } from "expo-status-bar";
@@ -12,14 +12,36 @@ import ModalParticipante from "../../Components/Modales/ModalParticipante";
 import ModalNoMatch from "../../Components/Modales/ModalNoMatch";
 import useValidate from "../../func/CheckIn/useValidate";
 import ModalNotInEvent from "../../Components/Modales/ModalNotInEvent";
+import Modal_Registrado from "../../Components/Modales/Modal_Registrado";
+import ModalEnEvento from "../../Components/Modales/ModalEnEvento";
 
 
 export default function CheckIn() {
 
     const router = useRouter();
-    const [DataQr,setDataQr] = useState(null);
     const [WhatCamera,setWhatCamera] = useState('back');
     const [HavePermission,setHavePermission] = useCameraPermissions();
+    const [IsRegistrado,setIsRegistrado] = useState(false);
+    const [ZOOM,setZOOM] = useState(0);
+    const [More,setMore] = useState(false);
+    const [Less, setLess] = useState(false);
+    const [StyleBtnLinterna,setStyleBtnLinterna] = useState({
+        btn: StyleCheckIn.BtnLinternaOFF,
+        Status: false,
+    });
+
+
+    useEffect(()=>{
+        if(More &&  ZOOM < 1){
+            setZOOM(ZOOM + 0.1)
+        };
+
+        if(Less && ZOOM > 0){
+            setZOOM(ZOOM - 0.1)
+        };
+    });
+
+    
     
     
     const LocalData = useLocalSearchParams();
@@ -36,6 +58,8 @@ export default function CheckIn() {
         StatusModalIngCodigo,
         setStatusModalIngCodigo,
         UserID,
+        Ischeckin,
+        setISCheckin,
     } = useValidate();
 
   
@@ -86,13 +110,41 @@ export default function CheckIn() {
     return (
         <SafeAreaProvider>
             
-            <CameraView facing={WhatCamera} onBarcodeScanned={(Data)=>{
+            <CameraView zoom={ZOOM} facing={WhatCamera} enableTorch={StyleBtnLinterna.Status}  onBarcodeScanned={(Data)=>{
                 CodeScanned({DataScanned:Data,TokenUser: LocalData.TokenAccess,EventId: LocalData.IDEvents})
                 }} style={{flex:1}} Flash = "auto" />
                 
-                <QR_Mask/>
+                <QR_Mask 
+                Zoom_LessIN={()=>{
+                    setLess(true)
+                }}
+                Zoom_moreIN={()=>{
+                    setMore(true)
+                }}
+                Zoom_LessOUT={()=>{
+                    setLess(false)
+                }}
+                Zoom_moreOUT={()=>{
+                    setMore(false)
+                }}
+                />
 
                 <View style={StyleCheckIn.containerBtns}>
+                    <TouchableOpacity style={StyleBtnLinterna.btn} onPress={()=>{
+                        if(!StyleBtnLinterna.Status){
+                            setStyleBtnLinterna({
+                                btn:StyleCheckIn.BtnLinternaON,
+                                Status: true,
+                            })
+                        }else{
+                            setStyleBtnLinterna({
+                                btn:StyleCheckIn.BtnLinternaOFF,
+                                Status: false,
+                            })
+                        };
+                    }}>
+                        <Image style={StyleCheckIn.IconLinterna} source={require('../../assets/IconCheckIn/bolt.png')}/>
+                    </TouchableOpacity>
                     <TouchableOpacity style={StyleCheckIn.BtnIngresarCodigo} 
                         onPress={()=>{
                             setStatusModalIngCodigo(!StatusModalIngCodigo)
@@ -132,6 +184,10 @@ export default function CheckIn() {
                     TokenAccess={LocalData.TokenAccess}
                     EventId={LocalData.IDEvents}
                     user_id={UserID}
+                    FuncionRegistrado={()=>{
+                        setIsRegistrado(true);
+                        ResetStatusPar();
+                    }}
                     
                 />
 
@@ -143,12 +199,33 @@ export default function CheckIn() {
                     setStatusModalIngCodigo(!StatusModalIngCodigo);
                 }}
                 />
+
                 <ModalNotInEvent
                     StatusModal={NotInEvent}
                     FuncionCancelar={()=>{
                         setNotInEvent(false);
                     }}
                     Data={DataUsers}
+                    EventId={LocalData.IDEvents}
+                    TokenAccess={LocalData.TokenAccess}
+                />
+
+                <Modal_Registrado
+                StatusModal={IsRegistrado}
+                FuncionVolver={()=>{
+                    setIsRegistrado(false);
+                    router.back();
+                }}
+                FuncionOtraEntrada={()=>{
+                    setIsRegistrado(false)
+                }}
+                />
+
+                <ModalEnEvento
+                StatusModal={Ischeckin}
+                FuncionCerrar={()=>{
+                    setISCheckin(false);
+                }}
                 />
 
                <StatusBar style="auto"/>
