@@ -1,7 +1,7 @@
 import { Text, View,TouchableOpacity,Image,TextInput, ScrollView, FlatList, RefreshControl, ActivityIndicator } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleParticipantes } from "../../style/StyleParticipantes";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CardParticipante from "../../Components/Cards/CardParticipante";
 import { useLocalSearchParams } from "expo-router";
 import useRefresh from "../../hooks/useRefresh";
@@ -22,6 +22,7 @@ export default function ListaPart() {
     
     const LocalData = useLocalSearchParams();
     const { ScreenRefresHome,StateRefresh} = useRefresh(false);
+    const [AutoRefresh,setAutoRefresh] = useState(false)
 
     const {
       Loading,
@@ -40,7 +41,7 @@ export default function ListaPart() {
         GetParticipant({Event:LocalData.IDEvents,
         TokenAcces: LocalData.TokenAccess})
 
-    },[StateRefresh,TextSearch,FiltroEstado]);
+    },[StateRefresh,TextSearch,FiltroEstado,AutoRefresh]);
 
 
   return (
@@ -135,6 +136,11 @@ export default function ListaPart() {
             Email={item.email}
             ImgPerfil={item.profile_picture}
             CheckIn={item.checkin}
+            funcionRefresh={()=>{
+              setAutoRefresh(!AutoRefresh)
+            }}
+            TokenAccess={LocalData.TokenAccess}
+            user_id={item.userEventId}
             />
             )
             }}/> 
