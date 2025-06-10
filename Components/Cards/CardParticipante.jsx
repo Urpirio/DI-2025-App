@@ -1,10 +1,21 @@
-import { View,Image,Text, TouchableOpacity } from "react-native";
+import { View,Image,Text, TouchableOpacity,ActivityIndicator } from "react-native";
 import { StyleCardParticipantes } from "../../style/StyleCardParticipantes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function CardParticipante({
-    first_name,last_name,ImgPerfil,Email,IdPersona,CheckIn
+    first_name,
+    last_name,
+    ImgPerfil,
+    Email,
+    IdPersona,
+    CheckIn,
+    user_id,
+    TokenAccess,
+    funcionRefresh,
 }) {
+
+    const [Loading,setLoading] = useState(false);
+    const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
 
     const ImageProfile = ImgPerfil 
     ? `https://directus-prueba.dominicanainnova.gob.do/assets/${ImgPerfil}` 
@@ -12,6 +23,34 @@ export default function CardParticipante({
     
     const FirstName = first_name.split(" ");
     const LastName = last_name.split(" ");
+
+    const ConfirmarAsistencia = () => {
+
+        setLoading(true);
+        const date = new Date().toISOString();
+
+        fetch(ApiSpecificEvent + user_id,{
+            method:'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenAccess}`
+            },
+            body: JSON.stringify({checkin: date})
+        })
+        .then(respuesta => respuesta.json())
+        .then(Data =>{
+            console.log(Data);
+            console.log(TokenAccess);
+            console.log(user_id);
+        })
+        .catch((err)=>{
+            console.error(err)
+        }) 
+        .finally(()=>{
+            setLoading(false)
+            funcionRefresh();
+        })    
+    };
   
   return (
     <View style={StyleCardParticipantes.BodyCard}>
@@ -29,11 +68,13 @@ export default function CardParticipante({
                          <Text>{Email}</Text>
                          <Text style={CheckIn ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{CheckIn ? 'Registrado' : 'No registrado'}</Text>
                     </View>
-                    <View style={StyleCardParticipantes.Section3C}>
-                        <TouchableOpacity style={StyleCardParticipantes.BtnConfirmarAsistencia}>
-                            <Text style={StyleCardParticipantes.TextBtns}>{'Confirmar Asistencia'}</Text>
+                    {CheckIn ? <View/> : <View style={StyleCardParticipantes.Section3C}>
+                        <TouchableOpacity style={StyleCardParticipantes.BtnConfirmarAsistencia} onPress={ConfirmarAsistencia} >
+                           { Loading ? <ActivityIndicator size={'small'}/> :
+                            <Text style={StyleCardParticipantes.TextBtns}>Confirmar Asistencia</Text>
+                            }
                         </TouchableOpacity>
-                    </View>
+                    </View>}
               </View>
             
     </View>
