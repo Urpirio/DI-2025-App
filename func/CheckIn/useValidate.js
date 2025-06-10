@@ -9,6 +9,7 @@ const useValidate = () => {
     const [NoMatchUser,setNoMatchUser] = useState(false);
     const [NotInEvent, setNotInEvent] = useState(false);
     const [UserID,setUserID] = useState();
+    const [Ischeckin,setISCheckin] = useState(false);
 
 
     const [DataUsers,setDataUsers] = useState(
@@ -51,7 +52,6 @@ const useValidate = () => {
                     if(data.id == DataScanned.data && LargeDataScanned.length > 7){
                         const FirstName = data.first_name.split(' ');
                         const LastName = data.last_name.split(' ');
-                        setUserID(data.id)
                         Validando({
                             firstName: FirstName[0],
                             lastName: LastName[0],
@@ -104,28 +104,54 @@ const useValidate = () => {
         .then((Data)=>{
 
             let B;
-            Data.data.forEach((data)=>{
-                if(data.user_id == Id){
+            let C;
+
+            if(Data.data.length === 0){
+                setDataUsers({
+                    lastName:lastName,
+                    firstName: firstName,
+                    Id: Id,
+                    Picture_Profile: Picture_Profile,
+                    ShortID: Id.slice(30,36)
+                });
+            }else{
+             Data.data.forEach((data)=>{
+                if(data.user_id == Id && data.checkin === null){
                    setDataUsers({
                     lastName:lastName,
                     firstName: firstName,
                     Id: Id.slice(30,36),
                     Picture_Profile: Picture_Profile,
                    });
+                   setUserID(data.id)
                    setStatusPar(true);
                    B = true;
-                }else{
+                }else if(data.checkin === null){
                    setDataUsers({
                     lastName:lastName,
                     firstName: firstName,
-                    Id: Id.slice(30,36),
+                    Id: Id,
                     Picture_Profile: Picture_Profile,
+                    ShortID: Id.slice(30,36)
                    }); 
+                }else if(data.user_id != Id){
+                    setDataUsers({
+                    lastName:lastName,
+                    firstName: firstName,
+                    Id: Id,
+                    Picture_Profile: Picture_Profile,
+                    ShortID: Id.slice(30,36)
+                    });
+                }else if(data.checkin != null){
+                    C = true;   
                 }
-            });
+                });
+            }
 
-            if(!B){
+            if(!B && !C){
                 setNotInEvent(true)
+            }else if(C){
+                setISCheckin(true);
             };
             
 
@@ -152,6 +178,8 @@ const useValidate = () => {
         StatusModalIngCodigo: StatusModalIngCodigo,
         setStatusModalIngCodigo: setStatusModalIngCodigo,
         UserID:UserID,
+        Ischeckin: Ischeckin,
+        setISCheckin:setISCheckin,
     })
 };
 export default useValidate
