@@ -60,10 +60,8 @@ export default function CardHomeEvents({
                     profile_picture: LocalData.profile_picture, FirstName: LocalData.FirstName,
                     LastName: LocalData.LastName,IDEvents: IDEvents,
                 }})
-                // console.log(IDEvents)
             }}>
-                {/* <Image style={StyleHome.IconBtnInCardEvent} 
-                    source={IconBtn}/> */}
+               
                     <Text style={{color:'white'}}>Entrar</Text>
             </TouchableOpacity>
         </View>
