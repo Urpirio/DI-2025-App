@@ -32,6 +32,26 @@ export const StyleCheckIn = StyleSheet.create({
         fontSize:16,
         fontWeight:'600'
     },
+    BtnLinternaON:{
+        paddingVertical:10,
+        paddingHorizontal:30,
+        borderRadius:30,
+        backgroundColor:'#343a40',
+        opacity: 0.4,
+
+    },
+    BtnLinternaOFF:{
+        paddingVertical:10,
+        paddingHorizontal:30,
+        borderRadius:30,
+        backgroundColor:'#343a40',
+    },
+    IconLinterna:{
+        height:20,
+        width:20,
+        objectFit:'cover',
+        tintColor: '#ffc300',
+    },
     ContainerPermissionCamara:{
         backgroundColor:'white',
         alignItems:'center',
