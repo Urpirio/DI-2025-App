@@ -5,8 +5,6 @@ import { StatusBar } from "expo-status-bar";
 import { StyleInEvent } from "../../style/StylesInEvent";
 import { useInEvent } from "../../func/InEvent/UseInEvent";
 import {  Skeleton,LinearGradient } from "@rneui/themed";
-
-
 import { useEffect } from "react";
 
 export default function InEvent() {
@@ -26,9 +24,13 @@ export default function InEvent() {
               <Text style={StyleInEvent.TextNombreEvent}>
                 {LocalData.NombreEvento}
               </Text>
-              {Loading ? <Text style={StyleInEvent.TextParticipantesEvent}>
-                {CantidadPart.InEvent}/{CantidadPart.PartInEvent}
-              </Text> : 
+              {Loading ? <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row'}}>
+                  <Text style={{fontSize:18,fontWeight:'500',color:'#adb5bd'}}>
+                    {CantidadPart.InEvent} {`${CantidadPart.InEvent > 1 ? 'Registrados' : 'registrado'}`} de {CantidadPart.PartInEvent}
+                  </Text>
+                </View>
+              </View> : 
               <Skeleton 
               LinearGradientComponent={LinearGradient}
               animation="wave"
