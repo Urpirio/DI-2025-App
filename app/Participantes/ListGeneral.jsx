@@ -6,6 +6,7 @@ import CardPartGeneral from "../../Components/Cards/CardPartGeneral";
 import { useLocalSearchParams } from "expo-router";
 import useRefresh from "../../hooks/useRefresh";
 import { useRenderPartG } from "../../func/ListaPart/useRenderPartG";
+import CardSkeletonPart from "../../Components/Cards/CardSkeletonPart";
 
 export default function ListGeneral() {
 
@@ -16,6 +17,7 @@ export default function ListGeneral() {
     });
     const LocalData = useLocalSearchParams();
     const { ScreenRefresHome,StateRefresh} = useRefresh(false);
+    const [AutoRefresh,setAutoRefresh] = useState(false)
 
     const {GetGeneralParticipant ,
           Loading,
@@ -28,7 +30,7 @@ export default function ListGeneral() {
 
     useEffect(()=>{
         GetGeneralParticipant({TokenAcces: LocalData.TokenAccess,EventId: LocalData.IDEvents})
-    },[StateRefresh,TextSearch])
+    },[StateRefresh,TextSearch,AutoRefresh])
 
 
     const DeployFilter = () => {
@@ -99,12 +101,20 @@ export default function ListGeneral() {
             Email={item.email}
             ImgPerfil={item.profile_picture}
             CheckIn={item.checkin}
-            EventID={LocalData.IDEvents}
             userID={item.id}
-            TokenAccess = {LocalData.TokenAccess}
+            FuncionAutoR={()=>{
+              setAutoRefresh(!AutoRefresh);
+            }}
             />
             )
-          }}/> : <ActivityIndicator size={'large'} />}
+          }}/> : <View>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            </View>}
 
         </ScrollView>
     </SafeAreaProvider>
