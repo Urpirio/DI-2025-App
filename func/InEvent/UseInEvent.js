@@ -17,7 +17,11 @@ export const useInEvent = () => {
                 'Authorization': `Bearer ${TokenAccess}`
             }
         })
-        .then(respuesta => respuesta.json())
+        .then(respuesta => {
+            if(respuesta.ok){
+               return respuesta.json();
+            };
+        })
         .then((Data)=>{
 
             const ArrayInEvent = [];
