@@ -1,12 +1,9 @@
-import { Image,Text, TouchableOpacity, View,ScrollView,VirtualizedList, 
-TextInput,ActivityIndicator,
-FlatList} from "react-native";
+import { Text, View,ScrollView,FlatList} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
-import { StyleHome } from "../../style/StyleHome";
 import CardHomeEvents from "../../Components/Cards/CardHomeEvents";
-import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS,funcionCancelarCerrarSesion} from "../_layout";
+import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS} from "../_layout";
 import { StatusBar } from "expo-status-bar";
 import ModalCerrarSesion from "../../Components/Modales/ModalCerrarSesion";
 import { RefreshControl } from "react-native";
@@ -14,23 +11,27 @@ import useRefresh from "../../hooks/useRefresh";
 import { useHome } from "../../func/Home/useFilterHome";
 import { useGetEvents } from "../../func/Home/useGetEvents";
 import { CerrarSesion } from "../_layout";
-import CardSkeleton from "../../Components/Cards/CardSkeleton";
-import SwitchHome from "../../Components/Btn/SwitchHome";
 import { useSwitchHome } from "../../func/Home/useSwitchHome";
-
+import { useNetInfo } from "@react-native-community/netinfo";
+import SKhome from "../../Components/SK/SKhome";
+import SearchHome from "../../Components/Searchs/Search - Home";
+import NoInternet from "../../Components/AvisosInternet/NoInternet";
 
 // export let StatusRefreshHome;
 export let funcionRefresh;
 
 export default function index() {
 
+    const HaveInternet = useNetInfo();
     const [StatusBack,setStatusBack] = useState(true);
 
     const {SwitchStyle,StyleBtnHoy,StyleBtnTodos} = useSwitchHome();
+    
 
     const {
         GetEvents,
         Loading,
+        setLoading,
         AllEvents,
         GetSalaEvent,
         DataSala,
@@ -65,8 +66,15 @@ export default function index() {
     });
 
     useEffect(()=>{
-        GetEvents();
-    },[SearchText,SelectName,CerrarSesion,StateRefresh,StatusModalCerrarS,EventosHoy]);
+        if(HaveInternet.isConnected){
+            GetEvents();
+        }else if(HaveInternet.isWifiEnabled){
+            GetEvents();
+        }
+        
+    },[SearchText,SelectName,CerrarSesion,StateRefresh,
+    StatusModalCerrarS,EventosHoy,Loading,HaveInternet.isWifiEnabled,
+    HaveInternet.isConnected]);
 
     const IsScrolling = ()=>{
         if(!RotateIconFilter){
@@ -82,94 +90,32 @@ export default function index() {
         }
     }
 
-
+  if(!HaveInternet.isConnected){
+    return(
+        <NoInternet/>
+    )
+  }
 
 
   if(!Loading){
     return(
-        <SafeAreaProvider style={{backgroundColor:'white'}}>
-            <ScrollView style={{padding:10}}>
-                 <View style={{
-                    borderWidth:1,
-                    borderRadius:10,
-                    height:50,
-                    flexDirection:'row',
-                    borderColor:'#ced4da',
-                    width:`100%`,
-                    marginBottom: 10,
-                }}>
-                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} >
-                        <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
-                    </TouchableOpacity>
-                    <TextInput style={{
-                        fontSize:16,
-                        width:`85%`,
-                        borderTopRightRadius:10,
-                        borderBottomRightRadius:10,
-                        }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'} 
-                        onPress={()=>{
-                            if(!RotateIconFilter){
-                                DeployFilter();
-                            };
-                        }}/>
-            </View>
-           <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-             <View style={StyleHome.ContainerFilter}>
-                <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
-                    onPress={()=>{DeployFilter(); GetSalaEvent();}}>
-                    <Text style={{color:'gray'}}>Filtrar por sala</Text>
-                    <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
-                </TouchableOpacity>
-                <View style={StyleFiltros}>
-
-                    {LoadingF ? <FlatList 
-                    data={DataSala}
-                    renderItem={({item})=>{
-                        return(
-                        <TouchableOpacity style={StyleHome.BtnSelectFilter} onPress={()=>{
-                            ChangeSelected({Selected: item});
-                            if(!RotateIconFilter){
-                                DeployFilter();
-                            };
-                        }}>
-                            <Text style={StyleHome.TextBtnSelectFilter}>{item}</Text>
-                            <Text>{SelectName == item ? "✔️" : ""}</Text>
-                        </TouchableOpacity>
-                        )
-                    }}
-                    /> : <ActivityIndicator size={'small'}/>}
-
-                </View>
-            </View>
-            <SwitchHome
-                    StyleBtnTodos={StyleBtnTodos}
-                    FTodos={()=>{
-                    setEventosHoy(false);
-                    SwitchStyle({StatusStyle: false});
-                    if(!RotateIconFilter){
-                        DeployFilter();
-                    };
-                    }}
-                    StyleBtnHoy={StyleBtnHoy}
-                    Fhoy={()=>{
-                    setEventosHoy(true);
-                    SwitchStyle({StatusStyle: true});
-                    if(!RotateIconFilter){
-                        DeployFilter();
-                    };
-                    }}
-                />
-           </View>
-       
-            <CardSkeleton/>
-            <CardSkeleton/>
-            <CardSkeleton/>
-            <CardSkeleton/>
-            <CardSkeleton/>
-            <CardSkeleton/>
-            <CardSkeleton/>
-        </ScrollView>
-        </SafeAreaProvider>
+        <SKhome
+        setEventosHoy={setEventosHoy}
+        setSearchText={setSearchText}
+        SearchText={SearchText}
+        SelectName={SelectName}
+        ChangeSelected={ChangeSelected}
+        StyleBtnHoy={StyleBtnHoy}
+        StyleBtnTodos={StyleBtnTodos}
+        StyleFiltros={StyleFiltros}
+        SwitchStyle={SwitchStyle}
+        GetSalaEvent={GetSalaEvent}
+        DataSala={DataSala}
+        DeployFilter={DeployFilter}
+        RotateIconFilter={RotateIconFilter}
+        IconBtnFilter={IconBtnFilter}
+        LoadingF={LoadingF}
+        IconSearch={IconSearch}/>
     )
   };
 
@@ -184,79 +130,23 @@ export default function index() {
         <ScrollView style={{padding:10}}  refreshControl={
             <RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>
         }>
-            <View style={{
-                    borderWidth:1,
-                    borderRadius:10,
-                    height:50,
-                    flexDirection:'row',
-                    borderColor:'#ced4da',
-                    width:`100%`,
-                    marginBottom: 10,
-                }}>
-                    <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} >
-                        <Image style={{height:'90%',width:40,objectFit:'contain'}} source={IconSearch}/>
-                    </TouchableOpacity>
-                    <TextInput style={{
-                        fontSize:16,
-                        width:`85%`,
-                        borderTopRightRadius:10,
-                        borderBottomRightRadius:10,
-                        }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'} 
-                        onPress={()=>{
-                            if(!RotateIconFilter){
-                                DeployFilter();
-                            };
-                        }}/>
-            </View>
-           <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-             <View style={StyleHome.ContainerFilter}>
-                <TouchableOpacity style={StyleHome.BtnFilterDeploy} 
-                    onPress={()=>{DeployFilter(); GetSalaEvent();}}>
-                    <Text style={{color:'gray'}}>Filtrar por sala</Text>
-                    <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
-                </TouchableOpacity>
-                <View style={StyleFiltros}>
-
-                    {LoadingF ? <FlatList 
-                    data={DataSala}
-                    renderItem={({item})=>{
-                        return(
-                        <TouchableOpacity style={StyleHome.BtnSelectFilter} onPress={()=>{
-                            ChangeSelected({Selected: item});
-                            if(!RotateIconFilter){
-                                DeployFilter();
-                            };
-                        }}>
-                            <Text style={StyleHome.TextBtnSelectFilter}>{item}</Text>
-                            <Text>{SelectName == item ? "✔️" : ""}</Text>
-                        </TouchableOpacity>
-                        )
-                    }}
-                    /> : <ActivityIndicator size={'small'}/>}
-
-                </View>
-            </View>
-            <SwitchHome
-                    StyleBtnTodos={StyleBtnTodos}
-                    FTodos={()=>{
-                    setEventosHoy(false);
-                    SwitchStyle({StatusStyle: false});
-                    if(!RotateIconFilter){
-                        DeployFilter();
-                    };
-                    }}
-                    StyleBtnHoy={StyleBtnHoy}
-                    Fhoy={()=>{
-                    setEventosHoy(true);
-                    SwitchStyle({StatusStyle: true});
-                    if(!RotateIconFilter){
-                        DeployFilter();
-                    };
-                    }}
-                />
-           </View>
-
-           
+           <SearchHome
+                SearchText={SearchText}
+                setSearchText={setSearchText}
+                setEventosHoy={setEventosHoy}
+                RotateIconFilter={RotateIconFilter}
+                DeployFilter={DeployFilter}
+                DataSala={DataSala}
+                GetSalaEvent={GetSalaEvent}
+                SelectName={SelectName}
+                StyleBtnHoy={StyleBtnHoy}
+                StyleBtnTodos={StyleBtnTodos}
+                StyleFiltros={StyleFiltros}
+                SwitchStyle={SwitchStyle}
+                ChangeSelected={ChangeSelected}
+                IconBtnFilter={IconBtnFilter}
+                IconSearch={IconSearch}
+                LoadingF={LoadingF}/>
 
            {NoEventos ? <View style={{height:'100%',width:'100%',
             alignItems:'center',justifyContent:'center'}}>
@@ -287,8 +177,7 @@ export default function index() {
         StatusModal={StatusModalCerrarS}
         FuncionGoBack={()=>{
             setStatusBack(!StatusBack);
-        }}
-        />
+        }}/>
 
         <StatusBar style="auto"/>
     </SafeAreaProvider>
