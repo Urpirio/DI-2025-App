@@ -17,7 +17,11 @@ export const useRenderPartG = () => {
                 'Authorization': `Bearer ${TokenAcces}`
             }
         })
-        .then(respuestas => respuestas.json())
+        .then(respuestas => {
+            if(respuestas.ok){
+                return respuestas.json();
+            }
+        })
         .then((Data)=>{
 
                 FilterUser({TokenAcces:TokenAcces,UserInGeneral:Data.data,EventId:EventId})
