@@ -14,6 +14,7 @@ import useValidate from "../../func/CheckIn/useValidate";
 import ModalNotInEvent from "../../Components/Modales/ModalNotInEvent";
 import Modal_Registrado from "../../Components/Modales/Modal_Registrado";
 import ModalEnEvento from "../../Components/Modales/ModalEnEvento";
+import PermisoCamara from "../../Components/AvisosPermiso/PermisoCamara";
 
 
 export default function CheckIn() {
@@ -72,35 +73,10 @@ export default function CheckIn() {
 
     if(!HavePermission.granted){
         return(
-            <SafeAreaProvider style={StyleCheckIn.ContainerPermissionCamara}>
-                <View style={StyleCheckIn.ContainerTextPermission}>
-                    <Text style={StyleCheckIn.MainTextPermission}>
-                        ¿Nos permites acceder a tu cámara?
-                    </Text>
-                    <Text style={StyleCheckIn.SubTextPermission}>
-                        Usamos la cámara únicamente para escanear códigos QR y así mejorar tu experiencia dentro de la app.
-                    </Text>
-                </View>
-                <View style={StyleCheckIn.ContainerBtnPermission}>
-
-                    
-
-                    <TouchableOpacity style={StyleCheckIn.BtnPermission} 
-                        onPress={()=>{
-                            setHavePermission(!HavePermission);
-                        }}>
-                        <Text style={{color:'white'}}>Permitir acceso</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={StyleCheckIn.BtnNotPermission} 
-                        onPress={()=>{
-                            router.back();
-                            alert(HavePermission.status)
-                        }}>
-                        <Text style={{color:'white'}}>Ahora no</Text>
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaProvider>
+            <PermisoCamara 
+            setHavePermission={()=>{setHavePermission(!HavePermission);}}
+            router={router}  
+            />
         )
     };
 
@@ -208,6 +184,7 @@ export default function CheckIn() {
                     Data={DataUsers}
                     EventId={LocalData.IDEvents}
                     TokenAccess={LocalData.TokenAccess}
+                    StaffID={LocalData.StaffId}
                 />
 
                 <Modal_Registrado
