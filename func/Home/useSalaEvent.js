@@ -28,7 +28,11 @@ export const useSalaEvent = () => {
 
     const GetSalaEvent = () => {
         fetch(ApiEvent)
-        .then(respuestas => respuestas.json())
+        .then(respuestas => {
+            if(respuestas.ok){
+                respuestas.json();
+            };
+        })
         .then((Data)=>{
             const ArrayP = [];
 
