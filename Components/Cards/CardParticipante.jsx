@@ -21,8 +21,8 @@ export default function CardParticipante({
     ? `https://directus-prueba.dominicanainnova.gob.do/assets/${ImgPerfil}` 
     : `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
     
-    const FirstName = first_name.split(" ");
-    const LastName = last_name.split(" ");
+    const FirstName = first_name ? first_name.split(" ")[0] : '';
+    const LastName = last_name ? last_name.split(" ")[0] : '';
 
     const ConfirmarAsistencia = () => {
 
@@ -61,11 +61,11 @@ export default function CardParticipante({
                 </View>
                 <View style={StyleCardParticipantes.MainContainer}>
                     <View style={StyleCardParticipantes.Section1C}>
-                        <Text style={StyleCardParticipantes.TextNombre}>{FirstName[0]} {LastName[0]}</Text>
-                        <Text style={StyleCardParticipantes.TextId}>ID {IdPersona}</Text>
+                        <Text style={StyleCardParticipantes.TextNombre}>{FirstName} {LastName}</Text>
+                        <Text style={StyleCardParticipantes.TextId}>ID {IdPersona ? IdPersona : 'No disponible'}</Text>
                     </View>
                     <View style={StyleCardParticipantes.Section2C}>
-                         <Text>{Email}</Text>
+                         <Text>{Email ? Email : 'No disponible'}</Text>
                          <Text style={CheckIn ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{CheckIn ? 'Registrado' : 'No registrado'}</Text>
                     </View>
                     {CheckIn ? <View/> : <View style={StyleCardParticipantes.Section3C}>
