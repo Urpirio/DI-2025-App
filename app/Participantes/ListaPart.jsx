@@ -7,6 +7,7 @@ import { useLocalSearchParams } from "expo-router";
 import useRefresh from "../../hooks/useRefresh";
 import { useRenderPart } from "../../func/ListaPart/useRenderPart";
 import { useStyleListPart } from "../../func/ListaPart/useStyleListPart";
+import CardSkeletonPart from "../../Components/Cards/CardSkeletonPart";
 
 export default function ListaPart() {
 
@@ -48,6 +49,7 @@ export default function ListaPart() {
     <SafeAreaProvider style={StyleParticipantes.Body}>
         <ScrollView style={StyleParticipantes.MainContainer} 
             refreshControl={<RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome} />}>
+              {/* Contenerdor del buscador */}
             <View style={StyleParticipantes.SearchContainer}>
                   <TouchableOpacity style={StyleParticipantes.BtnSearch}>
                       <Image style={StyleParticipantes.IconBtnSearch}
@@ -65,62 +67,58 @@ export default function ListaPart() {
                 <Image style={StyleParticipantes.IconArrow} 
                   source={IconBtnFilter.Icon}/>
               </TouchableOpacity>
-
+              {/* Filtro por Email y Nombre del participante */}
               <View style={DeploySelectS}>
-                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilter} onPress={()=>{
+                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilterS} onPress={()=>{
                   setFiltroBusqueda('Email');
                   DeployFilterS();
                 }}>
                   <Text style={{color:'gray'}}>Email</Text>
+                  <Text>{FiltroBusqueda == 'Email' ? '✔️' : ''}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilter} onPress={()=>{
+                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilterS} onPress={()=>{
                   setFiltroBusqueda('Nombre');
                   DeployFilterS();
                 }}>
                   <Text style={{color:'gray'}}>Nombre</Text>
+                  <Text>{FiltroBusqueda == 'Nombre' ? '✔️' : ''}</Text>
                 </TouchableOpacity>
               </View>
             </View>
+            {/* Filtro por estado del participante */}
             <View style={StyleParticipantes.ContainerFilter}>
               <TouchableOpacity style={StyleParticipantes.BtnDeployFilter} 
                 onPress={DeployFilterRegistro}>
-                <Text style={{color:'gray'}}>{FiltroEstado}</Text>
+                <Text style={{color:'gray'}}>Filtro por estados</Text>
                 <Image style={StyleParticipantes.IconArrow} 
                   source={IconBtnFilterR.Icon}/>
               </TouchableOpacity>
 
               <View style={DeploySelectR}>
 
-                {FiltroEstado == 'Registrados' ? 
-                <View/> 
-                : 
-                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilter} onPress={()=>{
+                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilterR} onPress={()=>{
                   setFiltroEstado('Registrados');
                   DeployFilterRegistro();
                 }}>
-                  <Text style={{color:'gray'}}>Registrado</Text>
-                </TouchableOpacity>}
+                  <Text style={{color:'gray'}}>Registrados</Text>
+                  <Text>{FiltroEstado == 'Registrados' ? '✔️' : ''}</Text>
+                </TouchableOpacity>
 
-                {FiltroEstado == 'No registrados' ? 
-                <View/> 
-                :
-                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilter} onPress={()=>{
+                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilterR} onPress={()=>{
                   setFiltroEstado('No registrados');
                   DeployFilterRegistro();
                 }}>
                   <Text style={{color:'gray'}}>No registrado</Text>
+                  <Text>{FiltroEstado == 'No registrados' ? '✔️' : ''}</Text>
                 </TouchableOpacity>
-                }
 
-                {FiltroEstado == 'Todos' ?
-                 <View/> 
-                : 
-                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilter} onPress={()=>{
+                <TouchableOpacity style={StyleParticipantes.SelectBtnForFilterR} onPress={()=>{
                   setFiltroEstado('Todos');
                   DeployFilterRegistro();
                 }}>
                   <Text style={{color:'gray'}}>Todos</Text>
-                </TouchableOpacity>}
+                  <Text>{FiltroEstado == 'Todos' ? '✔️' : ''}</Text>
+                </TouchableOpacity>
               </View>
             </View>
             </View>
@@ -144,7 +142,15 @@ export default function ListaPart() {
             />
             )
             }}/> 
-            : <ActivityIndicator size={'large'} />}
+            :<View>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            <CardSkeletonPart/>
+            </View>}
+            
 
         </ScrollView>
     </SafeAreaProvider>
