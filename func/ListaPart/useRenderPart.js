@@ -11,7 +11,6 @@ export const useRenderPart = () => {
     const [FiltroBusqueda,setFiltroBusqueda] = useState('Nombre');
     const [FiltroEstado,setFiltroEstado] = useState('Todos');
     const [TextSearch,setTextSearch] = useState();
-    // const [,setuserEventId] = useState();
     
 
 
@@ -23,7 +22,11 @@ export const useRenderPart = () => {
                 'Authorization': `Bearer ${TokenAcces}`
             }
         })
-        .then(respuestas => respuestas.json())
+        .then(respuestas => {
+            if(respuestas.ok){
+                return respuestas.json();
+            };
+        })
         .then((Data)=>{
             const  ArrayUser = [];
             Data.data.forEach((data) =>{
@@ -62,7 +65,11 @@ export const useRenderPart = () => {
                 'Authorization': `Bearer ${TokenAccess}`
             }
         })
-        .then(respuestas => respuestas.json())
+        .then(respuestas => {
+            if(respuestas.ok){
+               return respuestas.json()
+            }
+        })
         .then((Data)=>{
             const ArrayUser = [];
 
@@ -108,11 +115,10 @@ export const useRenderPart = () => {
                 }
             };
         })
-        .catch(()=>{
-
+        .catch((err)=>{
+            console.log(err);
         })
         .finally(()=>{
-            // console.log('funciona')
             setLoading(true)
         })
     };
