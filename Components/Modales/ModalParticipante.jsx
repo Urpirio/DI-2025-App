@@ -35,8 +35,6 @@ export default function ModalParticipante({
         .then(respuesta => {
             if(respuesta.ok){
                 FuncionRegistrado();
-            }else{
-
             }
         })
         .catch((err)=>{
