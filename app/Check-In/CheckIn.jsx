@@ -181,6 +181,9 @@ export default function CheckIn() {
                     FuncionCancelar={()=>{
                         setNotInEvent(false);
                     }}
+                    FuncionExitoso={()=>{
+                        setIsRegistrado(true);
+                    }}
                     Data={DataUsers}
                     EventId={LocalData.IDEvents}
                     TokenAccess={LocalData.TokenAccess}
