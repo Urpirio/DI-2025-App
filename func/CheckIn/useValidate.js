@@ -31,9 +31,10 @@ const useValidate = () => {
     };
         
     const CodeScanned = ({DataScanned,TokenUser,EventId}) =>{
-        if((!NoMatchUser && !NotInEvent) === !StatusPar){
+        if((!NoMatchUser && (!NotInEvent == !Ischeckin)) === !StatusPar){
             setLoading(true);
-        }
+        };
+
         fetch(ApiUser,{
             method: 'GET',
             headers:{
@@ -150,7 +151,7 @@ const useValidate = () => {
 
             if(!B && !C){
                 setNotInEvent(true)
-            }else if(C){
+            }else if(C && !Ischeckin){
                 setISCheckin(true);
             };
             
