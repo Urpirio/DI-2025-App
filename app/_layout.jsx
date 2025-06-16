@@ -114,7 +114,7 @@ export default function _layout() {
             },
             
         }} />
-        <Stack.Screen name="InEvent/[InEvent]" options={{
+        <Stack.Screen name="Evento/EnEvento" options={{
             header:({route})=>{
 
                 const ArrayNombreEvento = route.params.NombreEvento.split('');
