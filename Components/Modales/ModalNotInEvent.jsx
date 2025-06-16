@@ -6,11 +6,11 @@ export default function ModalNotInEvent({
     FuncionCancelar,
     Data,
     EventId,
-    TokenAccess
+    TokenAccess,
+    StaffID,
+    FuncionExitoso,
 
 }) {
-
-    
 
     const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
 
@@ -19,7 +19,7 @@ export default function ModalNotInEvent({
     : `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
 
 
-    const ConfirmarAsistencia = () => {
+    const AsistenciaStaff = () => {
         const date = new Date().toISOString();
 
         fetch(ApiSpecificEvent,{
@@ -30,18 +30,46 @@ export default function ModalNotInEvent({
             },
             body: JSON.stringify({
                 checkin: date,
-                user_id: Data.Id,
+                user_id: StaffID,
                 event_id: EventId,
             })
         })
         .then(respuesta => respuesta.json()).then((data)=>{
-            console.log(data)
-            console.log(Data.Id)
+            if(!data.errors){
+                AsistenciaParticipante({Id: data.data.id})
+            }
         })
         .catch((err)=>{
             console.error(err)
         })     
-    }
+    };
+
+    const AsistenciaParticipante = ({Id}) => {
+        fetch(ApiSpecificEvent + Id ,{
+            method:'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenAccess}`
+            },
+            body: JSON.stringify({
+                user_id: Data.Id,
+            })
+        })
+        .then(respuesta => {
+            if(respuesta.ok){
+                FuncionCancelar();
+                FuncionExitoso();
+            }
+        })
+        .catch((err)=>{
+            console.error(err)
+        })
+    };
+
+    
+
+
+
 
   return (
     <Modal visible={StatusModal} transparent={true}>
@@ -58,7 +86,7 @@ export default function ModalNotInEvent({
                     <Text style={StyleModalNotInEvent.TextId}>ID: {Data ? Data.ShortID : 'No disponible'}</Text>
                 </View>
                 <View style={{gap:10}}>
-                    <TouchableOpacity style={StyleModalNotInEvent.btnConfirmarAsistencia} onPress={ConfirmarAsistencia}>
+                    <TouchableOpacity style={StyleModalNotInEvent.btnConfirmarAsistencia} onPress={AsistenciaStaff}>
                         <Text style={StyleModalNotInEvent.TextbtnConfirmarAsistencia}>Agregar y Confirmar Asitencia</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={StyleModalNotInEvent.BtnCancelar} 
