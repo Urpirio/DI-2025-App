@@ -27,7 +27,11 @@ export const GetLogin = () => {
                 password:Password,
             })
         })
-        .then(respuesta => respuesta.json())
+        .then(respuesta => {
+            if(respuesta.ok){
+               return respuesta.json();
+            }
+        })
         .then((Data)=>{
             if(Data.errors){
                 setCredencial_No_Valida(true)
@@ -68,6 +72,7 @@ export const GetLogin = () => {
                     profile_picture: Data.data.profile_picture,
                     LastName: Data.data.last_name,
                     FirstName: Data.data.first_name,
+                    StaffId: Data.id,
                     }
                 });
             }
