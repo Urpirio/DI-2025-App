@@ -41,7 +41,7 @@ export const StyleParticipantes = StyleSheet.create({
     BtnDeployFilter:{
         borderWidth:1,
         borderColor:'#ced4da',
-        paddingHorizontal:16,
+        paddingHorizontal:5,
         paddingVertical:5,
         borderRadius:10,
         flexDirection:'row',
@@ -80,10 +80,19 @@ export const StyleParticipantes = StyleSheet.create({
     SelectContainerFilterHiddenR:{
         display:'none'
     },
-    SelectBtnForFilter:{
+    SelectBtnForFilterS:{
         width:'100%',
         padding:5,
         borderRadius:5,
+        flexDirection:'row',
+        justifyContent:'space-between'
+    },
+    SelectBtnForFilterR:{
+        width:'100%',
+        padding:5,
+        borderRadius:5,
+        flexDirection:'row',
+        justifyContent:'space-between'
     },
     IconArrow:{
         height:30,
