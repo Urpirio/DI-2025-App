@@ -1,5 +1,4 @@
 import { View} from "react-native";
-import { StyleHome } from "../../style/StyleHome";
 import { Skeleton,LinearGradient } from "@rneui/base";
 
 export default function CardSkeleton() {
