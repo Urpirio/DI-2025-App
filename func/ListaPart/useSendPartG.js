@@ -1,7 +1,7 @@
 // import { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 
-export const useSendPart = () =>{
+export const useSendPartG = () =>{
 
         const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
         
