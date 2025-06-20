@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const StyleParticipantesGeneral = StyleSheet.create({
     Body:{
         backgroundColor:'white',
+        paddingHorizontal: 5,
     },
     MainContainer:{
         paddingHorizontal:5,
