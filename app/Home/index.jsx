@@ -125,8 +125,6 @@ export default function index() {
   return (
     <SafeAreaProvider style={{backgroundColor:'white'}}>
 
-        
-
         <ScrollView style={{padding:10}}  refreshControl={
             <RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>
         }>
