@@ -74,7 +74,6 @@ export const useGetEvents = () => {
         const GetEvents = () =>{
             
             // if(HaveInternet.isConnected){
-                console.log('funciona la parte 1')
              fetch(ApiEvent)
             .then(respuesta => {
                 if(respuesta.ok){
