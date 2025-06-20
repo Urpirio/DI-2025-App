@@ -29,9 +29,6 @@ export const useRenderPartG = () => {
         .catch((error)=>{
             console.error(error)
         })
-        .finally(()=>{
-            setLoading(true)
-        });
     };
 
     const FilterUser = ({TokenAcces,UserInGeneral,EventId}) =>{
@@ -85,13 +82,9 @@ export const useRenderPartG = () => {
                     };
                 }
             }
-
-
+            setLoading(true)
         })
         .catch(()=>{
-
-        })
-        .finally(()=>{
 
         })
     }
@@ -105,5 +98,6 @@ export const useRenderPartG = () => {
         setTextSearch: setTextSearch,
         FiltroBusqueda: FiltroBusqueda,
         setFiltroBusqueda: setFiltroBusqueda,
+        setLoading,
     })
 }
