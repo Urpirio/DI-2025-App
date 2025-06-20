@@ -26,6 +26,7 @@ export default function CardPartGeneral({
 
   return(
   <FlatList 
+    showsVerticalScrollIndicator={false}
     refreshControl={<RefreshControl 
         refreshing={StateRefresh} 
         onRefresh={ScreenRefresHome}/>}
