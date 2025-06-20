@@ -7,6 +7,7 @@ import { useLocalSearchParams } from "expo-router";
 import useRefresh from "../../hooks/useRefresh";
 import { useRenderPartG } from "../../func/ListaPart/useRenderPartG";
 import CardSkeletonPart from "../../Components/Cards/CardSkeletonPart";
+import TopHeaderListG from "../../Components/TopBarLists/TopHeaderListG";
 
 export default function ListGeneral() {
 
@@ -16,7 +17,8 @@ export default function ListGeneral() {
         Icon:require('../../assets/IconHome/ArrowDerecha.png')
     });
     const LocalData = useLocalSearchParams();
-    const { ScreenRefresHome,StateRefresh} = useRefresh(false);
+    //hook personalizado
+    const { ScreenRefresHome,StateRefresh} = useRefresh();
     const [AutoRefresh,setAutoRefresh] = useState(false)
 
     const {GetGeneralParticipant ,
@@ -55,68 +57,42 @@ export default function ListGeneral() {
 
   return (
     <SafeAreaProvider style={StyleParticipantesGeneral.Body}>
-        <ScrollView style={StyleParticipantesGeneral.MainContainer} 
-            refreshControl={<RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome} />}>
-            <View style={StyleParticipantesGeneral.SearchContainer}>
-                  <TouchableOpacity style={StyleParticipantesGeneral.BtnSearch}>
-                      <Image style={StyleParticipantesGeneral.IconBtnSearch}
-                        source={require('../../assets/IconParticipantes/search-big.png')}/>
-                  </TouchableOpacity>
-                  <TextInput style={StyleParticipantesGeneral.TextInputSearch} 
-                    placeholder={`Buscador por ${FiltroBusqueda}`} placeholderTextColor={'#adb5bd'} value={TextSearch} 
-                    onChangeText={setTextSearch}/>
-            </View>
-            <View style={StyleParticipantesGeneral.ContainerFilter}>
-              <TouchableOpacity style={StyleParticipantesGeneral.BtnDeployFilter} 
-                onPress={DeployFilter}>
-                <Text style={{color:'gray'}}>Filtrar busqueda por</Text>
-                <Image style={StyleParticipantesGeneral.IconArrow} 
-                  source={IconBtnFilter.Icon}/>
-              </TouchableOpacity>
-
-              <View style={DeploySelect}>
-                <TouchableOpacity style={StyleParticipantesGeneral.SelectBtnForFilter} onPress={()=>{
-                  setFiltroBusqueda('Email');
-                  DeployFilter();
-                  }}>
-                  <Text>Email</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={StyleParticipantesGeneral.SelectBtnForFilter} onPress={()=>{
-                  setFiltroBusqueda('Nombre');
-                  DeployFilter();
-                }}>
-                  <Text>Nombre</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {Loading ? <FlatList 
-            data={DataParticipant} 
-            renderItem={({item})=>{
-            return(   
-            <CardPartGeneral 
-            first_name={item.first_name}
-            last_name={item.last_name}
-            IdPersona={item.id.slice(30,36)}
-            Email={item.email}
-            ImgPerfil={item.profile_picture}
-            CheckIn={item.checkin}
-            userID={item.id}
-            FuncionAutoR={()=>{
-              setAutoRefresh(!AutoRefresh);
-            }}
-            />
-            )
-          }}/> : <View>
-            <CardSkeletonPart/>
-            <CardSkeletonPart/>
-            <CardSkeletonPart/>
-            <CardSkeletonPart/>
-            <CardSkeletonPart/>
-            <CardSkeletonPart/>
-            </View>}
-
-        </ScrollView>
+        
+          <View>
+            {Loading 
+            ? 
+            <CardPartGeneral
+            ListaParticipantes={DataParticipant}
+            funcionRefresh={()=>{setAutoRefresh(!AutoRefresh);}}
+            setTextSearch={setTextSearch}
+            setFiltroBusqueda={setFiltroBusqueda}
+            DeployFilter={DeployFilter}
+            StateRefresh={StateRefresh}
+            ScreenRefresHome={ScreenRefresHome}
+            TextSearch={TextSearch}
+            DeploySelect={DeploySelect}
+            IconBtnFilter={IconBtnFilter}
+            /> 
+            : 
+            <ScrollView>
+              <TopHeaderListG
+              setTextSearch={setTextSearch}
+              DeployFilter={DeployFilter}
+              setFiltroBusqueda={setDeploySelect}
+              FiltroBusqueda={FiltroBusqueda}
+              TextSearch={TextSearch}
+              DeploySelect={DeploySelect}
+              IconBtnFilter={IconBtnFilter}
+              />
+              <CardSkeletonPart/>
+              <CardSkeletonPart/>
+              <CardSkeletonPart/>
+              <CardSkeletonPart/>
+              <CardSkeletonPart/>
+            </ScrollView>
+            }
+        </View>
+        
     </SafeAreaProvider>
   )
 }
