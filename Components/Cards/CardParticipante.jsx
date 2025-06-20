@@ -37,6 +37,9 @@ export default function CardParticipante({
         DeploySelectS={DeploySelectS}  
         setTextSearch={setTextSearch} 
         />}
+        ListEmptyComponent={<View style={{alignItems: 'center', marginTop: 50 ,flex:1,marginBottom:50,}}>
+        <Text style={{color:'gray'}}>No hay participantes que mostrar</Text>
+      </View>}
         refreshControl={<RefreshControl 
             refreshing={StateRefresh} 
             onRefresh={ScreenRefresHome} 
@@ -71,7 +74,10 @@ export default function CardParticipante({
                          <Text style={item.checkin ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{item.checkin ? 'Registrado' : 'No registrado'}</Text>
                     </View>
                     {item.checkin ? <View/> : <View style={StyleCardParticipantes.Section3C}>
-                        <TouchableOpacity style={StyleCardParticipantes.BtnConfirmarAsistencia} onPress={()=>{ConfirmarAsistencia({TokenAccess:LocalData.TokenAccess,userEventId:item.userEventI})}} >
+                        <TouchableOpacity style={StyleCardParticipantes.BtnConfirmarAsistencia} onPress={()=>{
+                            ConfirmarAsistencia({TokenAccess:LocalData.TokenAccess,userEventId:item.userEventId});
+                            funcionRefresh();
+                        }}>
                            { Loading2 ? <ActivityIndicator size={'small'}/> :
                             <Text style={StyleCardParticipantes.TextBtns}>Confirmar Asistencia</Text>
                             }
