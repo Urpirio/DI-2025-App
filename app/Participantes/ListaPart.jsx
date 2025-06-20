@@ -26,7 +26,6 @@ export default function ListaPart() {
     const [AutoRefresh,setAutoRefresh] = useState(false)
 
     const {
-      Loading,
       DataParticipant,
       GetParticipant,
       FiltroBusqueda,
@@ -52,7 +51,7 @@ export default function ListaPart() {
     <SafeAreaProvider style={StyleParticipantes.Body}>
         <View style={StyleParticipantes.MainContainer}>
 
-            {DataParticipant 
+            {DataParticipant
             ? <CardParticipante
             DataParticipantes={DataParticipant}
             funcionRefresh={()=>{
