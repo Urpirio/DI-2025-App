@@ -1,6 +1,6 @@
 import { View,Image,Text, TouchableOpacity, ActivityIndicator, FlatList,VirtualizedList } from "react-native";
 import { StyleCardParticipantes } from "../../style/StyleCardParticipantes";
-import { useSendPart } from "../../func/ListaPart/useSendPart";
+import { useSendPartG } from "../../func/ListaPart/useSendPartG";
 import { useState } from "react";
 import { RefreshControl } from "react-native";
 import TopHeaderListG from "../TopBarLists/TopHeaderListG";
@@ -20,8 +20,8 @@ export default function CardPartGeneral({
 }) {
 
     
-  const {AsistenciaStaff} = useSendPart();
-  //Esto no se usara temporalmente.
+  const {AsistenciaStaff} = useSendPartG();
+  
   const [Loading,setLoading] = useState(false);
 
   return(
@@ -43,6 +43,9 @@ export default function CardPartGeneral({
     IconBtnFilter={IconBtnFilter}
     />}
     ListHeaderComponentStyle={{zIndex:20}}
+    ListEmptyComponent={<View style={{alignItems: 'center', marginTop: 50 ,flex:1,marginBottom:50,}}>
+        <Text style={{color:'gray'}}>No hay participantes que agregar</Text>
+    </View>}
 
     data={ListaParticipantes}
     renderItem={({item})=>{
