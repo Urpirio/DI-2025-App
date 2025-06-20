@@ -125,10 +125,19 @@ export default function index() {
   return (
     <SafeAreaProvider style={{backgroundColor:'white'}}>
 
-        <ScrollView style={{padding:10}}  refreshControl={
+        <View style={{padding:10}}>
+           
+            
+           <FlatList
+            refreshControl={
             <RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>
-        }>
-           <SearchHome
+            }
+           ListEmptyComponent={<View style={{marginVertical:100,alignItems:'center'}}>
+            <Text style={{color:'gray'}}>No hay eventos</Text>
+           </View>}
+           ListHeaderComponentStyle={{zIndex:20}}
+           ListHeaderComponent={
+            <SearchHome
                 SearchText={SearchText}
                 setSearchText={setSearchText}
                 setEventosHoy={setEventosHoy}
@@ -144,14 +153,8 @@ export default function index() {
                 ChangeSelected={ChangeSelected}
                 IconBtnFilter={IconBtnFilter}
                 IconSearch={IconSearch}
-                LoadingF={LoadingF}/>
-
-           {NoEventos ? <View style={{height:'100%',width:'100%',
-            alignItems:'center',justifyContent:'center'}}>
-            <Text style={{color:'gray'}}>No hay eventos</Text>
-           </View> : <View/>}
+                LoadingF={LoadingF}/>}
             
-           <FlatList
             onTouchMove={IsScrolling}
             style={{paddingBottom:15}}
             data={AllEvents}
@@ -168,7 +171,7 @@ export default function index() {
                     />)
                 
             }}/>
-        </ScrollView>
+        </View>
 
         
         <ModalCerrarSesion
