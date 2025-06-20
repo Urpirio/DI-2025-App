@@ -119,9 +119,6 @@ export default function index() {
     )
   };
 
-    
-    
-
   return (
     <SafeAreaProvider style={{backgroundColor:'white'}}>
 
@@ -129,37 +126,37 @@ export default function index() {
            
             
            <FlatList
-            refreshControl={
-            <RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>
-            }
-           ListEmptyComponent={<View style={{marginVertical:100,alignItems:'center'}}>
-            <Text style={{color:'gray'}}>No hay eventos</Text>
-           </View>}
-           ListHeaderComponentStyle={{zIndex:20}}
-           ListHeaderComponent={
-            <SearchHome
-                SearchText={SearchText}
-                setSearchText={setSearchText}
-                setEventosHoy={setEventosHoy}
-                RotateIconFilter={RotateIconFilter}
-                DeployFilter={DeployFilter}
-                DataSala={DataSala}
-                GetSalaEvent={GetSalaEvent}
-                SelectName={SelectName}
-                StyleBtnHoy={StyleBtnHoy}
-                StyleBtnTodos={StyleBtnTodos}
-                StyleFiltros={StyleFiltros}
-                SwitchStyle={SwitchStyle}
-                ChangeSelected={ChangeSelected}
-                IconBtnFilter={IconBtnFilter}
-                IconSearch={IconSearch}
-                LoadingF={LoadingF}/>}
+           showsVerticalScrollIndicator={false}
+            refreshControl={<RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>}
+            ListEmptyComponent={<View style={{marginVertical:100,alignItems:'center'}}>
+                <Text style={{color:'gray'}}>No hay eventos</Text>
+            </View>}
+            ListHeaderComponentStyle={{zIndex:20}}
+            ListHeaderComponent={
+                <SearchHome
+                    SearchText={SearchText}
+                    setSearchText={setSearchText}
+                    setEventosHoy={setEventosHoy}
+                    RotateIconFilter={RotateIconFilter}
+                    DeployFilter={DeployFilter}
+                    DataSala={DataSala}
+                    GetSalaEvent={GetSalaEvent}
+                    SelectName={SelectName}
+                    StyleBtnHoy={StyleBtnHoy}
+                    StyleBtnTodos={StyleBtnTodos}
+                    StyleFiltros={StyleFiltros}
+                    SwitchStyle={SwitchStyle}
+                    ChangeSelected={ChangeSelected}
+                    IconBtnFilter={IconBtnFilter}
+                    IconSearch={IconSearch}
+                    LoadingF={LoadingF}
+            />}
             
             onTouchMove={IsScrolling}
-            style={{paddingBottom:15}}
+            style={{paddingBottom:15,width:'100%'}}
             data={AllEvents}
             renderItem={({item})=>{
-                    return(
+                return(
                     <CardHomeEvents
                     NombreEvento={item.title}
                     Localizacion={item.room === null ? '??' : item.room.location}
@@ -168,17 +165,18 @@ export default function index() {
                     HoraFinal={item.end_time.slice(12,16)}
                     IconBtn={require('../../assets/IconHome/caret-left.png')}
                     IDEvents={item.id}
-                    />)
+                />)
                 
             }}/>
         </View>
 
         
         <ModalCerrarSesion
-        StatusModal={StatusModalCerrarS}
-        FuncionGoBack={()=>{
+            StatusModal={StatusModalCerrarS}
+            FuncionGoBack={()=>{
             setStatusBack(!StatusBack);
-        }}/>
+            }}
+        />
 
         <StatusBar style="auto"/>
     </SafeAreaProvider>
