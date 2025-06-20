@@ -1,59 +1,61 @@
-import { View,Image,Text, TouchableOpacity,ActivityIndicator } from "react-native";
+import { View,Image,Text, TouchableOpacity,ActivityIndicator, FlatList,RefreshControl } from "react-native";
 import { StyleCardParticipantes } from "../../style/StyleCardParticipantes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocalSearchParams } from "expo-router";
+import { useSendPart } from "../../func/ListaPart/useSendPart";
+import TopHeaderList from "../TopBarLists/TopHeaderList";
+
 
 export default function CardParticipante({
-    first_name,
-    last_name,
-    ImgPerfil,
-    Email,
-    IdPersona,
-    CheckIn,
-    user_id,
-    TokenAccess,
-    funcionRefresh,
+    DataParticipantes,funcionRefresh,
+    TextSearch,IconBtnFilter,IconBtnFilterR,setFiltroBusqueda,
+    setFiltroEstado,FiltroBusqueda,FiltroEstado,DeployFilterRegistro,
+    DeployFilterS,DeploySelectR,DeploySelectS,setTextSearch,ScreenRefresHome,
+    StateRefresh
 }) {
-
-    const [Loading,setLoading] = useState(false);
-    const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
-
-    const ImageProfile = ImgPerfil 
-    ? `https://directus-prueba.dominicanainnova.gob.do/assets/${ImgPerfil}` 
-    : `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
     
-    const FirstName = first_name ? first_name.split(" ")[0] : '';
-    const LastName = last_name ? last_name.split(" ")[0] : '';
+    const { ConfirmarAsistencia } = useSendPart();
+    
+    const LocalData = useLocalSearchParams();
+    const [Loading2,setLoading2] = useState(false);
+      
 
-    const ConfirmarAsistencia = () => {
+    return(
+        <FlatList
+        ListHeaderComponentStyle={{zIndex:20}}
+        ListHeaderComponent={<TopHeaderList
+        TextSearch={TextSearch}
+        IconBtnFilter={IconBtnFilter}
+        IconBtnFilterR={IconBtnFilterR}
+        setFiltroBusqueda={setFiltroBusqueda}
+        setFiltroEstado={setFiltroEstado}
+        FiltroBusqueda={FiltroBusqueda}
+        FiltroEstado={FiltroEstado}
+        DeployFilterRegistro={DeployFilterRegistro}
+        DeployFilterS={DeployFilterS}
+        DeploySelectR={DeploySelectR}
+        DeploySelectS={DeploySelectS}  
+        setTextSearch={setTextSearch} 
+        />}
+        refreshControl={<RefreshControl 
+            refreshing={StateRefresh} 
+            onRefresh={ScreenRefresHome} 
+        />}
+        initialNumToRender={5}
+        data={DataParticipantes}
+        renderItem={({item})=>{
 
-        setLoading(true);
-        const date = new Date().toISOString();
+            const FirstName = item.first_name ? item.first_name.split(" ")[0] : '';
+            const LastName = item.last_name ? item.last_name.split(" ")[0] : '';
+            const IdPersona = item.id.slice(30,36);
+            const Email = item.email;
+            const ImageProfile = item.profile_picture 
+            ? `https://directus-prueba.dominicanainnova.gob.do/assets/${item.profile_picture}` 
+            :   `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
+    
 
-        fetch(ApiSpecificEvent + user_id,{
-            method:'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${TokenAccess}`
-            },
-            body: JSON.stringify({checkin: date})
-        })
-        .then(respuesta => respuesta.json())
-        .then(Data =>{
-            console.log(Data);
-            console.log(TokenAccess);
-            console.log(user_id);
-        })
-        .catch((err)=>{
-            console.error(err)
-        }) 
-        .finally(()=>{
-            setLoading(false)
-            funcionRefresh();
-        })    
-    };
-  
-  return (
-    <View style={StyleCardParticipantes.BodyCard}>
+            return(
+                <View key={IdPersona} style={StyleCardParticipantes.BodyCard}>
                 <View style={StyleCardParticipantes.ImageContainer}>
                     <Image style={StyleCardParticipantes.PerfilImg} 
                         source={{uri:ImageProfile}}
@@ -66,17 +68,21 @@ export default function CardParticipante({
                     </View>
                     <View style={StyleCardParticipantes.Section2C}>
                          <Text>{Email ? Email : 'No disponible'}</Text>
-                         <Text style={CheckIn ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{CheckIn ? 'Registrado' : 'No registrado'}</Text>
+                         <Text style={item.checkin ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{item.checkin ? 'Registrado' : 'No registrado'}</Text>
                     </View>
-                    {CheckIn ? <View/> : <View style={StyleCardParticipantes.Section3C}>
-                        <TouchableOpacity style={StyleCardParticipantes.BtnConfirmarAsistencia} onPress={ConfirmarAsistencia} >
-                           { Loading ? <ActivityIndicator size={'small'}/> :
+                    {item.checkin ? <View/> : <View style={StyleCardParticipantes.Section3C}>
+                        <TouchableOpacity style={StyleCardParticipantes.BtnConfirmarAsistencia} onPress={()=>{ConfirmarAsistencia({TokenAccess:LocalData.TokenAccess,userEventId:item.userEventI})}} >
+                           { Loading2 ? <ActivityIndicator size={'small'}/> :
                             <Text style={StyleCardParticipantes.TextBtns}>Confirmar Asistencia</Text>
                             }
                         </TouchableOpacity>
                     </View>}
               </View>
             
-    </View>
-  )
-}
+            </View>
+            )
+        }}
+        />
+    )
+  
+};
