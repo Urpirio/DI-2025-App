@@ -1,82 +1,71 @@
-import { View,Image,Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View,Image,Text, TouchableOpacity, ActivityIndicator, FlatList,VirtualizedList } from "react-native";
 import { StyleCardParticipantes } from "../../style/StyleCardParticipantes";
-import {  useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { useSendPart } from "../../func/ListaPart/useSendPart";
+import { useState } from "react";
+import { RefreshControl } from "react-native";
+import TopHeaderListG from "../TopBarLists/TopHeaderListG";
 
 export default function CardPartGeneral({
-    first_name,
-    last_name,
-    ImgPerfil,
-    Email,
-    IdPersona,
-    CheckIn,
-    userID,
-    FuncionAutoR
+    ListaParticipantes,
+    funcionRefresh,
+    StateRefresh,
+    ScreenRefresHome,
+    setTextSearch,
+    DeployFilter,
+    setFiltroBusqueda,
+    FiltroBusqueda,
+    DeploySelect,
+    TextSearch,
+    IconBtnFilter,
 }) {
-    const LocalData = useLocalSearchParams();
-    const [Loading,setLoading] = useState(false);
-    const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
 
-    const ImageProfile = ImgPerfil 
-    ? `https://directus-prueba.dominicanainnova.gob.do/assets/${ImgPerfil}` 
-    : `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
     
-    const FirstName = first_name ?  first_name.split(" ")[0] : '';
-    const LastName = last_name ? last_name.split(" ")[0] : '';
+  const {AsistenciaStaff} = useSendPart();
+  //Esto no se usara temporalmente.
+  const [Loading,setLoading] = useState(false);
 
-    const AsistenciaStaff = () => {
-        const date = new Date().toISOString();
-        console.log(LocalData.StaffId);
-        console.log(LocalData.TokenAccess);
-        console.log(LocalData.IDEvents);
-        console.log(userID);
-        fetch(ApiSpecificEvent,{
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${LocalData.TokenAccess}`
-            },
-            body: JSON.stringify({
-                checkin: date,
-                user_id: LocalData.StaffId,
-                event_id: LocalData.IDEvents,
-            })
-        })
-        .then(respuesta => respuesta.json())
-        .then((data)=>{
-            console.log(data)
-            if(!data.errors){
-                AsistenciaParticipante({Id: data.data.id})
-            }
-        })
-        .catch((err)=>{
-            console.error(err)
-        })     
-    };
+  return(
+  <FlatList 
+    refreshControl={<RefreshControl 
+        refreshing={StateRefresh} 
+        onRefresh={ScreenRefresHome}/>}
+    initialNumToRender={5}
+    // Eso viene de un componente el continue el fitrado y 
+    // buscador y al mismo tiempo pide los siguientes datos.
+    ListHeaderComponent={
+    <TopHeaderListG
+    setTextSearch={setTextSearch}
+    DeployFilter={DeployFilter}
+    setFiltroBusqueda={setFiltroBusqueda}
+    FiltroBusqueda={FiltroBusqueda}
+    DeploySelect={DeploySelect}
+    TextSearch={TextSearch}
+    IconBtnFilter={IconBtnFilter}
+    />}
+    ListHeaderComponentStyle={{zIndex:20}}
 
-    const AsistenciaParticipante = ({Id}) => {
-        fetch(ApiSpecificEvent + Id ,{
-            method:'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${LocalData.TokenAccess}`
-            },
-            body: JSON.stringify({
-                user_id: userID,
-            })
-        })
-        .then(respuesta => respuesta.json())
-        .catch((err)=>{
-            console.error(err)
-        })
-        .finally(()=>{
-            setLoading(false);
-            FuncionAutoR();
-        })
-    };
-  
-  return (
-    <View style={StyleCardParticipantes.BodyCard}>
+    data={ListaParticipantes}
+    renderItem={({item})=>{
+    
+    
+    const ImageProfile = item.profile_picture
+    ? `https://directus-prueba.dominicanainnova.gob.do/assets/${item.profile_picture}` 
+    : `https://i.pinimg.com/736x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg`;
+
+    const FirstName = item.first_name ?  item.first_name.split(" ")[0] : '';
+
+    const LastName = item.last_name ? item.last_name.split(" ")[0] : '';
+
+    const Email = item.email;
+
+    const IdPersona = item.id.slice(30,36);
+
+    const userID = item.id;
+
+
+     return (
+        //Cards de los participantes.
+        <View key={item.id} style={StyleCardParticipantes.BodyCard}>
                 <View style={StyleCardParticipantes.ImageContainer}>
                     <Image style={StyleCardParticipantes.PerfilImg} 
                         source={{uri:ImageProfile}}
@@ -85,23 +74,23 @@ export default function CardPartGeneral({
                 <View style={StyleCardParticipantes.MainContainer}>
                     <View style={StyleCardParticipantes.Section1C}>
                         <Text style={StyleCardParticipantes.TextNombre}>{FirstName} {LastName}</Text>
-                        <Text style={StyleCardParticipantes.TextId}>ID {IdPersona ?  IdPersona : 'No disponible'}</Text>
+                        <Text style={StyleCardParticipantes.TextId}>ID 
+                            {IdPersona ?  IdPersona : 'No disponible'}
+                        </Text>
                     </View>
                     <View style={StyleCardParticipantes.Section2C}>
                          <Text>{Email ? Email : 'No disponible'}</Text>
-                         <Text style={CheckIn ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{CheckIn ? 'Inscrito' : 'No Inscrito'}</Text>
+                         <Text style={item.checkin ? StyleCardParticipantes.TextInscrito :  StyleCardParticipantes.TextNotInscrito}>{item.checkin ? 'Inscrito' : 'No Inscrito'}</Text>
                     </View>
                     <View style={StyleCardParticipantes.Section3C}>
                         <TouchableOpacity style={StyleCardParticipantes.btnAgregar} onPress={()=>{
-                            AsistenciaStaff();
-                            setLoading(true);
-                            
+                            AsistenciaStaff({userID:userID,FuncLoading:setLoading,FuncionAutoR:funcionRefresh});
                         }}>
-                            {Loading ? <ActivityIndicator size={'small'}/> : <Text style={StyleCardParticipantes.TextBtns}>Agregar a Evento</Text>}
+                            <Text style={StyleCardParticipantes.TextBtns}>Agregar a Evento</Text>
                         </TouchableOpacity>
                     </View>
-              </View>
-            
-    </View>
-  )
+              </View> 
+         </View>
+  )}}/>)
+
 }
