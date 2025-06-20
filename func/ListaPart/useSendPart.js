@@ -4,9 +4,9 @@ import { useState } from "react";
 export  function useSendPart() {
     const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
 
-    
     const ConfirmarAsistencia = ({userEventId,TokenAccess}) => {
-
+        console.log(TokenAccess);
+        console.log(userEventId)
         const date = new Date().toISOString();
 
         fetch(ApiSpecificEvent + userEventId,{
@@ -18,6 +18,9 @@ export  function useSendPart() {
             body: JSON.stringify({checkin: date})
         })
         .then(respuesta => respuesta.json())
+        .then((Data)=>{
+            console.log(Data)
+        })
         .catch((err)=>{
             console.error(err)
         }) 
