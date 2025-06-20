@@ -58,7 +58,7 @@ export const StyleParticipantes = StyleSheet.create({
         gap:5,
         position:'absolute',
         marginTop:50,
-        zIndex:20,
+        // zIndex:20,
         backgroundColor:'white'
     },
     SelectContainerFilterHiddenS:{
@@ -74,7 +74,7 @@ export const StyleParticipantes = StyleSheet.create({
         gap:5,
         position:'absolute',
         marginTop:50,
-        zIndex:20,
+        // zIndex:20,
         backgroundColor:'white'
     },
     SelectContainerFilterHiddenR:{
