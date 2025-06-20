@@ -25,7 +25,7 @@ export const useRenderPart = () => {
         .then(respuestas => {
             if(respuestas.ok){
                 return respuestas.json();
-            };
+            }
         })
         .then((Data)=>{
             const  ArrayUser = [];
@@ -52,7 +52,7 @@ export const useRenderPart = () => {
             
         })
         .catch((error)=>{
-            console.error(error)
+            
         })
     };
 
@@ -116,7 +116,7 @@ export const useRenderPart = () => {
             };
         })
         .catch((err)=>{
-            console.log(err);
+            
         })
         .finally(()=>{
             setLoading(true)
