@@ -82,11 +82,8 @@ export default function _layout() {
         }}/>
         <Stack.Screen name="Home/index" options={{
             header:({route})=>{
-                // const LocalData = useLocalSearchParams();
                 const FirstName = route.params.FirstName.split(" ");
                 const LastName = route.params.LastName.split(" ");
-
-                // console.log(LastName)
                 return(
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutHome.Header}>
