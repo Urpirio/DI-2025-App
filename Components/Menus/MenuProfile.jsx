@@ -14,11 +14,11 @@ export default function MenuProfile({
 
   return (
     <View style={StyleMenuProfile}>
-            <Pressable style={Style.PressableMenuProfile} onPress={DeployProfileMenu}>
+            <Pressable style={Style.PressableMenuProfile} onPressOut={DeployProfileMenu}>
                 <View style={Style.ContainerBtnMenuProfile}>
-                    <TouchableOpacity style={Style.BtnMyProfile}>
+                    <View style={Style.BtnMyProfile}>
                         <Text style={{color:'#023e8a',fontSize:18,fontWeight:'600'}}>{FirstName[0]+ " " + LastName[0]}</Text>
-                    </TouchableOpacity>
+                    </View>
                     <TouchableOpacity style={Style.BtnCloseSesion} onPress={FCerrarSesion}>
                         <Text style={{color:'#d00000',}}>Cerrar sesion</Text>
                     </TouchableOpacity>
@@ -33,6 +33,8 @@ const Style = StyleSheet.create({
         width:'100%',
         alignItems:'flex-end',
         paddingRight:10,
+        backgroundColor:'black',
+        zIndex:10,
     },
     ContainerBtnMenuProfile:{
         width:'50%',
@@ -42,6 +44,8 @@ const Style = StyleSheet.create({
         borderWidth:1,
         borderColor:'#ced4da',
         borderRadius:10,
+        zIndex: 10,
+
     },
     BtnMyProfile:{
         width:'100%',
