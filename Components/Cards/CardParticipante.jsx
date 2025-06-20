@@ -22,6 +22,7 @@ export default function CardParticipante({
 
     return(
         <FlatList
+        showsVerticalScrollIndicator={false}
         ListHeaderComponentStyle={{zIndex:20}}
         ListHeaderComponent={<TopHeaderList
         TextSearch={TextSearch}
