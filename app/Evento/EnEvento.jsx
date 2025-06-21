@@ -15,7 +15,11 @@ export default function InEvent() {
 
   useEffect(()=>{
     GetPartInEvent({TokenAccess: LocalData.TokenAccess,IdEvent: LocalData.IDEvents});
-  });
+  },[LocalData.TokenAccess,LocalData.IDEvents]);
+
+  const Cantidad_Registrados = CantidadPart.InEvent > 1 ? ' registrados de ' : ' registrado de ';
+  const Cantidad_De_Personas_Dentro = CantidadPart.InEvent ? CantidadPart.InEvent : '?';
+  const Cantidad_Total_De_Personas_Fuera = CantidadPart.PartInEvent ? CantidadPart.PartInEvent : '?';
 
   return (
     <SafeAreaProvider style={StyleInEvent.Body}>
@@ -25,11 +29,15 @@ export default function InEvent() {
                 {LocalData.NombreEvento}
               </Text>
               {Loading ? <View style={{flexDirection:'row'}}>
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row',gap:5}}>
                   <Text style={{fontSize:18,fontWeight:'500',color:'#adb5bd'}}>
-                  {CantidadPart.InEvent ? CantidadPart.InEvent : '?'} 
-                  {`${CantidadPart.InEvent > 1 ? ' registrados de ' : ' registrado de '}`} 
-                  {CantidadPart.PartInEvent ? CantidadPart.PartInEvent : '?'}
+                  {Cantidad_De_Personas_Dentro} 
+                  </Text>
+                  <Text style={{fontSize:18,fontWeight:'500',color:'#adb5bd'}}>
+                    {Cantidad_Registrados}
+                  </Text>
+                  <Text style={{fontSize:18,fontWeight:'500',color:'#adb5bd'}}>
+                    {Cantidad_Total_De_Personas_Fuera}
                   </Text>
                 </View>
               </View> : 
