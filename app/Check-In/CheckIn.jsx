@@ -2,7 +2,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { CameraView,useCameraPermissions,CameraType } from "expo-camera";
 import { useState,useEffect } from "react";
 import { TouchableOpacity,View,Text, Image} from "react-native";
-import { useRouter,useLocalSearchParams } from "expo-router";
+import { useRouter,useLocalSearchParams, useFocusEffect } from "expo-router";
 import Modal_IngresarCodigo from "../../Components/Modales/Modal_IngresarCodigo";
 import { StatusBar } from "expo-status-bar";
 import QR_Mask from "../../Components/Masks/QR_Mask";
@@ -15,6 +15,7 @@ import ModalNotInEvent from "../../Components/Modales/ModalNotInEvent";
 import Modal_Registrado from "../../Components/Modales/Modal_Registrado";
 import ModalEnEvento from "../../Components/Modales/ModalEnEvento";
 import PermisoCamara from "../../Components/AvisosPermiso/PermisoCamara";
+import { useCallback } from "react";
 
 
 export default function CheckIn() {
@@ -26,11 +27,21 @@ export default function CheckIn() {
     const [ZOOM,setZOOM] = useState(0);
     const [More,setMore] = useState(false);
     const [Less, setLess] = useState(false);
+
     const [StyleBtnLinterna,setStyleBtnLinterna] = useState({
         btn: StyleCheckIn.BtnLinternaOFF,
         Status: false,
     });
 
+    const [isFocused, setIsFocused] = useState(true); 
+
+    //Evita que la camara se ponga negra
+    useFocusEffect(useCallback(() => {
+        setIsFocused(true);
+        return () => {
+            setIsFocused(false);
+        };
+    }, []))
 
     useEffect(()=>{
         if(More &&  ZOOM < 1){
@@ -40,12 +51,13 @@ export default function CheckIn() {
         if(Less && ZOOM > 0){
             setZOOM(ZOOM - 0.1)
         };
-    });
+    },[More,Less,ZOOM]);
 
     
     
     
     const LocalData = useLocalSearchParams();
+    
     const { 
         CodeScanned,
         Loading,
@@ -80,15 +92,21 @@ export default function CheckIn() {
         )
     };
 
+    if (!isFocused) {
+        return null; 
+    }
+
     
 
 
     return (
         <SafeAreaProvider>
             
-            <CameraView zoom={ZOOM} facing={WhatCamera} enableTorch={StyleBtnLinterna.Status}  onBarcodeScanned={(Data)=>{
-                CodeScanned({DataScanned:Data,TokenUser: LocalData.TokenAccess,EventId: LocalData.IDEvents})
-                }} style={{flex:1}} Flash = "auto" />
+            <CameraView zoom={ZOOM} facing={WhatCamera} onCameraReady={(Ready)=>{
+                console.log('fUNCIONA')
+            }} key={WhatCamera} enableTorch={StyleBtnLinterna.Status} 
+                onBarcodeScanned={(Data)=>{CodeScanned({DataScanned:Data,TokenUser: LocalData.TokenAccess,
+                EventId: LocalData.IDEvents})}} style={{flex:1}} Flash = "auto"/>
                 
                 <QR_Mask 
                 Zoom_LessIN={()=>{
@@ -132,8 +150,9 @@ export default function CheckIn() {
                         onPress={()=>{
                             router.navigate({pathname: 'Participantes/ListaPart',params:{
                                 NameLista:'Participantes',WhatList: true,TokenAccess: LocalData.TokenAccess,
-                                IDEvents: LocalData.IDEvents
+                                IDEvents: LocalData.IDEvents,
                             }});
+                            
                         }}>
                         <Text style={StyleCheckIn.TextBtnVerparticipantes}>Ver participantes</Text>
                     </TouchableOpacity>
