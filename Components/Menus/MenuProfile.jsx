@@ -33,7 +33,7 @@ const Style = StyleSheet.create({
         width:'100%',
         alignItems:'flex-end',
         paddingRight:10,
-        backgroundColor:'black',
+        // backgroundColor:'black',
         zIndex:10,
     },
     ContainerBtnMenuProfile:{
