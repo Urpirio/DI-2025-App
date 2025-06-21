@@ -1,4 +1,4 @@
-import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator} from "react-native";
+import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator, Keyboard} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {useState } from "react";
 import { StyleLoginForm } from "../style/StyleLoginForm";
@@ -8,12 +8,6 @@ import { GetLogin } from "../func/Login/useLogin";
 import { useStyleLogin } from "../func/Login/useStyleLogin";
 import { useNetInfo } from "@react-native-community/netinfo";
 import ModalConectRed from "../Components/Modales/ModalConectRed";
-
-
-//Cosas para trabajar -> bug del QR,BUG del Login que te permite regresar sin cerrar sesion, Optimizacion de codigo,Crear los filtros dinamico
-//Corregir el error de que solo se llama a la funcion general para filtrar, crear un estado para que se llame a la general solo 
-//cuando se este en la lista general
-
 
 export default function LoginForm() {
 
@@ -99,7 +93,10 @@ export default function LoginForm() {
                 <TextInput placeholder="Password" placeholderTextColor={'#ced4da'} 
                   secureTextEntry={ShowPassword} style={ChangesColorPassword.TextInput_PassWord} 
                     onPress={ChangeColorInputP2} onChangeText={setTextPassword} value={TextPassword}/>
-                  <Pressable onPress={ChangeVisibilidyPassword}>
+                  <Pressable onPress={()=>{
+                    ChangeVisibilidyPassword();
+                    Keyboard.dismiss();
+                  }}>
                     <Image source={IconEyePassWord}
                       style={ChangesColorPassword.PressablePassWordIcon}/>
                   </Pressable>
@@ -113,13 +110,18 @@ export default function LoginForm() {
             </View>
             <View style={{gap:20,paddingVertical:10}}>
               <View style={StyleLoginForm.ContainerForgetPassword}>
-                <TouchableOpacity onPress={()=>{Router.navigate('/ForgetPassword')}}>
+                <TouchableOpacity onPress={()=>{
+                  Router.navigate('/ForgetPassword');
+                }}>
                     <Text style={{color:'#023e8a',fontWeight:'600'}}>Forget the password?</Text>
                 </TouchableOpacity>
               </View>
               <View style={StyleLoginForm.ContainerBtnSignIn}>
                 <TouchableOpacity style={StyleLoginForm.BtnSignIn} 
-                  onPress={SignIn}>
+                  onPress={()=>{
+                    SignIn();
+                    Keyboard.dismiss();
+                  }}>
                   {LoadingLOGIN ? 
                   <ActivityIndicator size={'small'} color={"white"}/> 
                   : 
