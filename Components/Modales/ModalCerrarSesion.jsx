@@ -2,7 +2,7 @@ import { Modal,Text,TouchableOpacity,View,Pressable } from "react-native";
 import { StyleSheet } from "react-native";
 import { funcionCancelarCerrarSesion, funcionCSesion } from "../../app/_layout";
 import { funcionChangeStateMenuPerfil } from "../../app/_layout";
-import { router, useNavigation } from "expo-router";
+import {  useNavigation } from "expo-router";
 import { funcionRefresh } from "../../app/Home";
 
 export default function ModalCerrarSesion({StatusModal,FuncionGoBack}) {
