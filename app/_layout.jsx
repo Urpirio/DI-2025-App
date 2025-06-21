@@ -166,6 +166,7 @@ export default function _layout() {
 
         <Stack.Screen name="Check-In/CheckIn" options={{
             header:()=>{
+
                 return(
                     <View style={{
                         alignItems:'center',
@@ -176,7 +177,9 @@ export default function _layout() {
                         gap: 20,
                         paddingTop: StatusBar.currentHeight,
                         }}>
-                        <TouchableOpacity onPress={()=>{Router.back()}}>
+                        <TouchableOpacity onPress={()=>{
+                            Router.back();  
+                        }}>
                             <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
                             source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
                         </TouchableOpacity>
@@ -200,6 +203,7 @@ export default function _layout() {
                         paddingTop: StatusBar.currentHeight,
                         }}>
                         <TouchableOpacity onPress={()=>{
+                            // FunctionChangeCamara('back');
                             Router.back();
                         }}>
                             <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
