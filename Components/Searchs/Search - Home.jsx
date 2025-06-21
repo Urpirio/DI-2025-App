@@ -1,6 +1,7 @@
 import SwitchHome from "../Btn/SwitchHome";
 import { StyleHome } from "../../style/StyleHome";
 import { Image,Text, TouchableOpacity, View, TextInput,ActivityIndicator, FlatList} from "react-native";
+import { CheckMenuPerfil } from "../../app/_layout";
 
 export default function SearchHome({
     SearchText,
@@ -23,7 +24,7 @@ export default function SearchHome({
   return (
     
 <View>
-        <View style={{
+                <View style={{
                         borderWidth:1,
                         borderRadius:10,
                         height:50,
@@ -87,8 +88,6 @@ export default function SearchHome({
                         }}
                         StyleBtnHoy={StyleBtnHoy}
                         Fhoy={()=>{
-                        //     ScreenRefresHome()
-                        // setLoading(false)
                         setEventosHoy(true);
                         SwitchStyle({StatusStyle: true});
                         if(!RotateIconFilter){
