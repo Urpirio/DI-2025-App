@@ -17,7 +17,6 @@ import SKhome from "../../Components/SK/SKhome";
 import SearchHome from "../../Components/Searchs/Search - Home";
 import NoInternet from "../../Components/AvisosInternet/NoInternet";
 
-// export let StatusRefreshHome;
 export let funcionRefresh;
 
 export default function index() {
