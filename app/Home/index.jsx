@@ -1,4 +1,4 @@
-import { Text, View,ScrollView,FlatList} from "react-native";
+import { Text, View,FlatList} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
@@ -8,14 +8,14 @@ import { StatusBar } from "expo-status-bar";
 import ModalCerrarSesion from "../../Components/Modales/ModalCerrarSesion";
 import { RefreshControl } from "react-native";
 import useRefresh from "../../hooks/useRefresh";
-import { useHome } from "../../func/Home/useFilterHome";
-import { useGetEvents } from "../../func/Home/useGetEvents";
+import { useHome } from "../../func/Screen - Home/useFilterHome";
+import { useGetEvents } from "../../func/Screen - Home/useGetEvents";
 import { CerrarSesion } from "../_layout";
-import { useSwitchHome } from "../../func/Home/useSwitchHome";
+import { useSwitchHome } from "../../func/Screen - Home/useSwitchHome";
 import { useNetInfo } from "@react-native-community/netinfo";
 import SKhome from "../../Components/SK/SKhome";
 import SearchHome from "../../Components/Searchs/Search - Home";
-import NoInternet from "../../Components/AvisosInternet/NoInternet";
+import NoInternet from "../../Components/Components - ScreenGlobal/AvisosInternet/NoInternet";
 
 export let funcionRefresh;
 

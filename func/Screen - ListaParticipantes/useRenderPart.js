@@ -1,4 +1,5 @@
 import { useState } from "react";
+// import { useRenderPartG } from "./useRenderPartG";
 
 export const useRenderPart = () => {
 
@@ -9,8 +10,11 @@ export const useRenderPart = () => {
     const [ArrayUserId,setArrayUserId] = useState([])
     const [Loading,setLoading] = useState(false);
     const [FiltroBusqueda,setFiltroBusqueda] = useState('Nombre');
-    const [FiltroEstado,setFiltroEstado] = useState('Todos');
+    const [FiltroEstado,setFiltroEstado] = useState('Todos los usuarios');
     const [TextSearch,setTextSearch] = useState();
+
+
+    // const {GetGeneralParticipant,DataParticipant1} = useRenderPartG();
     
 
 
@@ -32,13 +36,13 @@ export const useRenderPart = () => {
             Data.data.forEach((data) =>{
 
             if(Event == data.event_id){
-                if(FiltroEstado == 'Todos'){
+                if(FiltroEstado == 'Todos los usuarios'){
                     ArrayUserId.push(data);
-                }else if(data.checkin != null && FiltroEstado == 'Registrados'){
+                }else if(data.checkin != null && FiltroEstado == 'Participantes en el evento'){
                     ArrayUserId.push(data);
-                }else if(data.checkin == null && FiltroEstado == 'No registrados'){
+                }else if(data.checkin == null && FiltroEstado == 'Inscritos'){
                     ArrayUserId.push(data);
-                };
+                }
             };
             
             
@@ -49,9 +53,6 @@ export const useRenderPart = () => {
                 Users({TokenAccess:TokenAcces})
             }
 
-            
-        })
-        .catch((error)=>{
             
         })
     };

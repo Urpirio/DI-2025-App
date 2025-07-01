@@ -1,5 +1,5 @@
 import { View,TouchableOpacity,Text } from "react-native";
-import { StyleSwicthHome } from "../../style/StyleSwicthHome";
+import { StyleSwicthHome } from "../../../style/Screen - Home/StyleSwicthHome";
 // import { useSwitchHome } from "../../func/Home/useSwitchHome";
 
 export let FuncionSwitch;

@@ -1,7 +1,7 @@
 import SwitchHome from "../Btn/SwitchHome";
-import { StyleHome } from "../../style/StyleHome";
+import { StyleHome } from "../../../style/Screen - Home/StyleHome";
 import { Image,Text, TouchableOpacity, View, TextInput,ActivityIndicator, FlatList} from "react-native";
-import { CheckMenuPerfil } from "../../app/_layout";
+import { CheckMenuPerfil } from "../../../app/_layout";
 
 export default function SearchHome({
     SearchText,

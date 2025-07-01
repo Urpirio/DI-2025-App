@@ -146,7 +146,7 @@ export default function CheckIn() {
                         <Text style={StyleCheckIn.TextBtnIngresarCodigo}>Ingresar codigo</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={StyleCheckIn.BtnVerparticipantes} 
+                    {/* <TouchableOpacity style={StyleCheckIn.BtnVerparticipantes} 
                         onPress={()=>{
                             router.navigate({pathname: 'Participantes/ListaPart',params:{
                                 NameLista:'Participantes',WhatList: true,TokenAccess: LocalData.TokenAccess,
@@ -156,7 +156,7 @@ export default function CheckIn() {
                         }}>
                         <Text style={StyleCheckIn.TextBtnVerparticipantes}>Ver participantes</Text>
                     </TouchableOpacity>
-                    
+                     */}
                     
                 </View>
 

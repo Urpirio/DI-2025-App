@@ -1,5 +1,5 @@
 import { View,Text,TouchableOpacity,Image } from 'react-native'
-import { StyleHome } from '../../style/StyleHome';
+import { StyleHome } from '../../style/Screen - Home/StyleHome';
 import { useRouter } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 

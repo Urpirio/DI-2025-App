@@ -16,8 +16,8 @@ export default function LoginForm() {
   const HaveInternet = useNetInfo();
   const [StatusConnect,setStatusConnect] = useState(false);
 
-  const [TextEmail,setTextEmail] = useState(String);
-  const [TextPassword,setTextPassword] = useState(String);
+  const [TextEmail,setTextEmail] = useState('urpiriojunior@gmail.com');
+  const [TextPassword,setTextPassword] = useState('1234');
 
   const {PostUserCredential, LoadingLOGIN,Token} = GetLogin();
 

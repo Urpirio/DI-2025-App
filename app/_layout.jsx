@@ -1,8 +1,8 @@
-import { router, Stack, useRouter } from "expo-router";
+import { router, Stack, Tabs, useRouter } from "expo-router";
 import { Image, View,TouchableOpacity,Text, StatusBar } from "react-native";
 import { StyleLayoutEvent } from "../style/StyleLayoutEvents";
 import MenuProfile from "../Components/Menus/MenuProfile";
-import { StyleLayoutHome } from "../style/StyleLayoutHome";
+import { StyleLayoutHome } from "../style/Screen - Home/StyleLayoutHome";
 import useDeployPerfil from "../hooks/useDeployPerfil";
 import useDeployCerrarSesion from "../hooks/useDeployCerrarSesion";
 import { funcionRefresh } from "./Home";
@@ -54,6 +54,7 @@ export default function _layout() {
                     </View>
                 )
             },
+            
         }}/>
         <Stack.Screen name="ForgetPassword/index" options={{
             header:()=>{
@@ -110,6 +111,7 @@ export default function _layout() {
                 )
             },
             
+            
         }} />
         <Stack.Screen name="Evento/EnEvento" options={{
             header:({route})=>{
@@ -161,6 +163,7 @@ export default function _layout() {
                     </View>
                 )
             },
+            
             
         }}/>
 

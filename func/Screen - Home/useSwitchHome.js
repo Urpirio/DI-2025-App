@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSwicthHome } from "../../style/StyleSwicthHome";
+import { StyleSwicthHome } from "../../style/Screen - Home/StyleSwicthHome";
 
 export const useSwitchHome = () => {
 

@@ -23,8 +23,7 @@ export const useRenderPartG = () => {
             }
         })
         .then((Data)=>{
-
-                FilterUser({TokenAcces:TokenAcces,UserInGeneral:Data.data,EventId:EventId})
+            FilterUser({TokenAcces:TokenAcces,UserInGeneral:Data.data,EventId:EventId})
         })
         .catch((error)=>{
             console.error(error)
@@ -40,7 +39,7 @@ export const useRenderPartG = () => {
         })
         .then(respuestas => respuestas.json())
         .then((Data)=>{
-             
+            // console.log(TextSearch)
             const Array = [];
             const ArrayIdEvent = [];
 
@@ -55,9 +54,11 @@ export const useRenderPartG = () => {
             });
 
             if(Array != []){
+                
                 const ArraySearch = [];
 
                 if(TextSearch == undefined){
+
                     setDataParticipant(Array)
                 }else if(FiltroBusqueda == 'Nombre'){
                     Array.forEach(D =>{
@@ -71,6 +72,7 @@ export const useRenderPartG = () => {
                         setDataParticipant(ArraySearch)
                     };
                 }else if(FiltroBusqueda == 'Email'){
+                    
                     Array.forEach(D =>{
                         if(D.email.toUpperCase().includes(TextSearch.toUpperCase())){
                             ArraySearch.push(D);
@@ -84,20 +86,20 @@ export const useRenderPartG = () => {
             }
             setLoading(true)
         })
-        .catch(()=>{
-
+        .finally(()=>{
+            // console.log(DataParticipant)
         })
-    }
+    };
     
     
     return({
         GetGeneralParticipant: GetGeneralParticipant,
-        Loading: Loading,
-        DataParticipant: DataParticipant,
-        TextSearch: TextSearch,
-        setTextSearch: setTextSearch,
-        FiltroBusqueda: FiltroBusqueda,
-        setFiltroBusqueda: setFiltroBusqueda,
-        setLoading,
+        LoadingGeneral: Loading,
+        DataParticipantGeneral: DataParticipant,
+        TextSearchGeneral: TextSearch,
+        setTextSearchGeneral: setTextSearch,
+        FiltroBusquedaGeneral: FiltroBusqueda,
+        setFiltroBusquedaGeneral: setFiltroBusqueda,
+        setLoadingGeneral:setLoading,
     })
 }

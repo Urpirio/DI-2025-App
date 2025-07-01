@@ -8,7 +8,7 @@ export const useSendPartG = () =>{
         
         const LocalData = useLocalSearchParams();
 
-        const AsistenciaStaff = ({userID,FuncLoading, FuncionAutoR}) => {
+        const AsistenciaStaff = ({userID}) => {
             // FuncLoading(true)
             const date = new Date().toISOString();
             fetch(ApiSpecificEvent,{
@@ -26,7 +26,7 @@ export const useSendPartG = () =>{
             .then(respuesta => respuesta.json())
             .then((data)=>{
                 if(!data.errors){
-                    AsistenciaParticipante({Id: data.data.id,userID:userID, FuncionAutoR: FuncionAutoR,FuncLoading:FuncLoading})
+                    AsistenciaParticipante({Id: data.data.id,userID:userID,})
                 }
             })
             .catch((err)=>{
@@ -34,7 +34,7 @@ export const useSendPartG = () =>{
             })     
         };
     
-        const AsistenciaParticipante = ({Id,userID,FuncLoading,FuncionAutoR}) => {
+        const AsistenciaParticipante = ({Id,userID}) => {
             fetch(ApiSpecificEvent + Id ,{
                 method:'PATCH',
                 headers: {
@@ -50,7 +50,7 @@ export const useSendPartG = () =>{
                 console.error(err)
             })
             .finally(()=>{
-                FuncionAutoR();
+                // FuncionAutoR(false);
             })
         };
 

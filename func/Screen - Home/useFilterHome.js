@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleHome } from "../../style/StyleHome";
+import { StyleHome } from "../../style/Screen - Home/StyleHome";
 
 export const useHome = () => {
 

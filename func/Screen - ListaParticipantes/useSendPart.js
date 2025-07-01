@@ -2,7 +2,9 @@ import { useState } from "react";
 
 
 export  function useSendPart() {
+
     const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
+    const [LoadingSendPart,setLoadingSendPart] = useState(false)
 
     const ConfirmarAsistencia = ({userEventId,TokenAccess}) => {
 
@@ -30,5 +32,6 @@ export  function useSendPart() {
     };
     return({
         ConfirmarAsistencia,
+        LoadingSendPart,
     })
 }
