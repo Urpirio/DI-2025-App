@@ -5,7 +5,7 @@ import MenuProfile from "../Components/Menus/MenuProfile";
 import { StyleLayoutHome } from "../style/Screen - Home/StyleLayoutHome";
 import useDeployPerfil from "../hooks/useDeployPerfil";
 import useDeployCerrarSesion from "../hooks/useDeployCerrarSesion";
-import { funcionRefresh } from "./Home";
+import { funcionRefresh } from "./Screens/Screen - Home";
 
 export let CheckMenuPerfil;
 export let funcionChangeStateMenuPerfil;

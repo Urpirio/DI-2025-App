@@ -3,19 +3,19 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
 import CardHomeEvents from "../../Components/Cards/CardHomeEvents";
-import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS} from "../_layout";
+import { CheckMenuPerfil, funcionChangeStateMenuPerfil, StatusModalCerrarS} from "../../_layout";
 import { StatusBar } from "expo-status-bar";
 import ModalCerrarSesion from "../../Components/Modales/ModalCerrarSesion";
 import { RefreshControl } from "react-native";
-import useRefresh from "../../hooks/useRefresh";
-import { useHome } from "../../func/Screen - Home/useFilterHome";
-import { useGetEvents } from "../../func/Screen - Home/useGetEvents";
-import { CerrarSesion } from "../_layout";
-import { useSwitchHome } from "../../func/Screen - Home/useSwitchHome";
+import useRefresh from "../../../hooks/useRefresh";
+import { useHome } from "../../../func/Screen - Home/useFilterHome";
+import { useGetEvents } from "../../../func/Screen - Home/useGetEvents";
+import { CerrarSesion } from "../../_layout";
+import { useSwitchHome } from "../../../func/Screen - Home/useSwitchHome";
 import { useNetInfo } from "@react-native-community/netinfo";
 import SKhome from "../../Components/SK/SKhome";
 import SearchHome from "../../Components/Searchs/Search - Home";
-import NoInternet from "../../Components/Components - ScreenGlobal/AvisosInternet/NoInternet";
+import NoInternet from "../../../Components/Components - ScreenGlobal/AvisosInternet/NoInternet";
 
 export let funcionRefresh;
 
