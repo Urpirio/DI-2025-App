@@ -16,8 +16,8 @@ export default function LoginForm() {
   const HaveInternet = useNetInfo();
   const [StatusConnect,setStatusConnect] = useState(false);
 
-  const [TextEmail,setTextEmail] = useState(String);
-  const [TextPassword,setTextPassword] = useState(String);
+  const [TextEmail,setTextEmail] = useState('urpiriojunior@gmail.com');
+  const [TextPassword,setTextPassword] = useState('1234');
 
   const {PostUserCredential, LoadingLOGIN,Token} = GetLogin();
 
@@ -111,7 +111,7 @@ export default function LoginForm() {
             <View style={{gap:20,paddingVertical:10}}>
               <View style={StyleLoginForm.ContainerForgetPassword}>
                 <TouchableOpacity onPress={()=>{
-                  Router.navigate('/ForgetPassword');
+                  Router.navigate('/Screens/ScreenForgetPassword');
                 }}>
                     <Text style={{color:'#023e8a',fontWeight:'600'}}>Forget the password?</Text>
                 </TouchableOpacity>

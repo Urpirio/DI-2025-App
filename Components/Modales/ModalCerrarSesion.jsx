@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { funcionCancelarCerrarSesion, funcionCSesion } from "../../app/_layout";
 import { funcionChangeStateMenuPerfil } from "../../app/_layout";
 import {  useNavigation } from "expo-router";
-import { funcionRefresh } from "../../app/Home";
+import { funcionRefresh } from "../../app/Screens/ScreenHome";
 
 export default function ModalCerrarSesion({StatusModal,FuncionGoBack}) {
 const prueba = useNavigation();
