@@ -3,18 +3,18 @@ import { CameraView,useCameraPermissions,CameraType } from "expo-camera";
 import { useState,useEffect } from "react";
 import { TouchableOpacity,View,Text, Image} from "react-native";
 import { useRouter,useLocalSearchParams, useFocusEffect } from "expo-router";
-import Modal_IngresarCodigo from "../../../Components/Modales/Modal_IngresarCodigo";
+import Modal_IngresarCodigo from "../../../Components/Components - ScreenCheckIn/Modales/Modal_IngresarCodigo";
 import { StatusBar } from "expo-status-bar";
-import QR_Mask from "../../../Components/Masks/QR_Mask";
-import { StyleCheckIn } from "../../../style/StyleCheckIn";
-import Modalloading from "../../../Components/Modales/Modalloading";
-import ModalParticipante from "../../../Components/Modales/ModalParticipante";
-import ModalNoMatch from "../../../Components/Modales/ModalNoMatch";
-import useValidate from "../../../func/CheckIn/useValidate";
-import ModalNotInEvent from "../../../Components/Modales/ModalNotInEvent";
-import Modal_Registrado from "../../../Components/Modales/Modal_Registrado";
-import ModalEnEvento from "../../../Components/Modales/ModalEnEvento";
-import PermisoCamara from "../../../Components/AvisosPermiso/PermisoCamara";
+import QR_Mask from "../../../Components/Components - ScreenCheckIn/Masks/QR_Mask";
+import { StyleCheckIn } from "../../../style/Style - ScreenCheckIn/StyleCheckIn";
+import Modalloading from "../../../Components/Components - ScreenCheckIn/Modales/Modalloading";
+import ModalParticipante from "../../../Components/Components - ScreenCheckIn/Modales/ModalParticipante";
+import ModalNoMatch from "../../../Components/Components - ScreenCheckIn/Modales/ModalNoMatch";
+import useValidate from "../../../hooks/hooks - ScreenCheckIn/useValidate";
+import ModalNotInEvent from "../../../Components/Components - ScreenCheckIn/Modales/ModalNotInEvent";
+import Modal_Registrado from "../../../Components/Components - ScreenCheckIn/Modales/Modal_Registrado";
+import ModalEnEvento from "../../../Components/Components - ScreenCheckIn/Modales/ModalEnEvento";
+import PermisoCamara from "../../../Components/Components - ScreenCheckIn/AvisosPermiso/PermisoCamara";
 import { useCallback } from "react";
 
 
@@ -102,9 +102,7 @@ export default function CheckIn() {
     return (
         <SafeAreaProvider>
             
-            <CameraView zoom={ZOOM} facing={WhatCamera} onCameraReady={(Ready)=>{
-                console.log('fUNCIONA')
-            }} key={WhatCamera} enableTorch={StyleBtnLinterna.Status} 
+            <CameraView zoom={ZOOM} facing={WhatCamera}  key={WhatCamera} enableTorch={StyleBtnLinterna.Status} 
                 onBarcodeScanned={(Data)=>{CodeScanned({DataScanned:Data,TokenUser: LocalData.TokenAccess,
                 EventId: LocalData.IDEvents})}} style={{flex:1}} Flash = "auto"/>
                 
