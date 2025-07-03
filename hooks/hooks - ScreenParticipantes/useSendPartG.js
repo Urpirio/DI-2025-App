@@ -1,16 +1,14 @@
 import { useLocalSearchParams } from "expo-router";
+import { GlobalApis } from "../../Apis/GlobalApis";
 
 export const useSendPartG = () =>{
 
-        const ApiSpecificEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/';
-        
-        
         const LocalData = useLocalSearchParams();
 
         const AsistenciaStaff = ({userID}) => {
 
             const date = new Date().toISOString();
-            fetch(ApiSpecificEvent,{
+            fetch(GlobalApis.ApiUser_Event,{
                 method:'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,7 +32,7 @@ export const useSendPartG = () =>{
         };
     
         const AsistenciaParticipante = ({Id,userID}) => {
-            fetch(ApiSpecificEvent + Id ,{
+            fetch(GlobalApis.ApiUser_Event + Id ,{
                 method:'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
