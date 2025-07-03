@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { GlobalApis } from "../../Apis/GlobalApis";
 
-const ApiUser = 'https://directus-prueba.dominicanainnova.gob.do/users/'
-const ApiUserEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/?filter[event_id][_eq]='
+
 const useValidate = () => {
     const [StatusModalIngCodigo,setStatusModalIngCodigo] = useState(false);
     const [Loading, setLoading] = useState(false);
@@ -18,8 +18,8 @@ const useValidate = () => {
         firstName: String,
         Id: String,
         Picture_Profile: String,
-    }
-);
+        }
+    );
 
     const CloseError = () => {
         setNoMatchUser(false)
@@ -35,7 +35,7 @@ const useValidate = () => {
             setLoading(true);
         };
 
-        fetch(ApiUser,{
+        fetch(GlobalApis.ApiUSer,{
             method: 'GET',
             headers:{
                 'Authorization': `Bearer ${TokenUser}`
@@ -95,7 +95,7 @@ const useValidate = () => {
     };
 
     const Validando = ({firstName,lastName,Id,Picture_Profile,TokenUser,EventId}) =>{
-        fetch(`${ApiUserEvent + EventId}`,{
+        fetch(`${GlobalApis.ApiUserInEvent + EventId}`,{
             method: 'GET',
             headers:{
                 'Authorization': `Bearer ${TokenUser}`
