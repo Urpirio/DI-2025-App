@@ -1,13 +1,13 @@
 import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator, Keyboard} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {useState } from "react";
-import { StyleLoginForm } from "../style/StyleLoginForm";
+import { StyleLoginForm } from "../style/Style - ScreenLogin/StyleLoginForm";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { GetLogin } from "../func/Login/useLogin";
-import { useStyleLogin } from "../func/Login/useStyleLogin";
+import { useLogin } from "../hooks/hooks - ScreenLogin/useLogin";
+import { useStyleLogin } from "../hooks/hooks - ScreenLogin/useStyleLogin";
 import { useNetInfo } from "@react-native-community/netinfo";
-import ModalConectRed from "../Components/Modales/ModalConectRed";
+import ModalConnectRed from "../Components/components - Login/Modales/ModalConnectRed";
 
 export default function LoginForm() {
 
@@ -16,10 +16,10 @@ export default function LoginForm() {
   const HaveInternet = useNetInfo();
   const [StatusConnect,setStatusConnect] = useState(false);
 
-  const [TextEmail,setTextEmail] = useState(String);
-  const [TextPassword,setTextPassword] = useState(String);
+  const [TextEmail,setTextEmail] = useState('urpiriojunior@gmail.com');
+  const [TextPassword,setTextPassword] = useState('1234');
 
-  const {PostUserCredential, LoadingLOGIN,Token} = GetLogin();
+  const {PostUserCredential, LoadingLOGIN,Token} = useLogin();
 
  const {
    ChangeVisibilidyPassword,
@@ -111,7 +111,7 @@ export default function LoginForm() {
             <View style={{gap:20,paddingVertical:10}}>
               <View style={StyleLoginForm.ContainerForgetPassword}>
                 <TouchableOpacity onPress={()=>{
-                  Router.navigate('/ForgetPassword');
+                  Router.navigate('/Screens/ScreenForgetPassword');
                 }}>
                     <Text style={{color:'#023e8a',fontWeight:'600'}}>Forget the password?</Text>
                 </TouchableOpacity>
@@ -132,7 +132,7 @@ export default function LoginForm() {
             </View>
           </View>
         </View>
-        <ModalConectRed
+        <ModalConnectRed
         StatusModal={StatusConnect}
         OnPress={()=>{
           setStatusConnect(false);
