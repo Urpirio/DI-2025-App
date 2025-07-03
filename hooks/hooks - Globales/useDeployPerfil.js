@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
-// export let StatusTheMenuPerfil;
 const useDeployPerfil = () => {
 
         
@@ -9,7 +8,6 @@ const useDeployPerfil = () => {
     const [StatusMenuProfile,setStatusMenuProfile] = useState(true);
 
     const Deploy = () =>{
-        // alert('funciona')
         if(StatusMenuProfile){
         SetStyleMenuProfile(StylesLayoutHome.MenuProfileShow);
         setStatusMenuProfile(!StatusMenuProfile);
