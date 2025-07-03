@@ -1,11 +1,11 @@
 import { router, Stack, useRouter } from "expo-router";
 import { Image, View,TouchableOpacity,Text, StatusBar } from "react-native";
-import { StyleLayoutEvent } from "../style/StyleLayoutEvents";
-import MenuProfile from "../Components/Menus/MenuProfile";
-import { StyleLayoutHome } from "../style/StyleLayoutHome";
-import useDeployPerfil from "../hooks/useDeployPerfil";
-import useDeployCerrarSesion from "../hooks/useDeployCerrarSesion";
+import MenuProfile from "../Components/Components - Globales/Menus/MenuProfile";
+import { StyleLayoutEvent } from "../style/Style - Layout/StyleLayoutEvents";
+import useDeployPerfil from "../hooks/hooks - Globales/useDeployPerfil";
+import useDeployCerrarSesion from "../hooks/hooks - Globales/useDeployCerrarSesion";
 import { funcionRefresh } from "./Screens/ScreenHome";
+import { StyleLayoutHome } from "../style/Style - ScreenHome/StyleLayoutHome";
 
 export let CheckMenuPerfil;
 export let funcionChangeStateMenuPerfil;
@@ -189,32 +189,6 @@ export default function _layout() {
                     </View>
                 )
             },
-        }}/>
-        <Stack.Screen name="r" options={{
-            header:({route})=>{
-                return(
-                    <View style={{
-                        alignItems:'center',
-                        paddingHorizontal: 10,
-                        justifyContent:'Flex-end',
-                        backgroundColor:'white',
-                        flexDirection:'row',
-                        gap: 20,
-                        paddingTop: StatusBar.currentHeight,
-                        }}>
-                        <TouchableOpacity onPress={()=>{
-                            // FunctionChangeCamara('back');
-                            Router.back();
-                        }}>
-                            <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
-                            source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
-                        </TouchableOpacity>
-                        <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>
-                            {route.params.NameLista}
-                        </Text>
-                    </View>
-                )  
-            }
         }}/>
         
     </Stack>
