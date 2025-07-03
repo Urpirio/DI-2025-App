@@ -1,8 +1,8 @@
 import {  View,Image, TextInput,TouchableOpacity,Text} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useState } from "react";
-import { StyleForgetPassword } from "../../../style/StyleForgetPassword";
 import { StatusBar } from "expo-status-bar";
+import { StyleForgetPassword } from "../../../style/Style - ScreenForgetPassword/StyleForgetPassword";
 
 export default function index() {
 
