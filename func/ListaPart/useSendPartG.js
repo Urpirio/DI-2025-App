@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 
 export const useSendPartG = () =>{
@@ -8,8 +7,8 @@ export const useSendPartG = () =>{
         
         const LocalData = useLocalSearchParams();
 
-        const AsistenciaStaff = ({userID,FuncLoading, FuncionAutoR}) => {
-            // FuncLoading(true)
+        const AsistenciaStaff = ({userID}) => {
+
             const date = new Date().toISOString();
             fetch(ApiSpecificEvent,{
                 method:'POST',
@@ -26,15 +25,15 @@ export const useSendPartG = () =>{
             .then(respuesta => respuesta.json())
             .then((data)=>{
                 if(!data.errors){
-                    AsistenciaParticipante({Id: data.data.id,userID:userID, FuncionAutoR: FuncionAutoR,FuncLoading:FuncLoading})
+                    AsistenciaParticipante({Id: data.data.id,userID:userID})
                 }
             })
             .catch((err)=>{
                 console.error(err)
-            })     
+            });    
         };
     
-        const AsistenciaParticipante = ({Id,userID,FuncLoading,FuncionAutoR}) => {
+        const AsistenciaParticipante = ({Id,userID}) => {
             fetch(ApiSpecificEvent + Id ,{
                 method:'PATCH',
                 headers: {
@@ -48,10 +47,7 @@ export const useSendPartG = () =>{
             .then(respuesta => respuesta.json())
             .catch((err)=>{
                 console.error(err)
-            })
-            .finally(()=>{
-                FuncionAutoR();
-            })
+            });
         };
 
 
