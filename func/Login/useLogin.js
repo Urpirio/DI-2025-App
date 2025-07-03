@@ -65,7 +65,7 @@ export const GetLogin = () => {
 
             }else{
                  router.navigate({
-                    pathname: '/Home',
+                    pathname: 'Screens/ScreenHome',
                     params: {
                     DataUser: Data.data,
                     TokenAccess: TokenAccess,
