@@ -1,8 +1,7 @@
 import { router } from "expo-router";
 import { useState } from "react";
+import { GlobalApis } from "../../Apis/GlobalApis";
 
-const ApiToken = 'https://directus-prueba.dominicanainnova.gob.do/auth/login/';
-const ApiInfoUser = 'https://directus-prueba.dominicanainnova.gob.do/users/me'
 export const useLogin = () => {
 
     const [LoadingLOGIN,setLoadingLOGIN] = useState(false);
@@ -17,7 +16,7 @@ export const useLogin = () => {
 
     const PostUserCredential = ({Email,Password,ErrorFunction}) => {
         setLoadingLOGIN(true)
-        fetch(ApiToken,{
+        fetch(GlobalApis.ApiToken,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -53,7 +52,7 @@ export const useLogin = () => {
     };
 
     const GetInfoUser = ({TokenAccess}) =>{
-        fetch(ApiInfoUser,{
+        fetch(GlobalApis.ApiInfoUser,{
             method: 'GET',
             headers:{
               'Authorization': `Bearer ${TokenAccess}`  
