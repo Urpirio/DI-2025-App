@@ -1,7 +1,5 @@
 import { useState } from "react";
-
-
-const ApiEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/events/?sort=start_time&fields=title,description,tags,room.*,speakers_event.*.*,start_time,end_time,id,show_at_home,category';
+import { GlobalApis } from "../../Apis/GlobalApis";
 
 export const useSalaEvent = () => {
 
@@ -27,7 +25,7 @@ export const useSalaEvent = () => {
     }
 
     const GetSalaEvent = () => {
-        fetch(ApiEvent)
+        fetch(GlobalApis.ApiTodosEventos)
         .then(respuestas => {
             if(respuestas.ok){
                 respuestas.json();
@@ -37,9 +35,9 @@ export const useSalaEvent = () => {
             const ArrayP = [];
 
             Data.data.forEach(D =>{
-                if(!ArrayP.includes(D.room.location)){
-                    if(SelectName != D.room.location){
-                        ArrayP.push(D.room.location)
+                if(!ArrayP.includes(D.room?.location)){
+                    if(SelectName != D.room?.location){
+                        ArrayP.push(D.room?.location)
                     }
                 }
             });
