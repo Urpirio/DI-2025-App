@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNetInfo,useNetInfoInstance,NetInfoConfiguration } from "@react-native-community/netinfo";
-
-const ApiEvent = 'https://directus-prueba.dominicanainnova.gob.do/items/events/?sort=start_time&fields=title,description,tags,room.*,speakers_event.*.*,start_time,end_time,id,show_at_home,category';
+import { useNetInfo} from "@react-native-community/netinfo";
+import { GlobalApis } from "../../Apis/GlobalApis";
 
 export const useGetEvents = () => {
 
-    const HaveInternet = useNetInfo();
     const [Loading,setLoading] = useState(false);
     const [AllEvents,setAllEvents] = useState([]);
 
@@ -35,7 +33,7 @@ export const useGetEvents = () => {
     
         const GetSalaEvent = () => {
         // if(HaveInternet.details.frequency ){
-            fetch(ApiEvent)
+            fetch(GlobalApis.ApiTodosEventos)
             .then(respuestas => {
             if(respuestas.ok){
                return respuestas.json()
@@ -74,7 +72,7 @@ export const useGetEvents = () => {
         const GetEvents = () =>{
             
             // if(HaveInternet.isConnected){
-             fetch(ApiEvent)
+             fetch(GlobalApis.ApiTodosEventos)
             .then(respuesta => {
                 if(respuesta.ok){
                   return  respuesta.json()
