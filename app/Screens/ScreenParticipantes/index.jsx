@@ -2,20 +2,20 @@ import { Text, View,FlatList, TouchableOpacity, Image,TextInput } from "react-na
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GlobalApis } from "../../../Apis/GlobalApis";
 import { useEffect, useState } from "react";
-import { StyleScreenEventos } from "../../../style/StyleScreen - Evento";
-import { useRenderTodos } from "../../../func/ListaPart/useRenderTodos";
-import { useSendPart } from "../../../func/ListaPart/useSendPart";
-import { useSendPartG } from "../../../func/ListaPart/useSendPartG";
-import { useStyleEnEvento } from "../../../func/ListaPart/useStyleEnEvento";
+import { StyleScreenEventos } from "../../../style/Style - ScreenParticipantes/StyleScreen - Evento";
+import { useRenderTodos } from "../../../hooks/hooks - ScreenParticipantes/useRenderTodos";
+import { useSendPart } from "../../../hooks/hooks - ScreenParticipantes/useSendPart";
+import { useSendPartG } from "../../../hooks/hooks - ScreenParticipantes/useSendPartG";
+import { useStyleEnEvento } from "../../../hooks/hooks - ScreenParticipantes/useStyleEnEvento";
 import { router,useLocalSearchParams } from "expo-router";
-import ModalSobreEvento from "../../../Components/Modales/ModalSobreEvento";
-import useRefresh from "../../../hooks/useRefresh";
+import ModalSobreEvento from "../../../Components/components - ScreenParticipantes/ModalSobreEvento";
+import useRefresh from "../../../hooks/hooks - Globales/useRefresh";
 import { RefreshControl } from "react-native";
 
 
 export default function index() {
 
-  const { GetTodosUsuarios,DatosParticipantes,setTextSearch,TextSearch,FiltroBuscador ,setFiltroBuscador,FiltroEstado,setFiltroEstado,ContarParticipantes} = useRenderTodos();
+  const { GetTodosUsuarios,DatosParticipantes,setTextSearch,TextSearch,FiltroBuscador ,setFiltroBuscador,FiltroEstado,setFiltroEstado} = useRenderTodos();
   const {ConfirmarAsistencia} = useSendPart();
   const {AsistenciaStaff} = useSendPartG();
   const {DeployDropDownBuscador,DeployDropDownEstado,StyleDropDownBuscador,StyleDropDownEstado,IconDropDownBuscado,IconDropDownEstado,} = useStyleEnEvento();
@@ -32,7 +32,9 @@ export default function index() {
 
   const Button = ({Registrado,item}) =>{
     if(Registrado === true){
-        return
+        return <View>
+            <Text style={{color:'green'}}>Usuario registrado</Text>
+        </View>
     }else if(Registrado === false){
         return <TouchableOpacity onLongPress={()=>{
                         ScreenRefresHome();
@@ -64,13 +66,18 @@ export default function index() {
     <SafeAreaProvider style={StyleScreenEventos.BodyScreen}>
 
        <FlatList data={DatosParticipantes}
+       
         refreshControl={<RefreshControl refreshing={StateRefresh} onRefresh={ScreenRefresHome}/>}
+
         style={{paddingHorizontal:5}}
+
         ListHeaderComponentStyle={{zIndex:50}}
+
         ListEmptyComponent={
         <View style={StyleScreenEventos.NoElementoslista}>
             <Text style={StyleScreenEventos.TextNoElementos}>No hay coincidencia</Text>
         </View>}
+
         ListHeaderComponent={ 
         <View style={StyleScreenEventos.ContenedorFiltros}>
 
@@ -159,8 +166,7 @@ export default function index() {
 
         <TouchableOpacity onPress={()=>{
             setDeployInformacion(true);
-            ContarParticipantes();
-            DesactivarDropDown()
+            DesactivarDropDown();
         }} style={{borderWidth:1,borderRadius:10,height:55,width:55,position:'absolute',backgroundColor: '#008000',marginBottom:90,marginRight:20,borderColor:'#008000'}}>
             <Image style={{height:'100%',width:'100%',tintColor:'white'}} source={require('../../../assets/IconParticipantes/alert-circle.png')}/>
         </TouchableOpacity>
