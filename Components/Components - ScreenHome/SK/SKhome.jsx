@@ -1,7 +1,7 @@
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import CardSkeleton from "../Cards/CardSkeleton";
-import SearchHome from "../../Searchs/Search - Home";
+import SearchHome from "../Searchs/Search - Home";
 import { ScrollView } from "react-native";
 
 export default function SKhome({
