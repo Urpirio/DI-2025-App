@@ -37,7 +37,11 @@ export const useRenderTodos = () => {
         method: 'GET',
         headers: {'Authorization': `Bearer ${LocalData.TokenAccess}`}
     })
-    .then(respuesta => respuesta.json())
+    .then(respuesta => {
+        if(respuesta.ok){
+            return respuesta.json()
+        }
+    })
     .then((Data)=>{
             const TodosParticipantes = [];
             const TodosID = [];
@@ -142,7 +146,9 @@ export const useRenderTodos = () => {
             }else{
                 setDatosParticipantes('')
             }
-        }
+        };
+
+        console.log(Data)
     })
     .catch((Err)=>{
         console.log(Err)

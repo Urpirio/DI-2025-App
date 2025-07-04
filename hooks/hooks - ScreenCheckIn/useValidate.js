@@ -41,7 +41,11 @@ const useValidate = () => {
                 'Authorization': `Bearer ${TokenUser}`
             }
          })
-         .then(respuesta => respuesta.json()) 
+         .then(respuesta => {
+            if(respuesta.ok){
+                return respuesta.json()
+            }
+         }) 
          .then((Data)=>{
             let B;
 

@@ -42,7 +42,11 @@ export const useSendPartG = () =>{
                     user_id: userID,
                 })
             })
-            .then(respuesta => respuesta.json())
+            .then(respuesta => {
+                if(respuesta.ok){
+                   return respuesta.json()
+                }
+            })
             .catch((err)=>{
                 console.error(err)
             });

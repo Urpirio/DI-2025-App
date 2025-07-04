@@ -1,7 +1,7 @@
 import { Text, View,FlatList, TouchableOpacity, Image,TextInput } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GlobalApis } from "../../../Apis/GlobalApis";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { StyleScreenEventos } from "../../../style/Style - ScreenParticipantes/StyleScreen - Evento";
 import { useRenderTodos } from "../../../hooks/hooks - ScreenParticipantes/useRenderTodos";
 import { useSendPart } from "../../../hooks/hooks - ScreenParticipantes/useSendPart";
@@ -11,6 +11,8 @@ import { router,useLocalSearchParams } from "expo-router";
 import ModalSobreEvento from "../../../Components/components - ScreenParticipantes/ModalSobreEvento";
 import useRefresh from "../../../hooks/hooks - Globales/useRefresh";
 import { RefreshControl } from "react-native";
+import { useFocusEffect } from "expo-router";
+import { BlurView } from "expo-blur";
 
 
 export default function index() {
@@ -26,15 +28,15 @@ export default function index() {
 
 
 
-  useEffect(()=>{
+  useFocusEffect(useCallback(()=>{
     GetTodosUsuarios();
-  },[TextSearch,StyleDropDownBuscador,StyleDropDownEstado,FiltroEstado,RefreshbtnCard,StateRefresh]);
+  },[TextSearch,StyleDropDownBuscador,StyleDropDownEstado,FiltroEstado,RefreshbtnCard,StateRefresh]));
+
+  
 
   const Button = ({Registrado,item}) =>{
     if(Registrado === true){
-        return <View>
-            <Text style={{color:'green'}}>Usuario registrado</Text>
-        </View>
+        return 
     }else if(Registrado === false){
         return <TouchableOpacity onLongPress={()=>{
                         ScreenRefresHome();
@@ -46,7 +48,7 @@ export default function index() {
         return <TouchableOpacity onLongPress={()=>{
                         ScreenRefresHome()
                         AsistenciaStaff({userID: item?.id})
-                    }} style={{borderWidth:1,borderColor: 'green',padding:5,borderRadius: 5,width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#008000'}}>
+                    }} style={{borderWidth:1,borderColor: '#006400',padding:5,borderRadius: 5,width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#006400'}}>
                         <Text style={{color: 'white'}}>Agregar y confirmar asistencia</Text>
                 </TouchableOpacity>
     }
@@ -82,10 +84,10 @@ export default function index() {
         <View style={StyleScreenEventos.ContenedorFiltros}>
 
         <View onTouchMove={DesactivarDropDown} style={{width:'100%'}}>
-            <View style={StyleScreenEventos.ContenedorBuscador} >
+            <BlurView intensity={180} style={StyleScreenEventos.ContenedorBuscador} >
                 <Image style={StyleScreenEventos.IconoBuscar} source={require('../../../assets/IconParticipantes/search-big.png')}/>
-                <TextInput value={TextSearch} onChangeText={setTextSearch} placeholder={`Buscador por ${FiltroBuscador}`} style={StyleScreenEventos.InputBuscador}/>
-            </View>
+                <TextInput placeholderTextColor={'#adb5bd'} value={TextSearch} onChangeText={setTextSearch} placeholder={`Buscador por ${FiltroBuscador}`} style={StyleScreenEventos.InputBuscador}/>
+            </BlurView>
         </View>
 
         <View style={StyleScreenEventos.ContenedorDropDown}>
@@ -145,20 +147,23 @@ export default function index() {
         </View>}
         renderItem={({item})=>{
             return(
-            <View onTouchMove={DesactivarDropDown} style={StyleScreenEventos.CardListado}>
+            <BlurView intensity={210}  onTouchMove={DesactivarDropDown} style={StyleScreenEventos.CardListado}>
                 <View style={{width:'30%',}}>
-                    <Image style={{height: '100%', width:'100%',objectFit:'corver',borderRadius:5}} 
-                    source={ item?.profile_picture ? {uri: GlobalApis.ApiImg + item?.profile_picture } : require('../../../assets/IconParticipantes/ImageDefaul.jpg')}/>
+                    <Image style={{height: 100, width:'100%',objectFit:'corver',borderRadius:5}} 
+                    source={ item?.profile_picture ? {uri: GlobalApis.ApiImg + item?.profile_picture } : require('../../../assets/IconParticipantes/userImg.png')}/>
                 </View>
-                <View style={{paddingHorizontal:5,width:'70%',height:'100%',gap:5}}>
+                <View style={{paddingHorizontal:5,width:'70%',height:100,gap:5,justifyContent:'space-between'}}>
 
-                    <Text style={{fontWeight:'600',fontSize:20,color:'gray'}}>{item?.first_name?.split(' ')[0]} {item?.last_name?.split(' ')[0]}</Text>
-                    <Text>ID: {item?.id.slice(30,36)}</Text>
-                    <Text>Email: {item?.email}</Text>
+                    <View>
+                    <Text style={{fontWeight:'600',fontSize:20,color:'#023e7d'}}>{item?.first_name?.split(' ')[0]} {item?.last_name?.split(' ')[0]}</Text>
+                    {/* <Text>ID: {item?.id.slice(30,36)}</Text> */}
+                    <Text style={{fontSize:12,fontWeight:'600',color:'gray'}}>{item?.email}</Text>
+                    <Text style={{color:'#006400'}}>{item?.Registrado ? 'Registrado' : ''}</Text>
+                    </View>
                     <Button Registrado={item?.Registrado} item={item}/>
                     
                 </View>
-            </View>
+            </BlurView>
             )
         }}/> 
 

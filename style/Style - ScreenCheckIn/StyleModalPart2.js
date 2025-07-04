@@ -34,7 +34,6 @@ export const StyleModalPart = StyleSheet.create({
         width:'100%'
     },
     BtnRegistrar:{
-        // paddingHorizontal:10,
         paddingVertical: 5,
         alignItems:'center',
         borderRadius:10,
@@ -47,11 +46,10 @@ export const StyleModalPart = StyleSheet.create({
         fontWeight:'500'
     },
     BtnVolver:{
-        // paddingHorizontal:10,
         paddingVertical: 5,
         alignItems:'center',
         borderRadius:10,
-        backgroundColor:'#adb5bd',
+        backgroundColor:'#6c757d',
         width:'100%'
     },
     TextBtnVolver:{

@@ -8,6 +8,7 @@ import { useLogin } from "../hooks/hooks - ScreenLogin/useLogin";
 import { useStyleLogin } from "../hooks/hooks - ScreenLogin/useStyleLogin";
 import { useNetInfo } from "@react-native-community/netinfo";
 import ModalConnectRed from "../Components/components - Login/Modales/ModalConnectRed";
+import { BlurView } from "expo-blur";
 
 export default function LoginForm() {
 
@@ -75,22 +76,22 @@ export default function LoginForm() {
           <View style={StyleLoginForm.SectionForm}>
             <View style={{gap:20}}>
               <View>
-                <View style={ChangesColorEmail.InputEmail}> 
+                <BlurView intensity={ChangesColorEmail.InputEmail.intensity} style={ChangesColorEmail.InputEmail}> 
               <Image source={require('../assets/IconInputs/envelope-alt (1).png')}
                 style={ChangesColorEmail.IconInputEmail}/>
-              <TextInput placeholder="Email" placeholderTextColor={'#ced4da'}  
+              <TextInput placeholder="Email" placeholderTextColor={ChangesColorEmail.IconInputEmail.tintColor}  
                 style={ChangesColorEmail.TextInput_Email} 
                 onPress={ChangeColorInput} onChangeText={setTextEmail} value={TextEmail}/>
                 
-              </View>
+              </BlurView>
               <View style={CorreoInValido}>
                   <Text style={{fontSize:12,color:'red'}}>Ingrese una dirección de correo electrónico válida.</Text>
               </View>
               </View>
-              <View style={ChangesColorPassword.InputPassword}>
+              <BlurView intensity={ChangesColorPassword.InputPassword.intensity} style={ChangesColorPassword.InputPassword}>
                 <Image source={require('../assets/IconInputs/lock.png')}
                   style={ChangesColorPassword.IconInputPassWord}/>
-                <TextInput placeholder="Password" placeholderTextColor={'#ced4da'} 
+                <TextInput placeholder="Password" placeholderTextColor={ChangesColorPassword.IconInputPassWord.tintColor} 
                   secureTextEntry={ShowPassword} style={ChangesColorPassword.TextInput_PassWord} 
                     onPress={ChangeColorInputP2} onChangeText={setTextPassword} value={TextPassword}/>
                   <Pressable onPress={()=>{
@@ -100,7 +101,7 @@ export default function LoginForm() {
                     <Image source={IconEyePassWord}
                       style={ChangesColorPassword.PressablePassWordIcon}/>
                   </Pressable>
-              </View>
+              </BlurView>
             </View>
             <View style={CredentialErrorStyle}>
               <Text style={{color:'red',fontWeight:'600'}}>Credenciales incorrectas</Text>
@@ -108,14 +109,14 @@ export default function LoginForm() {
             <View style={CamposVacios}>
               <Text style={{color:'#ffba08',fontWeight:'500'}}>Los campos no pueden estar vacíos.</Text>
             </View>
-            <View style={{gap:20,paddingVertical:10}}>
-              <View style={StyleLoginForm.ContainerForgetPassword}>
+            <View style={{gap:20,paddingVertical:30}}>
+              {/* <View style={StyleLoginForm.ContainerForgetPassword}>
                 <TouchableOpacity onPress={()=>{
                   Router.navigate('/Screens/ScreenForgetPassword');
                 }}>
                     <Text style={{color:'#023e8a',fontWeight:'600'}}>Forget the password?</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
               <View style={StyleLoginForm.ContainerBtnSignIn}>
                 <TouchableOpacity style={StyleLoginForm.BtnSignIn} 
                   onPress={()=>{
@@ -125,7 +126,7 @@ export default function LoginForm() {
                   {LoadingLOGIN ? 
                   <ActivityIndicator size={'small'} color={"white"}/> 
                   : 
-                  <Text style={StyleLoginForm.TextBtnSignIn}>Sign In</Text>
+                  <Text style={StyleLoginForm.TextBtnSignIn}>Iniciar sesion</Text>
                   }
                 </TouchableOpacity>
               </View>

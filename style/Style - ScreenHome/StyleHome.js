@@ -4,6 +4,7 @@ export const StyleHome = StyleSheet.create({
     ContainerFilter:{
         justifyContent:'center',
         alignItems:'flex-start',
+       
     },
     ContainerNotFilter:{
         display: 'none'
@@ -20,6 +21,7 @@ export const StyleHome = StyleSheet.create({
         zIndex:20,
         gap:5,
         borderRadius: 10,
+        
     },
     ContainerBtnFiltrosNotShow:{
         display:'none'
@@ -32,6 +34,7 @@ export const StyleHome = StyleSheet.create({
         borderRadius: 5,
         flexDirection:'row',
         justifyContent:'space-between'
+
     },
     TextBtnSelectFilter:{
         color:'#023e8a',fontWeight:'600'
@@ -46,7 +49,8 @@ export const StyleHome = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
-        boxShadow:'0px 0px 1px 0px gray'
+        boxShadow:'0px 0px 1px 0px gray',
+        backgroundColor:'white'
     },
     IconBtnFilter:{
         height:30,
@@ -57,16 +61,20 @@ export const StyleHome = StyleSheet.create({
     },
     CardEvent:{
         // flexDirection:'row',
-        borderWidth:1,
-        justifyContent:'space-between',
-        padding:5,
+        // borderRadius:10,
+        // borderWidth:1,
+        justifyContent:'center',
+        padding:10,
         marginBottom:10,
         borderRadius:10,
         gap:10,
-        boxShadow:'0px 0px 1px 0px gray',
-        borderColor:'#adb5bd',
+        // boxShadow:'0px 0px 1px 0px gray',
+        // borderColor:'#adb5bd',
         flexGrow: 1,
         flexBasis:0,
+        backgroundColor:'#001233',
+        position:'relative',
+        alignItems:'center'
 
     },
     CardEventSection1:{
@@ -76,18 +84,18 @@ export const StyleHome = StyleSheet.create({
         width:'100%',
         justifyContent:'center',
         alignItems:'center',
-
+        height:35
+        
     },
     BtnInCardEvent:{
         borderRadius:10,
         width:'100%',
-        paddingVertical:6,
+        // paddingVertical:6,
         flexGrow: 1,
         flexBasis:0,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#023e8a',
-        // borderWidth:1
+        backgroundColor:'#023e7d'
     },
     // IconBtnInCardEvent:{
     //     height:50,

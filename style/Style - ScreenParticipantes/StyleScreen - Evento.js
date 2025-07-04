@@ -22,22 +22,24 @@ export const StyleScreenEventos = StyleSheet.create({
         gap:5
     },
     ContenedorBuscador:{
-        borderWidth:1,
-        borderColor: ColorBorder,
         borderRadius:10,
-        flexDirection:'row',
-        alignItems:'center',
-        backgroundColor:'white',
-        paddingHorizontal:5
+                        height:50,
+                        flexDirection:'row',
+                        borderColor:'#ced4da',
+                        width:`100%`,
+                        marginBottom: 10,
+                        backgroundColor:'gray',
+                        justifyContent:'center',
+                        alignItems:'center',
     },
     IconoBuscar:{
         height:30,
         width:30,
-        tintColor: ColorBorder,
+        tintColor: '#023e7d',
     },
     InputBuscador: {
         height:50,
-        fontSize:18,
+        fontSize:16,
         width:'90%'
     },
     ContenedorDropDown:{
@@ -60,7 +62,8 @@ export const StyleScreenEventos = StyleSheet.create({
         justifyContent:'space-between',
         borderRadius:10,
         borderColor:ColorBorder,
-        flexDirection:'row'
+        flexDirection:'row',
+        backgroundColor:'white',
     },
     ButtondeployDropDownEstado:{
         width:'100%',
@@ -70,7 +73,8 @@ export const StyleScreenEventos = StyleSheet.create({
         justifyContent: 'space-between',
         borderRadius:10,
         borderColor:ColorBorder,
-        flexDirection:'row'
+        flexDirection:'row',
+        backgroundColor:'white',
     },
     IconDropDown:{
         height:20,
@@ -116,12 +120,12 @@ export const StyleScreenEventos = StyleSheet.create({
     },
     CardListado:{
         width:'100%',
-        borderWidth:1,
+        // borderWidth:1,
         padding:5,
         borderRadius:10,
         marginVertical:5,
         flexDirection:'row',
-        height:130,
-        borderColor:ColorBorder
+        // borderColor:ColorBorder,
+        backgroundColor:'#023e7d',
     },
 });

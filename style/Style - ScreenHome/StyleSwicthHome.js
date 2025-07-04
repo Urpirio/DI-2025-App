@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const StyleSwicthHome = StyleSheet.create({
     constainerBtn:{
         flexDirection:'row',
+        
     },
     BtnHoy:{
         borderWidth:1,
@@ -11,6 +12,7 @@ export const StyleSwicthHome = StyleSheet.create({
         paddingVertical: 5,
         borderBottomLeftRadius: 10,
         borderTopLeftRadius:10,
+        backgroundColor:'white'
     },
     BtnHoySelected:{
         borderWidth:1,
@@ -34,6 +36,7 @@ export const StyleSwicthHome = StyleSheet.create({
         paddingVertical: 5,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
+        backgroundColor:'white'
     },
     BtnTodosSelected:{
         borderWidth:1,

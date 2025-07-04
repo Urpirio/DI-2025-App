@@ -25,7 +25,7 @@ export default function Modal_Registrado({
                         <Text style={StyleModalPart.TextBtnRegistrar}>Registrar otra entrada</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={StyleModalPart.BtnVolver} onPress={FuncionVolver}>
-                        <Text style={StyleModalPart.TextBtnVolver}>Volver</Text>
+                        <Text style={StyleModalPart.TextBtnVolver}>Volver a evento</Text>
                     </TouchableOpacity>
                 </View>
             </View>

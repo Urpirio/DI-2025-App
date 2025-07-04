@@ -39,25 +39,16 @@ export const StyleEnEvento = StyleSheet.create({
         gap:5,
         width:'100%'
     },
-    // BtnRegistrar:{
-    //     // paddingHorizontal:10,
-    //     paddingVertical: 5,
-    //     alignItems:'center',
-    //     borderRadius:10,
-    //     backgroundColor:'#023e8a',
-    //     width:'100%'
-    // },
     TextBtnRegistrar:{
         color:'white',
         fontSize:16,
         fontWeight:'500'
     },
     BtnVolver:{
-        // paddingHorizontal:10,
         paddingVertical: 5,
         alignItems:'center',
         borderRadius:10,
-        backgroundColor:'#adb5bd',
+        backgroundColor:'#6c757d',
         width:'100%'
     },
     TextBtnVolver:{

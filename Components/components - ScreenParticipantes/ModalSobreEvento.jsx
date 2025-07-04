@@ -1,4 +1,4 @@
-import { Modal, View,Text, Image, TouchableOpacity } from "react-native";
+import { Modal, View,Text, Image, TouchableOpacity,Pressable } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { GlobalApis } from "../../Apis/GlobalApis";
 import { useEffect } from "react";
@@ -17,7 +17,11 @@ export default function ModalSobreEvento({FDeployModal,StatusModal}) {
             method: 'GET',
             headers: {'Authorization': `Bearer ${LocalData.TokenAccess}`}
         })
-        .then(respuesta => respuesta.json())
+        .then(respuesta => {
+            if(respuesta.ok){
+                return respuesta.json()
+            }
+        })
         .then((Data)=>{
             const Registrados = Data.data.filter(D => D.checkin != null);
             setRegistrados(Registrados);
@@ -28,7 +32,11 @@ export default function ModalSobreEvento({FDeployModal,StatusModal}) {
         });
 
         fetch(GlobalApis.ApiTodosEventos)
-        .then(respuesta => respuesta.json())
+        .then(respuesta => {
+            if(respuesta.ok){
+                   return respuesta.json()
+            }
+        })
         .then((Data)=>{
             const ElEvento = Data.data.filter(D => D.id == LocalData.IDEvents);
             Data.data.forEach((D)=>{
@@ -48,9 +56,11 @@ export default function ModalSobreEvento({FDeployModal,StatusModal}) {
   return (
     <Modal  visible={StatusModal} transparent={true}>
         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-            <View style={{backgroundColor:'gray',opacity:0.2,width:'100%',height:'100%'}}>
+            <Pressable onPress={()=>{
+                FDeployModal()
+            }} style={{backgroundColor:'gray',opacity:0.2,width:'100%',height:'100%'}}>
 
-            </View>
+            </Pressable>
             <View style={{width:'90%',borderWidth:1,borderRadius:10,borderColor:'#ced4da',padding:15,backgroundColor:'white',position:'absolute',gap:10}}>
                 <View style={{alignItems:'center'}}>
                     <Text style={{fontSize:24,fontWeight:'600',textAlign:'center'}}>{InformacionEvento.title}</Text>

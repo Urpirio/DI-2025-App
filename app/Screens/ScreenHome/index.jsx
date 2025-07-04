@@ -16,6 +16,8 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import SKhome from "../../../Components/Components - ScreenHome/SK/SKhome";
 import SearchHome from "../../../Components/Components - ScreenHome/Searchs/Search - Home";
 import NoInternet from "../../../Components/Components - Globales/AvisosInternet/NoInternet";
+import { useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 
 export let funcionRefresh;
 
@@ -64,7 +66,7 @@ export default function index() {
      return(true)
     });
 
-    useEffect(()=>{
+    useFocusEffect(useCallback(()=>{
         if(HaveInternet.isConnected){
             GetEvents();
         }else if(HaveInternet.isWifiEnabled){
@@ -73,7 +75,7 @@ export default function index() {
         
     },[SearchText,SelectName,CerrarSesion,StateRefresh,
     StatusModalCerrarS,EventosHoy,Loading,HaveInternet.isWifiEnabled,
-    HaveInternet.isConnected]);
+    HaveInternet.isConnected]));
 
     const IsScrolling = ()=>{
         if(!RotateIconFilter){
@@ -119,9 +121,9 @@ export default function index() {
   };
 
   return (
-    <SafeAreaProvider style={{backgroundColor:'white'}}>
+    <SafeAreaProvider style={{backgroundColor:'#f8f9fa',paddingVertical:5}}>
 
-        <View style={{padding:10}}>
+        <View style={{paddingHorizontal:10}}>
            
             
            <FlatList

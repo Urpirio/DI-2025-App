@@ -43,13 +43,17 @@ export default function _layout() {
                     <View style={{
                         backgroundColor:'white',
                         paddingHorizontal:0,
-                        paddingTop:150,
-                        alignItems:'center',
+                        paddingTop:120,
+                        // alignItems:'center',
+                        alignItems:'center'
+                        // borderWidth:1
                     }}>
                         <Image source={LogoOgtic}  style={{
                             tintColor:'#023e8a',
                             height:40,
-                            objectFit:'contain'
+                            // width:150,
+                            objectFit:'contain',
+                            // borderWidth:1
                         }}/>
                     </View>
                 )
@@ -92,7 +96,7 @@ export default function _layout() {
                         </View>
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutHome.ImgProfile}
-                                    source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`}}/>
+                                    source={ route.params.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : require('../assets/IconHome/userImg.png')}/>
                             </TouchableOpacity>
                         </View>
 
@@ -122,7 +126,6 @@ export default function _layout() {
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutEvent.Header}>
 
-                            {'Boton para volver atras'}
                             <TouchableOpacity onPress={()=>{
                                 Router.back();
                                 if(!StatusMenuProfile){
@@ -141,10 +144,10 @@ export default function _layout() {
                                     route.params.NombreEvento.slice(0,16)
                                 }
                             </Text>
-                            {'Imagen de perfil'}
+
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutEvent.ImgProfile}
-                                    source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`}}/>
+                                    source={ route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : require('../assets/IconHome/userImg.png')}/>
                             </TouchableOpacity>
 
                         </View>

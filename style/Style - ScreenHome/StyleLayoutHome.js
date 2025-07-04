@@ -21,7 +21,7 @@ export const StyleLayoutHome = StyleSheet.create({
     TitlesHeader:{
         fontSize:26,
         fontWeight:'600',
-        color:'#023e8a'
+        color:'#023e7d',
     },
     ImgProfile:{
         height:50,width:50,borderRadius: 100

@@ -1,4 +1,5 @@
 import { Modal, View,Text,Image, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 
 export default function ModalNoMatch({
     StatusModal,CloseModal,OpenIngresarCodigo
@@ -11,7 +12,7 @@ export default function ModalNoMatch({
             justifyContent:'center',
             paddingHorizontal:10
         }}>
-            <View style={{
+            <TouchableOpacity onPress={()=>CloseModal()} style={{
                 flex:1,
                 filter:'blur(50px)',
                 backgroundColor:'black',
@@ -19,7 +20,7 @@ export default function ModalNoMatch({
                 opacity:0.2
             }}>
 
-            </View>
+            </TouchableOpacity>
             <View style={{
                 borderWidth:1,
                 borderColor:'gray',
@@ -52,9 +53,11 @@ export default function ModalNoMatch({
                         justifyContent:'center',
                         padding:10,
                         borderRadius:10,
-                        backgroundColor:'#adb5bd',
-                    }} onPress={CloseModal}>
-                        <Text style={{color:'white',fontWeight:'500'}}>Volver a intentar</Text>
+                        backgroundColor:'#6c757d',
+                    }} onPress={()=>{
+                        router.back();
+                    }}>
+                        <Text style={{color:'white',fontWeight:'500'}}>Volver a evento</Text>
                     </TouchableOpacity>
                 </View>
             </View>
