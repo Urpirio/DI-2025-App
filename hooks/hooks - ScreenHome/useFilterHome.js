@@ -15,17 +15,17 @@ export const useHome = () => {
         );
 
         const DeployFilter = () => {
-                if(RotateIconFilter){
+                if(RotateIconFilter === true){
                     setIconBtnFilter({
                         Icon:require('../../assets/IconHome/ArrowAbajo.png')
                     });
-                    setRotateIconFilter(!RotateIconFilter);
+                    setRotateIconFilter(false);
                     setStyleFiltros(StyleHome.ContainerBtnFiltrosShow);
-                }else{
+                }else if(RotateIconFilter === false){
                     setIconBtnFilter({
                         Icon:require('../../assets/IconHome/ArrowDerecha.png')
                     });
-                    setRotateIconFilter(!RotateIconFilter);
+                    setRotateIconFilter(true);
                     setStyleFiltros(StyleHome.ContainerBtnFiltrosNotShow);
                 }
         };
