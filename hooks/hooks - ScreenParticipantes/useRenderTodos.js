@@ -22,7 +22,6 @@ export const useRenderTodos = () => {
     .then(respuesta => respuesta.json())
     .then((Data)=>{
         GetTodosUsuarios2({DatosPartG:Data.data});
-        // console.log(Data.data)
     })
     .catch((err)=>{
         console.log(err)
@@ -94,7 +93,7 @@ export const useRenderTodos = () => {
                         TodosEnBuscador.push(D)
                     }
                 })
-            }else if(FiltroBuscador === 'Nombre'){
+            }else if(FiltroBuscador === 'Email'){
                 TodoGetTodosUsuarios.forEach((D)=>{
                     const NombreCompleto = D.first_name + ' ' + D.last_name;
                     if(NombreCompleto.toUpperCase().includes(TextSearch.toUpperCase())){
