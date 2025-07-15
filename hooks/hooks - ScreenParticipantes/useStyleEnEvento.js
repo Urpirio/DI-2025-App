@@ -10,29 +10,17 @@ export const useStyleEnEvento = () => {
         stado: false,
     });
 
+
     const [IconDropDownBuscado,setIconDropDownBuscado] = useState(require('../../assets/IconParticipantes/ArrowDerecha.png'))
     const [StyleDropDownBuscador,setStyleDropDownBuscador]  = useState({
         Style:StyleScreenEventos.ContenedorOpcionesDropDownBuscador_None,
         stado: false,
     });
 
+    
 
 
-    const DeployDropDownEstado = () => {
-        if(StyleDropDownEstado.stado){
-            setIconDropDownEstado(require('../../assets/IconParticipantes/ArrowDerecha.png'))
-            setStyleDropDownEstado({
-                Style:StyleScreenEventos.ContenedorOpcionesDropDownEstados_None,
-                stado:false
-            })
-        }else{
-            setIconDropDownEstado(require('../../assets/IconParticipantes/ArrowAbajo.png'))
-            setStyleDropDownEstado({
-                Style:StyleScreenEventos.ContenedorOpcionesDropDownEstados,
-                stado:true
-            })
-        }
-    };
+ 
     const DeployDropDownBuscador = () => {
         if(StyleDropDownBuscador.stado){
             setIconDropDownBuscado(require('../../assets/IconParticipantes/ArrowDerecha.png'))
@@ -52,9 +40,7 @@ export const useStyleEnEvento = () => {
 
     return({
         DeployDropDownBuscador,
-        DeployDropDownEstado,
         StyleDropDownBuscador,
-        StyleDropDownEstado,
         setStyleDropDownBuscador,
         setStyleDropDownEstado,
         IconDropDownBuscado,
