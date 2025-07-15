@@ -44,45 +44,16 @@ export default function _layout() {
                         backgroundColor:'white',
                         paddingHorizontal:0,
                         paddingTop:120,
-                        // alignItems:'center',
                         alignItems:'center'
-                        // borderWidth:1
                     }}>
                         <Image source={LogoOgtic}  style={{
                             tintColor:'#023e8a',
                             height:40,
-                            // width:150,
                             objectFit:'contain',
-                            // borderWidth:1
                         }}/>
                     </View>
                 )
             },
-        }}/>
-        <Stack.Screen name="Screens/ScreenForgetPassword/index" options={{
-            header:()=>{
-                return(
-                    <View style={{
-                        alignItems:'center',
-                        height:100,
-                        paddingHorizontal: 10,
-                        justifyContent:'Flex-end',
-                        backgroundColor:'white',
-                        flexDirection:'row',
-                        gap: 20,
-                        paddingTop: StatusBar.currentHeight
-                        }}>
-                        <TouchableOpacity onPress={()=>{Router.navigate('../')}}>
-                            <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
-                            source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
-                        </TouchableOpacity>
-                        <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>
-                            Recuperar cuenta
-                        </Text>
-                    </View>
-                )
-            },
-            
         }}/>
         <Stack.Screen name="Screens/ScreenHome/index" options={{
             header:({route})=>{
@@ -141,8 +112,7 @@ export default function _layout() {
                                 {ArrayNombreEvento.length > 16 ?
                                     route.params.NombreEvento.slice(0,16) + '...'
                                     :
-                                    route.params.NombreEvento.slice(0,16)
-                                }
+                                    route.params.NombreEvento.slice(0,16)}
                             </Text>
 
                             <TouchableOpacity onPress={DeployMenuPerfil}>
@@ -183,10 +153,10 @@ export default function _layout() {
                         <TouchableOpacity onPress={()=>{
                             Router.back();  
                         }}>
-                            <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
+                            <Image style={{height:50,width:50,tintColor:'#007AFF'}} 
                             source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
                         </TouchableOpacity>
-                        <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>
+                        <Text style={{fontSize:20,color:'#007AFF',fontWeight:'600'}}>
                             Scanner QR
                         </Text>
                     </View>
