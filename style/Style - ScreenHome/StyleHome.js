@@ -12,15 +12,14 @@ export const StyleHome = StyleSheet.create({
     ContainerBtnFiltrosShow:{
         position:'absolute',
         marginTop:240,
-        borderWidth:1,
         borderColor:'#ced4da',
         width:150,
         height:200,
         backgroundColor:'#ffffff',
         padding:5,
-        zIndex:20,
         gap:5,
-        borderRadius: 10,
+        borderRadius: 5,
+        borderWidth:1,
         
     },
     ContainerBtnFiltrosNotShow:{
@@ -37,14 +36,14 @@ export const StyleHome = StyleSheet.create({
 
     },
     TextBtnSelectFilter:{
-        color:'#023e8a',fontWeight:'600'
+        color:'#007AFF',
+        fontWeight:'600'
     },
     BtnFilterDeploy:{
-        borderWidth:1,
         borderColor:'#ced4da',
-        paddingVertical:1,
+        paddingVertical:2,
         borderRadius:10,
-        paddingHorizontal: 5,
+        paddingHorizontal: 20,
         width:150,
         flexDirection:'row',
         alignItems:'center',
@@ -60,16 +59,11 @@ export const StyleHome = StyleSheet.create({
 
     },
     CardEvent:{
-        // flexDirection:'row',
-        // borderRadius:10,
-        // borderWidth:1,
         justifyContent:'center',
-        padding:10,
+        // padding:10,
         marginBottom:10,
         borderRadius:10,
         gap:10,
-        // boxShadow:'0px 0px 1px 0px gray',
-        // borderColor:'#adb5bd',
         flexGrow: 1,
         flexBasis:0,
         backgroundColor:'#001233',
@@ -77,30 +71,21 @@ export const StyleHome = StyleSheet.create({
         alignItems:'center'
 
     },
-    CardEventSection1:{
-
-    },
+    //Cambiar el nombre XD
     CardEventBtns:{
-        width:'100%',
-        justifyContent:'center',
         alignItems:'center',
-        height:35
+        justifyContent:'space-between',
+        width:'100%',
+        padding:10,
+        flexDirection:'row',
         
     },
     BtnInCardEvent:{
         borderRadius:10,
-        width:'100%',
-        // paddingVertical:6,
-        flexGrow: 1,
-        flexBasis:0,
+        paddingVertical:5,
+        paddingHorizontal:20,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#023e7d'
+        backgroundColor:'#007AFF'
     },
-    // IconBtnInCardEvent:{
-    //     height:50,
-    //     width:50,
-    //     marginLeft:5,
-    //     tintColor:'white'
-    // }
 });
