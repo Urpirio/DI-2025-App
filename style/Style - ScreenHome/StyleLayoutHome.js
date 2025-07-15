@@ -5,8 +5,7 @@ export const StyleLayoutHome = StyleSheet.create({
         width:'100%',
         justifyContent:'space-between',
         alignItems:'center',
-        paddingTop:10,
-        paddingBottom:10,
+        paddingVertical:5,
         paddingHorizontal:20,
         flexDirection:'row',
         backgroundColor:'white',
@@ -16,12 +15,12 @@ export const StyleLayoutHome = StyleSheet.create({
     IconBack:{
         height:50,
         width:50,
-        tintColor:'#023e8a'
+        tintColor:'#007AFF'
     },
     TitlesHeader:{
         fontSize:26,
         fontWeight:'600',
-        color:'#023e7d',
+        color:'#007AFF',
     },
     ImgProfile:{
         height:50,width:50,borderRadius: 100
