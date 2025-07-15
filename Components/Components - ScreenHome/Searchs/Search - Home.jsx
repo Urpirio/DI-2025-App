@@ -23,26 +23,29 @@ export default function SearchHome({
 }) {
   return (
     
-<View>
-                <BlurView intensity={180} style={{
+<View style={{paddingVertical:5,}}>
+                <BlurView intensity={80} style={{
                         borderRadius:10,
                         height:50,
                         flexDirection:'row',
                         borderColor:'#ced4da',
                         width:`100%`,
                         marginBottom: 10,
-                        backgroundColor:'gray',
+                        backgroundColor:'#E4E5E7',
                         justifyContent:'center',
                         alignItems:'center',
-                        // boxShadow:'0px 0px 60px 1px gray'
                     }}>
-                        {/* <TouchableOpacity style={{padding:5,justifyContent:'center',alignItems:'center'}} > */}
-                            <Image style={{height:30,width:30,objectFit:'contain',tintColor:'#023e7d'}} source={IconSearch}/>
-                        {/* </TouchableOpacity> */}
+                        <Image 
+                        style={{height:25,width:25,objectFit:'contain',tintColor:'#919192'}} 
+                        source={IconSearch}/>
                         <TextInput style={{
                             fontSize:16,
                             width:`90%`,
-                            }} placeholder="Buscador" value={SearchText} onChangeText={setSearchText} placeholderTextColor={'#adb5bd'} 
+                            }} 
+                            placeholder="Buscador"
+                            value={SearchText} 
+                            onChangeText={setSearchText} 
+                            placeholderTextColor={'#adb5bd'} 
                             onPress={()=>{
                                 if(!RotateIconFilter){
                                     DeployFilter();
@@ -52,9 +55,14 @@ export default function SearchHome({
                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
                  <View style={StyleHome.ContainerFilter}>
                     <TouchableOpacity  style={StyleHome.BtnFilterDeploy} 
-                        onPress={()=>{DeployFilter(); GetSalaEvent();}}>
-                        <Text style={{color:'gray'}}>Filtrar por sala</Text>
-                        <Image style={StyleHome.IconBtnFilter} source={IconBtnFilter.Icon}/>
+                        onPress={()=>{
+                           DeployFilter()
+                            GetSalaEvent()     
+                        }}>
+                        <Text style={{color:'gray',fontWeight:'300'}}>Filtrar por sala</Text>
+                        <Image 
+                        style={StyleHome.IconBtnFilter} 
+                        source={IconBtnFilter.Icon}/>
                     </TouchableOpacity>
                     <View style={StyleFiltros}>
     
