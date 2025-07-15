@@ -19,40 +19,41 @@ export const StyleScreenEventos = StyleSheet.create({
     },
     ContenedorFiltros:{
         padding:5,
-        gap:5
+        gap:5,
+        width:'100%'
     },
     ContenedorBuscador:{
         borderRadius:10,
-                        height:50,
-                        flexDirection:'row',
-                        borderColor:'#ced4da',
-                        width:`100%`,
-                        marginBottom: 10,
-                        backgroundColor:'gray',
-                        justifyContent:'center',
-                        alignItems:'center',
+        height:50,
+        flexDirection:'row',
+        borderColor:'#ced4da',
+        width:`100%`,
+        marginBottom: 10,
+        backgroundColor:'#E4E5E7',
+        justifyContent:'center',
+        alignItems:'center',
     },
     IconoBuscar:{
-        height:30,
-        width:30,
-        tintColor: '#023e7d',
+        height:25,
+        width:25,
+        objectFit:'contain',
+        tintColor:'#919192'
     },
     InputBuscador: {
         height:50,
         fontSize:16,
-        width:'90%'
+        width:'80%'
     },
     ContenedorDropDown:{
         width:'100%',
         flexDirection:'row',
-        justifyContent:'space-between',
+        borderWidth:1,
         gap:5
     },
     DropDownEstado:{
-        width:'48%'
-    },
-    DropDownBuscador:{
-        width:'48%'
+        flexDirection:'row',
+        justifyContent:'center',
+
     },
     ButtondeployDropDownBuscador:{
         width:'100%',
@@ -66,15 +67,7 @@ export const StyleScreenEventos = StyleSheet.create({
         backgroundColor:'white',
     },
     ButtondeployDropDownEstado:{
-        width:'100%',
-        borderWidth:1,
-        paddingVertical:10,
-        paddingHorizontal: 5,
-        justifyContent: 'space-between',
-        borderRadius:10,
-        borderColor:ColorBorder,
-        flexDirection:'row',
-        backgroundColor:'white',
+      
     },
     IconDropDown:{
         height:20,
@@ -92,40 +85,50 @@ export const StyleScreenEventos = StyleSheet.create({
         width:'100%',
         padding:5
     },
-    ContenedorOpcionesDropDownBuscador:{
-        width:'100%',
-        position:'absolute',
-        marginTop:45,
-        borderWidth:1,
-        padding:5,
-        borderRadius:5,
-        borderColor:ColorBorder,
-        backgroundColor:'white'
-    },
     ContenedorOpcionesDropDownBuscador_None:{
         display: 'none'
-    },
-    ContenedorOpcionesDropDownEstados:{
-        width:'100%',
-        position:'absolute',
-        marginTop:45,
-        borderWidth:1,
-        padding:5,
-        borderRadius:5,
-        borderColor:ColorBorder,
-        backgroundColor:'white'
     },
     ContenedorOpcionesDropDownEstados_None:{
         display: 'none'
     },
     CardListado:{
         width:'100%',
-        // borderWidth:1,
         padding:5,
         borderRadius:10,
         marginVertical:5,
         flexDirection:'row',
-        // borderColor:ColorBorder,
-        backgroundColor:'#023e7d',
+        backgroundColor:'white',
+        borderWidth:1,
+        borderColor:'#ced4da',
+        gap:10,
+    },
+    BtnSeleccionadoFiltros:{
+        paddingVertical:10,
+        paddingHorizontal:15,
+        borderRadius:5,
+        marginRight:5,
+        backgroundColor:'#007AFF',
+    },
+    BtnNoSeleccionadoFiltros:{
+        paddingVertical:10,
+        paddingHorizontal:15,
+        borderRadius:5,
+        marginRight:5
+    },
+    TextBtnSeleccionadoFiltros:{
+        fontSize:14,
+        color:'white'
+    },
+    TextBtnNoSeleccionadoFiltros:{
+        fontSize:14,
+        color:'gray'
+    },
+    ContainerFiltros:{
+        borderWidth:1,
+        borderColor:'#dee2e6',
+        flexDirection:'row',
+        width:'100%',
+        padding:5,
+        borderRadius:5
     },
 });
