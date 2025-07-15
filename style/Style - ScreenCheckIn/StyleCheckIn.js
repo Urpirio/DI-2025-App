@@ -14,7 +14,7 @@ export const StyleCheckIn = StyleSheet.create({
         paddingVertical:15,
         paddingHorizontal:50,
         borderRadius:30,
-        backgroundColor:'#023e8a'
+        backgroundColor:'#007AFF'
     },
     TextBtnIngresarCodigo:{
         color:'white',
