@@ -1,4 +1,4 @@
-import { Text, View,FlatList, TouchableOpacity, Image,TextInput } from "react-native";
+import { Text, View,FlatList, TouchableOpacity, Image,TextInput,ScrollView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GlobalApis } from "../../../Apis/GlobalApis";
 import { useCallback, useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export default function index() {
   const { GetTodosUsuarios,DatosParticipantes,setTextSearch,TextSearch,FiltroBuscador ,setFiltroBuscador,FiltroEstado,setFiltroEstado} = useRenderTodos();
   const {ConfirmarAsistencia} = useSendPart();
   const {AsistenciaStaff} = useSendPartG();
-  const {DeployDropDownBuscador,DeployDropDownEstado,StyleDropDownBuscador,StyleDropDownEstado,IconDropDownBuscado,IconDropDownEstado,} = useStyleEnEvento();
+  const {DeployDropDownBuscador,DeployDropDownEstado,StyleDropDownBuscador} = useStyleEnEvento();
   const LocalData = useLocalSearchParams();
   const [DeployInformacion,setDeployInformacion] = useState(false);
   const [RefreshbtnCard,setRefreshbtnCard] = useState(false);
@@ -30,39 +30,68 @@ export default function index() {
 
   useFocusEffect(useCallback(()=>{
     GetTodosUsuarios();
-  },[TextSearch,StyleDropDownBuscador,StyleDropDownEstado,FiltroEstado,RefreshbtnCard,StateRefresh]));
+  },[TextSearch,StyleDropDownBuscador,FiltroEstado,RefreshbtnCard,StateRefresh]));
 
-  
+  const ChangeFiltroBusqueda = ()=>{
+        if(FiltroBuscador === 'Nombre'){
+            setFiltroBuscador('Email')
+        }else{
+            setFiltroBuscador('Nombre')
+        }
+    }
 
   const Button = ({Registrado,item}) =>{
     if(Registrado === true){
-        return 
+        return <View style={{width:'100%',alignItems:'flex-end',justifyContent:'center'}}>
+                    <TouchableOpacity disabled 
+                    style={{borderWidth:1,borderColor: '#34C7594D',padding:5,borderRadius: 5,justifyContent:'center',alignItems:'center',backgroundColor:'#34C7594D'}}>
+                        <Text style={{color: '#34C759'}}>Registrado</Text>
+                </TouchableOpacity>                  
+        </View> 
     }else if(Registrado === false){
-        return <TouchableOpacity onLongPress={()=>{
-                        ScreenRefresHome();
-                        ConfirmarAsistencia({userEventId:item.userEventId})
-                    }} style={{borderWidth:1,borderColor: '#023e8a',padding:5,borderRadius: 5,width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#023e8a',display: `${item.Registrado ? 'none' : 'flex'}`}}>
-                        <Text style={{color: 'white'}}>Confirmar asistencia</Text>
-                </TouchableOpacity>
+        return <View style={{width:'100%',alignItems:'flex-end',justifyContent:'center'}}>
+             <TouchableOpacity onLongPress={()=>{
+                setRefreshbtnCard(!RefreshbtnCard)
+                ConfirmarAsistencia({userEventId:item.userEventId})
+                }} 
+                style={{
+                    borderWidth:1,
+                    borderColor: '#007AFF',
+                    paddingVertical:5,
+                    paddingHorizontal:10,
+                    borderRadius: 5,
+                    justifyContent:'center',
+                    alignItems:'center',
+                    backgroundColor:'#007AFF',
+                    display: `${item?.Registrado ? 'none' : 'flex'}`}}>
+                <Text style={{color: 'white'}}>Registrar</Text>
+            </TouchableOpacity>
+        </View>
+        
+       
     }else if(Registrado === null){
-        return <TouchableOpacity onLongPress={()=>{
-                        ScreenRefresHome()
+        return <View style={{width:'100%',alignItems:'flex-end',justifyContent:'center'}}>
+                    <TouchableOpacity onLongPress={()=>{
+                        setRefreshbtnCard(!RefreshbtnCard)
                         AsistenciaStaff({userID: item?.id})
-                    }} style={{borderWidth:1,borderColor: '#006400',padding:5,borderRadius: 5,width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#006400'}}>
-                        <Text style={{color: 'white'}}>Agregar y confirmar asistencia</Text>
-                </TouchableOpacity>
+                    }} style={{
+                        borderWidth:1,
+                        borderColor: '#006400',
+                        paddingVertical:5,
+                        paddingHorizontal:10,
+                        borderRadius: 5,
+                        justifyContent:'center',
+                        alignItems:'center',
+                        backgroundColor:'#006400'
+                    }}>
+                        <Text style={{color: 'white'}}>Registrar</Text>
+                </TouchableOpacity>                  
+            </View> 
     }
 
   };
 
-  const DesactivarDropDown = () =>{
-    if(StyleDropDownBuscador.stado){
-        DeployDropDownBuscador()
-    }else if(StyleDropDownEstado.stado){
-        DeployDropDownEstado()
-    }
-  };
-  
+ 
     
   return (
     <SafeAreaProvider style={StyleScreenEventos.BodyScreen}>
@@ -83,100 +112,112 @@ export default function index() {
         ListHeaderComponent={ 
         <View style={StyleScreenEventos.ContenedorFiltros}>
 
-        <View onTouchMove={DesactivarDropDown} style={{width:'100%'}}>
-            <BlurView intensity={180} style={StyleScreenEventos.ContenedorBuscador} >
+        <View style={{width:'100%'}}>
+            <BlurView intensity={80} style={StyleScreenEventos.ContenedorBuscador} >
                 <Image style={StyleScreenEventos.IconoBuscar} source={require('../../../assets/IconParticipantes/search-big.png')}/>
-                <TextInput placeholderTextColor={'#adb5bd'} value={TextSearch} onChangeText={setTextSearch} placeholder={`Buscador por ${FiltroBuscador}`} style={StyleScreenEventos.InputBuscador}/>
+                <TextInput 
+                placeholderTextColor={'#adb5bd'} 
+                value={TextSearch} 
+                onChangeText={setTextSearch} 
+                placeholder={`Buscador por ${FiltroBuscador}`} 
+                style={StyleScreenEventos.InputBuscador}/>
+                <TouchableOpacity onPress={ChangeFiltroBusqueda}>
+                    <Image 
+                    style={{height:25,width:25,objectFit:'contain',tintColor:'#007AFF'}} 
+                    source={require('../../../assets/IconParticipantes/menu-filter.png')}/>
+                </TouchableOpacity>
             </BlurView>
         </View>
 
-        <View style={StyleScreenEventos.ContenedorDropDown}>
-            <View style={StyleScreenEventos.DropDownEstado}>
-                <TouchableOpacity onPress={()=>DeployDropDownEstado()} style={StyleScreenEventos.ButtondeployDropDownEstado}>
-                    <Text style={{fontSize:FiltroEstado == 'Participantes en el evento' ? 12 : 14}}>{FiltroEstado}</Text>
-                    <Image style={StyleScreenEventos.IconDropDown} source={IconDropDownEstado}/>
-                </TouchableOpacity>
-                <View style={StyleDropDownEstado.Style}>
-                    <TouchableOpacity onPress={()=>{
-                        setFiltroEstado('Todos los usuarios');
-                        DeployDropDownEstado();
-                    }} style={StyleScreenEventos.buttonOpcionesDropDown}>
-                        <Text style={{fontSize:14}}>{FiltroEstado === 'Todos los usuarios' ? 'Todos los usuarios ✔️' : 'Todos los usuarios'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{
-                        setFiltroEstado('Participantes en el evento');
-                        DeployDropDownEstado();
-                    }} style={StyleScreenEventos.buttonOpcionesDropDown}>
-                        <Text style={{fontSize:14}}>{FiltroEstado === 'Participantes en el evento' ? 'Participantes en el evento ✔️' : 'Participantes en el evento'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{
-                        setFiltroEstado('Usuarios no inscritos');
-                        DeployDropDownEstado();
-                    }} style={StyleScreenEventos.buttonOpcionesDropDown}>
-                        <Text style={{fontSize:14}}>{FiltroEstado === 'Usuarios no inscritos' ? 'Usuarios no inscritos ✔️' : 'Usuarios no inscritos'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{
-                        setFiltroEstado('Usuarios Inscritos');
-                        DeployDropDownEstado();
-                    }} style={StyleScreenEventos.buttonOpcionesDropDownUltimo}>
-                        <Text style={{fontSize:14}}>{FiltroEstado === 'Usuarios Inscritos' ? 'Usuarios Inscritos ✔️' : 'Usuarios Inscritos'}</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={StyleScreenEventos.DropDownBuscador}>
-                <TouchableOpacity onPress={()=>DeployDropDownBuscador()} style={StyleScreenEventos.ButtondeployDropDownBuscador}>
-                    <Text style={{fontSize:14}}>Buscar por {FiltroBuscador}</Text>
-                    <Image style={StyleScreenEventos.IconDropDown} source={IconDropDownBuscado}/>
-                </TouchableOpacity>
-                <View style={StyleDropDownBuscador.Style}>
-                    <TouchableOpacity onPress={()=>{
-                        setFiltroBuscador('Email');
-                        DeployDropDownBuscador()
-                    }} style={StyleScreenEventos.buttonOpcionesDropDown}>
-                        <Text style={{fontSize:14}}>Email</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{
-                        setFiltroBuscador('Nombre');
-                        DeployDropDownBuscador()
-                    }} style={StyleScreenEventos.buttonOpcionesDropDownUltimo}>
-                        <Text style={{fontSize:14}}>Nombre</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+        <ScrollView horizontal 
+            style={StyleScreenEventos.ContainerFiltros}>
+            <TouchableOpacity 
+                onPress={()=>{setFiltroEstado('Todos los usuarios')}}
+                style={FiltroEstado === 'Todos los usuarios' ? StyleScreenEventos.BtnSeleccionadoFiltros : StyleScreenEventos.BtnNoSeleccionadoFiltros}>
+                <Text style={FiltroEstado === 'Todos los usuarios' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>
+                Todos los usuarios</Text>
+            </TouchableOpacity>
+             {/* <TouchableOpacity 
+                onPress={()=>{setFiltroEstado('Participantes en el evento')}}
+                style={FiltroEstado === 'Participantes en el evento' ? StyleScreenEventos.BtnSeleccionadoFiltros : StyleScreenEventos.BtnNoSeleccionadoFiltros}>
+                <Text style={FiltroEstado === 'Participantes en el evento' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>Participantes en el evento</Text>
+            </TouchableOpacity> */}
+             <TouchableOpacity 
+                onPress={()=>{setFiltroEstado('Usuarios no inscritos')}}
+                style={FiltroEstado === 'Usuarios no inscritos' ? StyleScreenEventos.BtnSeleccionadoFiltros : StyleScreenEventos.BtnNoSeleccionadoFiltros}>
+                <Text style={FiltroEstado === 'Usuarios no inscritos' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>Usuarios no inscritos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                onPress={()=>{setFiltroEstado('Usuarios Inscritos')}}
+                style={FiltroEstado === 'Usuarios Inscritos' ? StyleScreenEventos.BtnSeleccionadoFiltros : StyleScreenEventos.BtnNoSeleccionadoFiltros}>
+                <Text style={FiltroEstado === 'Usuarios Inscritos' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>Usuarios inscritos</Text>
+            </TouchableOpacity>
+        </ScrollView>
         </View>}
+
         renderItem={({item})=>{
+            // console.log(item)
             return(
-            <BlurView intensity={210}  onTouchMove={DesactivarDropDown} style={StyleScreenEventos.CardListado}>
-                <View style={{width:'30%',}}>
-                    <Image style={{height: 100, width:'100%',objectFit:'corver',borderRadius:5}} 
+            <View intensity={210} style={StyleScreenEventos.CardListado}>
+                <View style={{width:'38%',}}>
+                    <Image style={{height: 140, width:'100%',objectFit:'corver',borderRadius:5}} 
                     source={ item?.profile_picture ? {uri: GlobalApis.ApiImg + item?.profile_picture } : require('../../../assets/IconParticipantes/userImg.png')}/>
                 </View>
-                <View style={{paddingHorizontal:5,width:'70%',height:100,gap:5,justifyContent:'space-between'}}>
+                <View style={{width:'59%',gap:5,justifyContent:'space-between'}}>
 
-                    <View>
-                    <Text style={{fontWeight:'600',fontSize:20,color:'#023e7d'}}>{item?.first_name?.split(' ')[0]} {item?.last_name?.split(' ')[0]}</Text>
-                    {/* <Text>ID: {item?.id.slice(30,36)}</Text> */}
-                    <Text style={{fontSize:12,fontWeight:'600',color:'gray'}}>{item?.email}</Text>
-                    <Text style={{color:'#006400'}}>{item?.Registrado ? 'Registrado' : ''}</Text>
-                    </View>
-                    <Button Registrado={item?.Registrado} item={item}/>
+                    <View style={{gap:5}}>
+                        <Text style={{fontWeight:'300',fontSize:20,color:'#023e7d'}}>
+                            {item?.first_name?.split(' ')[0]} {item?.last_name?.split(' ')[0]}
+                        </Text>
+                        <View style={{flexDirection:'row',alignItems:'center',gap:5}}>
+                            <Image 
+                            style={{height:15,width:15,objectFit:'contain',tintColor:'#6B6B6B'}}
+                            source={require('../../../assets/IconParticipantes/IconProfile.png')}/>
+                            <View style={{borderLeftWidth:1,height:'100%'}}/>
+                            <Text style={{fontWeight:'300',fontSize:16,color:'#09090999'}}>
+                            {item?.id.slice(30,36)}
+                            </Text>
+                        </View>
+
+                        <View style={{flexDirection:'row',alignItems:'center',gap:5}}>
+                            <Image 
+                            style={{height:15,width:15,objectFit:'contain',tintColor:'#6B6B6B'}} 
+                            source={require('../../../assets/IconParticipantes/IconEmail.png')}/>
+                            <View style={{borderLeftWidth:1,height:'100%'}}/>
+                            <Text style={{fontSize:12,fontWeight:'300',color:'gray'}}>
+                            {item?.email}
+                            </Text>
+                        </View>
+                        
+                   </View>
+
+                    <Button Registrado={item?.Registrado} item={item}/> 
                     
                 </View>
-            </BlurView>
+            </View>
             )
         }}/> 
 
 
 
-        <TouchableOpacity onPress={()=>{
-            setDeployInformacion(true);
-            DesactivarDropDown();
-        }} style={{borderWidth:1,borderRadius:10,height:55,width:55,position:'absolute',backgroundColor: '#008000',marginBottom:90,marginRight:20,borderColor:'#008000'}}>
-            <Image style={{height:'100%',width:'100%',tintColor:'white'}} source={require('../../../assets/IconParticipantes/alert-circle.png')}/>
+        <TouchableOpacity onPress={()=>{setDeployInformacion(true)}} 
+        style={{
+            borderWidth:1,
+            borderRadius:'100%',
+            width:65,height:65,
+            position:'absolute',
+            backgroundColor: '#008000',
+            marginBottom:90,
+            marginRight:20,
+            borderColor:'#008000',
+            padding:15
+        }}>
+            <Image 
+            style={{height:'100%',width:'100%',tintColor:'white',objectFit:'contain'}} 
+            source={require('../../../assets/IconParticipantes/IconQuestion.png')}/>
+
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>{
-                DesactivarDropDown()
                 router.navigate({
                   pathname:'Screens/ScreenCheckIn/CheckIn',
                   params:{
@@ -185,15 +226,31 @@ export default function index() {
                     StaffId:LocalData.StaffId
                   }
                 })
-        }} style={{borderWidth:1,borderRadius: 10,width:55,height:55,position:'absolute',backgroundColor:'#023e8a',marginBottom:30,marginRight:20,borderColor:'#023e8a'}}>
-            <Image style={{height:'100%',width:'100%',tintColor: 'white'}} source={require('../../../assets/IconParticipantes/scan (1).png')}/>
+        }} style={{
+            borderWidth:1,
+            borderRadius:'100%',
+            width:65,height:65,
+            position:'absolute',
+            backgroundColor:'#007AFF',
+            marginBottom:20,
+            marginRight:20,
+            borderColor:'#007AFF',
+            padding:20}}>
+            <Image 
+            style={{height:'100%',width:'100%',tintColor: 'white',objectFit:'contain'}} 
+            source={require('../../../assets/IconParticipantes/IconQR.png')}/>
         </TouchableOpacity>
+
+
         <ModalSobreEvento 
+        Status={true}
         StatusModal={DeployInformacion}
         FDeployModal={()=>{
 
             setDeployInformacion(false)
         }}/>
+
+
     </SafeAreaProvider>
   )
 }
