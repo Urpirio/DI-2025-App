@@ -18,6 +18,7 @@ import SearchHome from "../../../Components/Components - ScreenHome/Searchs/Sear
 import NoInternet from "../../../Components/Components - Globales/AvisosInternet/NoInternet";
 import { useFocusEffect } from "expo-router";
 import { useCallback } from "react";
+import ModalSobreEvento from "../../../Components/components - ScreenParticipantes/ModalSobreEvento";
 
 export let funcionRefresh;
 
@@ -27,6 +28,8 @@ export default function index() {
     const [StatusBack,setStatusBack] = useState(true);
 
     const {SwitchStyle,StyleBtnHoy,StyleBtnTodos} = useSwitchHome();
+    const [DeploAboutEvent,setDeploAboutEvent] = useState(false);
+    const [IdEvent,setIdEvent] = useState();
     
 
     const {
@@ -78,13 +81,9 @@ export default function index() {
     HaveInternet.isConnected]));
 
     const IsScrolling = ()=>{
-        if(!RotateIconFilter){
-            DeployFilter();
-        };
         if(!CheckMenuPerfil){
             funcionChangeStateMenuPerfil();
         };
-
         if(SearchText ==  undefined){
             CloseBuscador();
             ChangetoSearch();
@@ -121,7 +120,7 @@ export default function index() {
   };
 
   return (
-    <SafeAreaProvider style={{backgroundColor:'#f8f9fa',paddingVertical:5}}>
+    <SafeAreaProvider style={{backgroundColor:'#f8f9fa'}}>
 
         <View style={{paddingHorizontal:10}}>
            
@@ -166,6 +165,12 @@ export default function index() {
                     HoraFinal={item.end_time.slice(12,16)}
                     IconBtn={require('../../../assets/IconHome/caret-left.png')}
                     IDEvents={item.id}
+                    DeployAboutEvent={()=>{
+                        setDeploAboutEvent(true);
+                        console.log(item?.id)
+                        setIdEvent(item?.id)
+
+                    }}
                 />)
                 
             }}/>
@@ -178,6 +183,10 @@ export default function index() {
             setStatusBack(!StatusBack);
             }}
         />
+       <ModalSobreEvento StatusModal={DeploAboutEvent} IDEvents={IdEvent} Status={false} FDeployModal={()=>{
+        setDeploAboutEvent(false);
+        
+       }} />
 
         <StatusBar style="auto"/>
     </SafeAreaProvider>
