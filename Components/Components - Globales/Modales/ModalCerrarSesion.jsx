@@ -1,30 +1,28 @@
 import { Modal,Text,TouchableOpacity,View,Pressable } from "react-native";
-import { StyleSheet } from "react-native";
 import { funcionCancelarCerrarSesion, funcionCSesion } from "../../../app/_layout";
 import { funcionChangeStateMenuPerfil } from "../../../app/_layout";
 import {  useNavigation } from "expo-router";
 import { funcionRefresh } from "../../../app/Screens/ScreenHome";
+import { StyleModalCerrarSesion } from "../../../style/Style - Layout/StyleModalCerrarSesion";
 
 export default function ModalCerrarSesion({StatusModal,FuncionGoBack}) {
 const prueba = useNavigation();
   return (
     <Modal visible={StatusModal} transparent={true}>
-        <View style={style.BodyContainer}>
+        <View style={StyleModalCerrarSesion.BodyContainer}>
             <Pressable style={{
                 backgroundColor:'white', 
                 opacity:0.5,
-                filter:'blur(20px)',
                 height:'100%',
                 width:'100%',
                 zIndex: 10,
             }} onPress={funcionCancelarCerrarSesion}></Pressable>
-            <View style={style.containerModal}>
-                <Text style={style.Question}>
+            <View style={StyleModalCerrarSesion.containerModal}>
+                <Text style={StyleModalCerrarSesion.Question}>
                     ¿Estás seguro de que deseas cerrar sesión?
                 </Text>
-                <View style={style.containerBtns}>
-                    <TouchableOpacity style={style.btnCerrarSesion} onPress={()=>{
-                        // FuncionGoBack();
+                <View style={StyleModalCerrarSesion.containerBtns}>
+                    <TouchableOpacity style={StyleModalCerrarSesion.btnCerrarSesion} onPress={()=>{
                         funcionChangeStateMenuPerfil();
                         funcionCancelarCerrarSesion();
                         funcionCSesion();
@@ -37,7 +35,7 @@ const prueba = useNavigation();
                     }}>
                         <Text style={{color:'white',fontWeight:'500'}}>Cerrar sesión</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.btnCancelar} 
+                    <TouchableOpacity style={StyleModalCerrarSesion.btnCancelar} 
                         onPress={()=>{funcionCancelarCerrarSesion();funcionRefresh();}}>
                         <Text style={{color:'white',fontWeight:'500'}}>Cancelar</Text>
                     </TouchableOpacity>
@@ -48,56 +46,4 @@ const prueba = useNavigation();
   )
 };
 
-const style = StyleSheet.create({
-    BodyContainer:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-        padding:10,
-    },
-    containerModal:{
-        borderWidth:1,
-        borderColor:'#ced4da',
-        paddingVertical:10,
-        gap:10,
-        borderRadius:10,
-        width:'100%',
-        position:'absolute',
-        backgroundColor:'white',
-        paddingHorizontal:1,
-        height:120,
-        justifyContent:'space-around',
-        alignItems:'center',
-        zIndex:20
-    },
-    Question:{
-        textAlign:'center',
-        fontSize:18,
-        color:'#023e8a',
-        fontWeight:'600'
-    },
-    containerBtns:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        // padding: 5,
-        gap:10
-    },
-    btnCerrarSesion:{
-        // borderWidth:1,
-        paddingVertical:10,
-        width:'45%',
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius: 10,
-        backgroundColor:'#023e8a',
-    },
-    btnCancelar:{
-        // borderWidth:1,
-        paddingVertical:10,
-        width:'45%',
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius: 10,
-        backgroundColor:'#d00000',
-    }
-});
+
