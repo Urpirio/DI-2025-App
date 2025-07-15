@@ -148,7 +148,6 @@ export const useRenderTodos = () => {
             }
         };
 
-        console.log(Data)
     })
     .catch((Err)=>{
         console.log(Err)
