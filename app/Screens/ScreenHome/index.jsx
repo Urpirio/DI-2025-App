@@ -13,7 +13,6 @@ import { useGetEvents } from "../../../hooks/hooks - ScreenHome/useGetEvents";
 import { CerrarSesion } from "../../_layout";
 import { useSwitchHome } from "../../../hooks/hooks - ScreenHome/useSwitchHome";
 import { useNetInfo } from "@react-native-community/netinfo";
-import SKhome from "../../../Components/Components - ScreenHome/SK/SKhome";
 import SearchHome from "../../../Components/Components - ScreenHome/Searchs/Search - Home";
 import NoInternet from "../../../Components/Components - Globales/AvisosInternet/NoInternet";
 import { useFocusEffect } from "expo-router";
@@ -98,25 +97,7 @@ export default function index() {
 
 
   if(!Loading){
-    return(
-        <SKhome
-        setEventosHoy={setEventosHoy}
-        setSearchText={setSearchText}
-        SearchText={SearchText}
-        SelectName={SelectName}
-        ChangeSelected={ChangeSelected}
-        StyleBtnHoy={StyleBtnHoy}
-        StyleBtnTodos={StyleBtnTodos}
-        StyleFiltros={StyleFiltros}
-        SwitchStyle={SwitchStyle}
-        GetSalaEvent={GetSalaEvent}
-        DataSala={DataSala}
-        DeployFilter={DeployFilter}
-        RotateIconFilter={RotateIconFilter}
-        IconBtnFilter={IconBtnFilter}
-        LoadingF={LoadingF}
-        IconSearch={IconSearch}/>
-    )
+    return <View/>
   };
 
   return (
