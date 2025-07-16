@@ -4,12 +4,10 @@ export const StyleLoginForm = StyleSheet.create({
     Section1:{
         paddingVertical:20,
         paddingHorizontal:20,
-        // backgroundColor:'#'
     },
     TextSection1:{
         fontSize:30,
         fontWeight:600,
-        // textAlign:'center'
     },
     SectionForm:{
         padding:20,
@@ -21,7 +19,6 @@ export const StyleLoginForm = StyleSheet.create({
         alignItems:'center',
         width:'100%',
         backgroundColor:'#e9ecef',
-        // borderWidth: 1,
         borderColor: '#adb5bd',
         intensity: 100
     },
@@ -33,6 +30,8 @@ export const StyleLoginForm = StyleSheet.create({
     TextInput_Email:{
         fontSize:16,
         width:'90%',
+        color:'gray',
+        fontWeight:'300'
                 
     },
     InputEmailBLue:{
@@ -42,20 +41,19 @@ export const StyleLoginForm = StyleSheet.create({
         alignItems:'center',
         width:'100%',
         backgroundColor:'#023e8a',
-        // borderWidth: 1,
         borderColor: '#023e8a',
-        intensity: 190
-
+        intensity: 190,
     },
     IconInputEmailBLue:{
         height:30,
         width:30,
-        tintColor: '#023e8a',
+        tintColor: '#007AFF',
     },
     TextInput_EmailBLue:{
         fontSize:16,
         width:'90%',
-        color:'#f8f9fa',
+        color:'#007AFF',
+        fontWeight:'300'
                 
     },
     InputPassword:{
@@ -65,7 +63,6 @@ export const StyleLoginForm = StyleSheet.create({
         alignItems:'center',
         width:'100%',
         backgroundColor:'#e9ecef',
-        // borderWidth: 1,
         borderColor: '#adb5bd',
         intensity: 90
     },
@@ -77,7 +74,14 @@ export const StyleLoginForm = StyleSheet.create({
     TextInput_PassWord:{
         fontSize:16,
         color:'gray',
-        width:'80%'
+        width:'80%',
+        fontWeight:'300'
+    },
+    TextInput_PassWordBLue:{
+        fontSize:16,
+        width:'80%',
+        color:'#007AFF',
+        fontWeight:'300'
     },
     PressablePassWord:{
 
@@ -93,20 +97,14 @@ export const StyleLoginForm = StyleSheet.create({
         borderRadius:10,
         alignItems:'center',
         width:'100%',
-       backgroundColor:'#023e8a',
-        // borderWidth: 1,
-        // borderColor: '#023e8a',
-        intensity: 190
+        backgroundColor:'#007AFF',
+        intensity: 190,
+        color:'gray'
     },
     IconInputPassWordBLue:{
         height:30,
         width:30,
-        tintColor: '#023e8a',
-    },
-    TextInput_PassWordBLue:{
-        fontSize:16,
-        color:'#f8f9fa',
-        width:'80%'
+        tintColor: '#007AFF',
     },
     PressablePassWordBLue:{
 
@@ -114,16 +112,11 @@ export const StyleLoginForm = StyleSheet.create({
     PressablePassWordIconBLue:{
         height:30,
         width:30,
-        tintColor: '#023e8a',
-    },
-    ContainerForgetPassword:{
-        alignItems:'center',
-        flexDirection:'row',
-        gap:10,
-        justifyContent:'center'
+        tintColor: '#007AFF',
     },
     ContainerBtnSignIn:{
-        alignItems:'center'
+        alignItems:'center',
+        gap:20
     },
     BtnSignIn:{
         width:'100%',
@@ -131,11 +124,12 @@ export const StyleLoginForm = StyleSheet.create({
         alignItems:'center',
         padding:12,
         borderRadius: 10,
-        backgroundColor:'#023e8a',
+        backgroundColor:'#007AFF',
     },
     TextBtnSignIn:{
         fontSize: 18,
-        color:'white'
+        color:'white',
+        fontWeight:'300'
     },
     CredentialErrorNotShow:{
         display:'none'
