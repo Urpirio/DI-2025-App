@@ -1,24 +1,27 @@
 import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator, Keyboard} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import {useState } from "react";
+import {useState ,useCallback, useEffect} from "react";
 import { StyleLoginForm } from "../style/Style - ScreenLogin/StyleLoginForm";
-import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useLogin } from "../hooks/hooks - ScreenLogin/useLogin";
 import { useStyleLogin } from "../hooks/hooks - ScreenLogin/useStyleLogin";
 import { useNetInfo } from "@react-native-community/netinfo";
 import ModalConnectRed from "../Components/components - Login/Modales/ModalConnectRed";
 import { BlurView } from "expo-blur";
+import * as LocalAuthentication from 'expo-local-authentication';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Checkbox from "expo-checkbox";
+import { useFocusEffect } from "expo-router";
 
 export default function LoginForm() {
 
-  const Router = useRouter();
 
   const HaveInternet = useNetInfo();
   const [StatusConnect,setStatusConnect] = useState(false);
+  const [CheckboxSave,setCheckBoxSave] = useState(false);
 
-  const [TextEmail,setTextEmail] = useState('urpiriojunior@gmail.com');
-  const [TextPassword,setTextPassword] = useState('1234');
+  const [TextEmail,setTextEmail] = useState();
+  const [TextPassword,setTextPassword] = useState();
 
   const {PostUserCredential, LoadingLOGIN,Token} = useLogin();
 
@@ -38,18 +41,44 @@ export default function LoginForm() {
    CorreoInValido,
   } = useStyleLogin();
 
+  useEffect(()=>{
+    const DatosUsuario = async () =>{
+      const Email = await AsyncStorage.getItem('Email');
+      const Password = await  AsyncStorage.getItem('Password')
+      if(Email){
+      setTextEmail(Email);
+      setTextPassword(Password)
+      }
+    };
+    DatosUsuario();
+  },[])
  
-  const SignIn = ()=>{
+  const SignIn = async ()=>{
 
+    
+    //condicional de error
     if(!TextEmail.includes('@') && (TextEmail != '' && TextPassword != '')){
       CredentialShow({Status:true});
       camposVacios({Status:true});
       correoInvalido({Status:false});
+
+
+
+
+      //condicional de todo correcto
     }else if(HaveInternet.isConnected && (TextEmail != '' && TextPassword != '') ){
         camposVacios({Status:true});
         correoInvalido({Status:true});
         PostUserCredential({Email:TextEmail,Password:TextPassword,ErrorFunction: CredentialShow});
-      }else if(!HaveInternet.isConnected &&(TextEmail != '' && TextPassword != '')){
+
+        if(CheckboxSave){
+          await AsyncStorage.setItem('Email',TextEmail);
+          await AsyncStorage.setItem('Password',TextPassword);
+        };
+
+
+        //Condicional de error
+    }else if(!HaveInternet.isConnected &&(TextEmail != '' && TextPassword != '')){
         if(!StatusConnect){
           setStatusConnect(true);
         }else{
@@ -58,11 +87,18 @@ export default function LoginForm() {
             setStatusConnect(true)
           },2000)
         }
-      }else if(HaveInternet.isConnected && (TextEmail == '' && TextPassword == '')){
+        //Condicional de error
+    }else if(HaveInternet.isConnected && (TextEmail == '' && TextPassword == '')){
         camposVacios({Status:false});
         CredentialShow({Status:true});
         correoInvalido({Status:true});
-      }
+    }
+  };
+
+
+  const ValidarInformacion = async () =>{
+
+
   };
 
  
@@ -88,6 +124,7 @@ export default function LoginForm() {
                   <Text style={{fontSize:12,color:'red'}}>Ingrese una dirección de correo electrónico válida.</Text>
               </View>
               </View>
+
               <BlurView intensity={ChangesColorPassword.InputPassword.intensity} style={ChangesColorPassword.InputPassword}>
                 <Image source={require('../assets/IconInputs/lock.png')}
                   style={ChangesColorPassword.IconInputPassWord}/>
@@ -102,37 +139,42 @@ export default function LoginForm() {
                       style={ChangesColorPassword.PressablePassWordIcon}/>
                   </Pressable>
               </BlurView>
+
+              {/* Check Box para guardas las credenciales o datos del usuario */}
+              <View style={{flexDirection:'row',gap:10,}}>
+                <Checkbox value={CheckboxSave} onValueChange={setCheckBoxSave}/>
+                <Text style={{fontSize:15}}>Recordar credenciales</Text>
+              </View>
+
             </View>
+
             <View style={CredentialErrorStyle}>
               <Text style={{color:'red',fontWeight:'600'}}>Credenciales incorrectas</Text>
             </View>
+
             <View style={CamposVacios}>
               <Text style={{color:'#ffba08',fontWeight:'500'}}>Los campos no pueden estar vacíos.</Text>
             </View>
+
             <View style={{gap:20,paddingVertical:30}}>
-              {/* <View style={StyleLoginForm.ContainerForgetPassword}>
-                <TouchableOpacity onPress={()=>{
-                  Router.navigate('/Screens/ScreenForgetPassword');
-                }}>
-                    <Text style={{color:'#023e8a',fontWeight:'600'}}>Forget the password?</Text>
-                </TouchableOpacity>
-              </View> */}
               <View style={StyleLoginForm.ContainerBtnSignIn}>
                 <TouchableOpacity style={StyleLoginForm.BtnSignIn} 
-                  onPress={()=>{
-                    SignIn();
-                    Keyboard.dismiss();
-                  }}>
+                  onPress={()=>{SignIn();Keyboard.dismiss();}}>
                   {LoadingLOGIN ? 
                   <ActivityIndicator size={'small'} color={"white"}/> 
                   : 
                   <Text style={StyleLoginForm.TextBtnSignIn}>Iniciar sesion</Text>
                   }
                 </TouchableOpacity>
+                <TouchableOpacity onPress={ValidarInformacion} >
+                  <Text style={{color:'#033E8A'}}>Iniciar con datos biometricos</Text>
+                </TouchableOpacity>
               </View>
             </View>
+
           </View>
         </View>
+        
         <ModalConnectRed
         StatusModal={StatusConnect}
         OnPress={()=>{
