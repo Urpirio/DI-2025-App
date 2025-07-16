@@ -59,6 +59,8 @@ export default function _layout() {
             header:({route})=>{
                 const FirstName = route.params.FirstName.split(" ");
                 const LastName = route.params.LastName.split(" ");
+                const ImageP = route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : {uri:'https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg'};
+
                 return(
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutHome.Header}>
@@ -67,7 +69,7 @@ export default function _layout() {
                         </View>
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutHome.ImgProfile}
-                                    source={ route.params.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : require('../assets/IconHome/userImg.png')}/>
+                                    source={ImageP}/>
                             </TouchableOpacity>
                         </View>
 
@@ -92,6 +94,7 @@ export default function _layout() {
                 const ArrayNombreEvento = route.params.NombreEvento.split('');
                 const FirstName = route.params.FirstName.split(" ");
                 const LastName = route.params.LastName.split(" ");
+                const ImageP = route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : {uri:'https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg'};
 
                 return(
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
@@ -117,7 +120,7 @@ export default function _layout() {
 
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutEvent.ImgProfile}
-                                    source={ route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : require('../assets/IconHome/userImg.png')}/>
+                                    source={ImageP}/>
                             </TouchableOpacity>
 
                         </View>
