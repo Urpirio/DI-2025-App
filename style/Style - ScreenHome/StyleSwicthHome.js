@@ -3,51 +3,54 @@ import { StyleSheet } from "react-native";
 export const StyleSwicthHome = StyleSheet.create({
     constainerBtn:{
         flexDirection:'row',
+        borderWidth:1,
+        padding:2,
+        borderRadius:10,
+        backgroundColor:'white',
+        borderColor: '#adb5bd',
+        justifyContent:'space-between',
+        gap:5,
     },
     BtnHoy:{
-        borderWidth:1,
-        borderColor: '#adb5bd',
         paddingHorizontal:20,
         paddingVertical: 5,
-        borderBottomLeftRadius: 10,
-        borderTopLeftRadius:10,
+        backgroundColor:'white'
     },
     BtnHoySelected:{
         borderWidth:1,
-        borderColor: '#adb5bd',
+        borderRadius:10,
+        borderColor: '#007AFF',
         paddingHorizontal:20,
         paddingVertical: 5,
-        borderBottomLeftRadius: 10,
-        borderTopLeftRadius:10,
-        backgroundColor:'#adb5bd'
+        backgroundColor:'#007AFF'
     },
     textBtnHoy:{
-        color:'#adb5bd'
+        color:'#adb5bd',
+        fontWeight:'300'
     },
     textBtnHoySelected:{
-        color:'white'
+        color:'white',
+        fontWeight:'300'
     },
     BtnTodos:{
-        borderWidth:1,
-        borderColor: '#adb5bd',
         paddingHorizontal:20,
         paddingVertical: 5,
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10,
+        backgroundColor:'white',
     },
     BtnTodosSelected:{
         borderWidth:1,
-        borderColor: '#adb5bd',
+        borderRadius:10,
+        borderColor: '#007AFF',
         paddingHorizontal:20,
         paddingVertical: 5,
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10,
-        backgroundColor:'#adb5bd'
+        backgroundColor:'#007AFF',
     },
     textBtnTodos:{
         color:'#adb5bd',
+        fontWeight:'300'
     },
     textBtnTodosSelected:{
         color:'white',
+        fontWeight:'300'
     }
 });

@@ -6,7 +6,7 @@ export default function Modal_IngresarCodigo({
     StatusModal,FunctionCloseModal,ValidarQR
 }) {
 
-    const [TextCd,setTextCd] = useState('')
+    const [TextCd,setTextCd] = useState('');
 
     
   return (
@@ -14,10 +14,9 @@ export default function Modal_IngresarCodigo({
         <View>
             <Pressable style={{
                 height:'100%',
-                filter:'blur(5px)',
                 width:'100%',
-                backgroundColor:'black',
-                opacity:0.3
+                backgroundColor:'white',
+                opacity:0.1
             }} onPress={FunctionCloseModal}>
 
             </Pressable>
@@ -25,9 +24,9 @@ export default function Modal_IngresarCodigo({
                 position:'absolute',
                 height:'100%',
                 width:'100%',
-                alignItems:'center',
                 justifyContent:'center',
-                padding:20,
+                paddingHorizontal:20,
+                paddingVertical:5,
             }}>
                 <View style={{
                     borderWidth:1,
@@ -37,28 +36,32 @@ export default function Modal_IngresarCodigo({
                     borderRadius:10,
                     backgroundColor:'white',
                     boxShadow:'0px 0px 1px 0px gray',
-                    justifyContent:'space-around',
+                    justifyContent:'space-between',
                     alignItems:'center',
                     padding:10,
                     minHeight:300,
                 }}>
-                    <View style={{
-                        height:150,
-                        width:150,
+                    <View style={{justifyContent:'center',alignItems:'center',gap:10}}>
+                        <View style={{
+                        height:130,
+                        width:130,
                         justifyContent:'center',
                         alignItems:'center',
-                        borderRadius:100,
-                        backgroundColor:'#ced4da'
-                    }}>
-                        <Text style={{fontSize:50}}>🔍</Text>
+                        borderRadius:'100%',
+                        backgroundColor:'#007bff2e'
+                        }}>
+                            <Text style={{fontSize:50}}>🔍</Text>
+                        </View>
+                        <Text style={{fontSize:16,fontWeight:'300'}}>
+                            Ingresa tu código de verificación
+                        </Text>
                     </View>
-                        <Text style={{fontSize:16,fontWeight:'500'}}>Ingresa tu código de verificación</Text>
                             <TextInput style={{
                                 borderWidth:1,
                                 width:'100%',
                                 fontSize: 18,
                                 borderRadius:10,
-                                borderColor:'#ced4da',
+                                borderColor:'#007bff2e',
 
                             }} placeholder="Codigo" placeholderTextColor={'#ced4da'} value={TextCd} onChangeText={setTextCd} maxLength={6}/>
                             <TouchableOpacity style={{
@@ -67,10 +70,9 @@ export default function Modal_IngresarCodigo({
                                 justifyContent:'center',
                                 paddingVertical:10,
                                 borderRadius:10,
-                                backgroundColor:'#023e8a'
-                            }} onPress={()=>{ValidarQR({TextCode: TextCd})}}>
-                                <Text style={{color:'white',fontSize:16}}>Validar</Text>
-                                {/* keyboardType="numeric" */}
+                                backgroundColor:'#007AFF'
+                            }} onPress={()=>ValidarQR({TextCode: TextCd})}>
+                                <Text style={{color:'white',fontSize:16,fontWeight:'300'}}>Validar</Text>
                             </TouchableOpacity>
 
                 </View>

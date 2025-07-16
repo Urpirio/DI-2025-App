@@ -22,7 +22,6 @@ export const useRenderTodos = () => {
     .then(respuesta => respuesta.json())
     .then((Data)=>{
         GetTodosUsuarios2({DatosPartG:Data.data});
-        // console.log(Data.data)
     })
     .catch((err)=>{
         console.log(err)
@@ -37,7 +36,11 @@ export const useRenderTodos = () => {
         method: 'GET',
         headers: {'Authorization': `Bearer ${LocalData.TokenAccess}`}
     })
-    .then(respuesta => respuesta.json())
+    .then(respuesta => {
+        if(respuesta.ok){
+            return respuesta.json()
+        }
+    })
     .then((Data)=>{
             const TodosParticipantes = [];
             const TodosID = [];
@@ -90,7 +93,7 @@ export const useRenderTodos = () => {
                         TodosEnBuscador.push(D)
                     }
                 })
-            }else if(FiltroBuscador === 'Nombre'){
+            }else if(FiltroBuscador === 'Email'){
                 TodoGetTodosUsuarios.forEach((D)=>{
                     const NombreCompleto = D.first_name + ' ' + D.last_name;
                     if(NombreCompleto.toUpperCase().includes(TextSearch.toUpperCase())){
@@ -142,7 +145,8 @@ export const useRenderTodos = () => {
             }else{
                 setDatosParticipantes('')
             }
-        }
+        };
+
     })
     .catch((Err)=>{
         console.log(Err)

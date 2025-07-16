@@ -5,9 +5,8 @@ export const StyleLayoutEvent = StyleSheet.create({
         width:'100%',
         justifyContent:'space-between',
         alignItems:'center',
-        paddingTop:10,
-        paddingBottom:10,
-        paddingHorizontal:10,
+        paddingVertical:5,
+        paddingHorizontal:20,
         flexDirection:'row',
         backgroundColor:'white',
         boxShadow:'0px 0px 1px 0px gray',
@@ -16,10 +15,10 @@ export const StyleLayoutEvent = StyleSheet.create({
     IconBack:{
         height:50,
         width:50,
-        tintColor:'#023e8a'
+        tintColor:'#007AFF'
     },
     TitlesHeader:{
-        color: '#023e8a',
+        color: '#007AFF',
         fontSize:20,
         fontWeight:'500'
     },

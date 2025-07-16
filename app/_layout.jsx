@@ -43,47 +43,24 @@ export default function _layout() {
                     <View style={{
                         backgroundColor:'white',
                         paddingHorizontal:0,
-                        paddingTop:150,
-                        alignItems:'center',
+                        paddingTop:120,
+                        alignItems:'center'
                     }}>
                         <Image source={LogoOgtic}  style={{
                             tintColor:'#023e8a',
                             height:40,
-                            objectFit:'contain'
+                            objectFit:'contain',
                         }}/>
                     </View>
                 )
             },
         }}/>
-        <Stack.Screen name="Screens/ScreenForgetPassword/index" options={{
-            header:()=>{
-                return(
-                    <View style={{
-                        alignItems:'center',
-                        height:100,
-                        paddingHorizontal: 10,
-                        justifyContent:'Flex-end',
-                        backgroundColor:'white',
-                        flexDirection:'row',
-                        gap: 20,
-                        paddingTop: StatusBar.currentHeight
-                        }}>
-                        <TouchableOpacity onPress={()=>{Router.navigate('../')}}>
-                            <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
-                            source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
-                        </TouchableOpacity>
-                        <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>
-                            Recuperar cuenta
-                        </Text>
-                    </View>
-                )
-            },
-            
-        }}/>
         <Stack.Screen name="Screens/ScreenHome/index" options={{
             header:({route})=>{
                 const FirstName = route.params.FirstName.split(" ");
                 const LastName = route.params.LastName.split(" ");
+                const ImageP = route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : {uri:'https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg'};
+
                 return(
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutHome.Header}>
@@ -92,7 +69,7 @@ export default function _layout() {
                         </View>
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutHome.ImgProfile}
-                                    source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`}}/>
+                                    source={ImageP}/>
                             </TouchableOpacity>
                         </View>
 
@@ -117,12 +94,12 @@ export default function _layout() {
                 const ArrayNombreEvento = route.params.NombreEvento.split('');
                 const FirstName = route.params.FirstName.split(" ");
                 const LastName = route.params.LastName.split(" ");
+                const ImageP = route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : {uri:'https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg'};
 
                 return(
                     <View style={{paddingTop: StatusBar.currentHeight,}}>
                         <View style={StyleLayoutEvent.Header}>
 
-                            {'Boton para volver atras'}
                             <TouchableOpacity onPress={()=>{
                                 Router.back();
                                 if(!StatusMenuProfile){
@@ -138,13 +115,12 @@ export default function _layout() {
                                 {ArrayNombreEvento.length > 16 ?
                                     route.params.NombreEvento.slice(0,16) + '...'
                                     :
-                                    route.params.NombreEvento.slice(0,16)
-                                }
+                                    route.params.NombreEvento.slice(0,16)}
                             </Text>
-                            {'Imagen de perfil'}
+
                             <TouchableOpacity onPress={DeployMenuPerfil}>
                                 <Image style={StyleLayoutEvent.ImgProfile}
-                                    source={{uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`}}/>
+                                    source={ImageP}/>
                             </TouchableOpacity>
 
                         </View>
@@ -180,10 +156,10 @@ export default function _layout() {
                         <TouchableOpacity onPress={()=>{
                             Router.back();  
                         }}>
-                            <Image style={{height:50,width:50,tintColor:'#023e8a'}} 
+                            <Image style={{height:50,width:50,tintColor:'#007AFF'}} 
                             source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
                         </TouchableOpacity>
-                        <Text style={{fontSize:20,color:'#023e8a',fontWeight:'600'}}>
+                        <Text style={{fontSize:20,color:'#007AFF',fontWeight:'600'}}>
                             Scanner QR
                         </Text>
                     </View>

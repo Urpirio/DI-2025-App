@@ -13,9 +13,11 @@ import { useGetEvents } from "../../../hooks/hooks - ScreenHome/useGetEvents";
 import { CerrarSesion } from "../../_layout";
 import { useSwitchHome } from "../../../hooks/hooks - ScreenHome/useSwitchHome";
 import { useNetInfo } from "@react-native-community/netinfo";
-import SKhome from "../../../Components/Components - ScreenHome/SK/SKhome";
 import SearchHome from "../../../Components/Components - ScreenHome/Searchs/Search - Home";
 import NoInternet from "../../../Components/Components - Globales/AvisosInternet/NoInternet";
+import { useFocusEffect } from "expo-router";
+import { useCallback } from "react";
+import ModalSobreEvento from "../../../Components/components - ScreenParticipantes/ModalSobreEvento";
 
 export let funcionRefresh;
 
@@ -25,6 +27,8 @@ export default function index() {
     const [StatusBack,setStatusBack] = useState(true);
 
     const {SwitchStyle,StyleBtnHoy,StyleBtnTodos} = useSwitchHome();
+    const [DeploAboutEvent,setDeploAboutEvent] = useState(false);
+    const [IdEvent,setIdEvent] = useState();
     
 
     const {
@@ -64,7 +68,7 @@ export default function index() {
      return(true)
     });
 
-    useEffect(()=>{
+    useFocusEffect(useCallback(()=>{
         if(HaveInternet.isConnected){
             GetEvents();
         }else if(HaveInternet.isWifiEnabled){
@@ -73,16 +77,12 @@ export default function index() {
         
     },[SearchText,SelectName,CerrarSesion,StateRefresh,
     StatusModalCerrarS,EventosHoy,Loading,HaveInternet.isWifiEnabled,
-    HaveInternet.isConnected]);
+    HaveInternet.isConnected]));
 
     const IsScrolling = ()=>{
-        if(!RotateIconFilter){
-            DeployFilter();
-        };
         if(!CheckMenuPerfil){
             funcionChangeStateMenuPerfil();
         };
-
         if(SearchText ==  undefined){
             CloseBuscador();
             ChangetoSearch();
@@ -97,31 +97,13 @@ export default function index() {
 
 
   if(!Loading){
-    return(
-        <SKhome
-        setEventosHoy={setEventosHoy}
-        setSearchText={setSearchText}
-        SearchText={SearchText}
-        SelectName={SelectName}
-        ChangeSelected={ChangeSelected}
-        StyleBtnHoy={StyleBtnHoy}
-        StyleBtnTodos={StyleBtnTodos}
-        StyleFiltros={StyleFiltros}
-        SwitchStyle={SwitchStyle}
-        GetSalaEvent={GetSalaEvent}
-        DataSala={DataSala}
-        DeployFilter={DeployFilter}
-        RotateIconFilter={RotateIconFilter}
-        IconBtnFilter={IconBtnFilter}
-        LoadingF={LoadingF}
-        IconSearch={IconSearch}/>
-    )
+    return <View/>
   };
 
   return (
-    <SafeAreaProvider style={{backgroundColor:'white'}}>
+    <SafeAreaProvider style={{backgroundColor:'#f8f9fa'}}>
 
-        <View style={{padding:10}}>
+        <View style={{paddingHorizontal:10}}>
            
             
            <FlatList
@@ -130,7 +112,7 @@ export default function index() {
             ListEmptyComponent={<View style={{marginVertical:100,alignItems:'center'}}>
                 <Text style={{color:'gray'}}>No hay eventos</Text>
             </View>}
-            ListHeaderComponentStyle={{zIndex:20}}
+            ListHeaderComponentStyle={{zIndex:50}}
             ListHeaderComponent={
                 <SearchHome
                     SearchText={SearchText}
@@ -164,6 +146,12 @@ export default function index() {
                     HoraFinal={item.end_time.slice(12,16)}
                     IconBtn={require('../../../assets/IconHome/caret-left.png')}
                     IDEvents={item.id}
+                    DeployAboutEvent={()=>{
+                        setDeploAboutEvent(true);
+                        console.log(item?.id)
+                        setIdEvent(item?.id)
+
+                    }}
                 />)
                 
             }}/>
@@ -176,6 +164,10 @@ export default function index() {
             setStatusBack(!StatusBack);
             }}
         />
+       <ModalSobreEvento StatusModal={DeploAboutEvent} IDEvents={IdEvent} Status={false} FDeployModal={()=>{
+        setDeploAboutEvent(false);
+        
+       }} />
 
         <StatusBar style="auto"/>
     </SafeAreaProvider>

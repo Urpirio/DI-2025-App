@@ -3,20 +3,15 @@ import { StyleSheet } from "react-native";
 export const StyleEnEvento = StyleSheet.create({
     Blur: {
         height:'100%',
-        filter:'blur(5px)',
+        // filter:'blur(5px)',
         width:'100%',
-        backgroundColor:'black',
-        opacity:0.3
+        backgroundColor:'white',
+        opacity:0.1
     },
     ImgCheck:{
         height:100,
         width:100,
         objectFit:'contain',
-        tintColor: '#023e8a',
-        borderWidth:1,
-        borderColor: '#023e8a',
-        padding:5,
-        borderRadius: 100,
     },
     BodyContainer:{
         height:'100%',
@@ -31,7 +26,7 @@ export const StyleEnEvento = StyleSheet.create({
         alignItems:'center',
         padding:10,
         backgroundColor: 'white',
-        borderRadius:20,
+        borderRadius:10,
         gap:20,
         width:'100%'
     },
@@ -39,30 +34,16 @@ export const StyleEnEvento = StyleSheet.create({
         gap:5,
         width:'100%'
     },
-    // BtnRegistrar:{
-    //     // paddingHorizontal:10,
-    //     paddingVertical: 5,
-    //     alignItems:'center',
-    //     borderRadius:10,
-    //     backgroundColor:'#023e8a',
-    //     width:'100%'
-    // },
-    TextBtnRegistrar:{
-        color:'white',
-        fontSize:16,
-        fontWeight:'500'
-    },
     BtnVolver:{
-        // paddingHorizontal:10,
         paddingVertical: 5,
         alignItems:'center',
-        borderRadius:10,
-        backgroundColor:'#adb5bd',
+        borderRadius:8,
+        backgroundColor:'#6c757d',
         width:'100%'
     },
     TextBtnVolver:{
         color:'white',
         fontSize:16,
-        fontWeight:'500'
+        fontWeight:'300'
     }
 });

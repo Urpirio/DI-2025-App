@@ -1,6 +1,6 @@
 {
   "name": "d-2025-app",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -8,25 +8,24 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eas:android": "eas build -p android --profile preview",
-    "build": "npm run eas:android"
+    "build": "npm run eas:android",
+    "doctor": "npx expo-doctor"
   },
   "dependencies": {
     "@react-native-community/netinfo": "^11.4.1",
-    "@rneui/base": "^0.0.0-edge.2",
-    "@rneui/themed": "^0.0.0-edge.2",
-    "expo": "~53.0.9",
-    "expo-camera": "~16.1.6",
+    "expo": "53.0.19",
+    "expo-blur": "~14.1.5",
+    "expo-camera": "~16.1.10",
     "expo-checkbox": "~4.1.4",
     "expo-constants": "~17.1.6",
-    "expo-linking": "~7.1.5",
-    "expo-router": "~5.0.7",
+    "expo-linking": "~7.1.7",
+    "expo-router": "~5.1.3",
     "expo-status-bar": "~2.2.3",
-    "expo-system-ui": "~5.0.7",
+    "expo-system-ui": "~5.0.10",
     "react": "19.0.0",
-    "react-native": "0.79.2",
+    "react-native": "0.79.5",
     "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.10.0",
-    "rn-speed-test": "^0.1.2"
+    "react-native-screens": "~4.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
