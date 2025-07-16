@@ -47,7 +47,7 @@ export default function _layout() {
                         alignItems:'center'
                     }}>
                         <Image source={LogoOgtic}  style={{
-                            tintColor:'#023e8a',
+                            tintColor:'#0059b8ff',
                             height:40,
                             objectFit:'contain',
                         }}/>
