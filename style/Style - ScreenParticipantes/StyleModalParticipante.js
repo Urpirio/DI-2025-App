@@ -8,8 +8,8 @@ export const StyleModalParticipante = StyleSheet.create({
     },
     Blur:{
         flex:1,
-        filter:'blur(50px)',
-        backgroundColor:'black',
+        // filter:'blur(50px)',
+        backgroundColor:'white',
         width:'100%',
         opacity:0.1
     },
@@ -31,7 +31,8 @@ export const StyleModalParticipante = StyleSheet.create({
     TextNameUser:{
         textAlign:'center',
         fontSize:20,
-        fontWeight:'500'
+        fontWeight:'400',
+        color:'#033E8A'
     },
     TextId:{
         textAlign:'center',
@@ -40,21 +41,21 @@ export const StyleModalParticipante = StyleSheet.create({
     btnConfirmarAsistencia:{
         alignItems:'center',
         padding:10,
-        borderRadius:5,
-        backgroundColor:'#023e8a'
+        borderRadius:8,
+        backgroundColor:'#007AFF'
     },
     TextbtnConfirmarAsistencia:{
         color:'white',
-        fontWeight:'600'
+        fontWeight:'300'
     },
     BtnCancelar:{
         alignItems:'center',
         padding:10,
-        borderRadius:5,
-        backgroundColor:'#d00000'
+        borderRadius:8,
+        backgroundColor:'#d00000c1'
     },
     TextBtnCancelar:{
        color:'white',
-       fontWeight:'600' 
+       fontWeight:'300' 
     }
 });
