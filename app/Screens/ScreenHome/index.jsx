@@ -112,7 +112,7 @@ export default function index() {
             ListEmptyComponent={<View style={{marginVertical:100,alignItems:'center'}}>
                 <Text style={{color:'gray'}}>No hay eventos</Text>
             </View>}
-            ListHeaderComponentStyle={{zIndex:20}}
+            ListHeaderComponentStyle={{zIndex:50}}
             ListHeaderComponent={
                 <SearchHome
                     SearchText={SearchText}
