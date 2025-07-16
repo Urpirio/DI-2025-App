@@ -4,7 +4,7 @@ export const StyleHome = StyleSheet.create({
     ContainerFilter:{
         justifyContent:'center',
         alignItems:'flex-start',
-       
+
     },
     ContainerNotFilter:{
         display: 'none'
@@ -20,6 +20,7 @@ export const StyleHome = StyleSheet.create({
         gap:5,
         borderRadius: 5,
         borderWidth:1,
+        zIndex:30,
         
     },
     ContainerBtnFiltrosNotShow:{
