@@ -114,7 +114,8 @@ export default function index() {
 
         <View style={{width:'100%'}}>
             <BlurView intensity={80} style={StyleScreenEventos.ContenedorBuscador} >
-                <Image style={StyleScreenEventos.IconoBuscar} source={require('../../../assets/IconParticipantes/search-big.png')}/>
+                <Image style={StyleScreenEventos.IconoBuscar} 
+                source={require('../../../assets/IconParticipantes/search-big.png')}/>
                 <TextInput 
                 placeholderTextColor={'#adb5bd'} 
                 value={TextSearch} 
@@ -161,7 +162,7 @@ export default function index() {
             <View intensity={210} style={StyleScreenEventos.CardListado}>
                 <View style={{width:'38%',}}>
                     <Image style={{height: 140, width:'100%',objectFit:'corver',borderRadius:5}} 
-                    source={ item?.profile_picture ? {uri: GlobalApis.ApiImg + item?.profile_picture } : require('../../../assets/IconParticipantes/userImg.png')}/>
+                    source={ item?.profile_picture ? {uri: GlobalApis.ApiImg + item?.profile_picture } : {uri:'https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg'}}/>
                 </View>
                 <View style={{width:'59%',gap:5,justifyContent:'space-between'}}>
 
