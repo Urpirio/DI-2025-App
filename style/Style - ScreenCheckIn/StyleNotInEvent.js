@@ -8,8 +8,7 @@ export const StyleModalNotInEvent = StyleSheet.create({
     },
     Blur:{
         flex:1,
-        filter:'blur(50px)',
-        backgroundColor:'black',
+        backgroundColor:'white',
         width:'100%',
         opacity:0.1
     },
@@ -31,7 +30,8 @@ export const StyleModalNotInEvent = StyleSheet.create({
     TextNameUser:{
         textAlign:'center',
         fontSize:20,
-        fontWeight:'500'
+        fontWeight:'400',
+        color:'#033E8A'
     },
     TextId:{
         textAlign:'center',
@@ -45,16 +45,16 @@ export const StyleModalNotInEvent = StyleSheet.create({
     },
     TextbtnConfirmarAsistencia:{
         color:'white',
-        fontWeight:'600'
+        fontWeight:'300'
     },
     BtnCancelar:{
         alignItems:'center',
         padding:10,
         borderRadius:5,
-        backgroundColor:'#d00000'
+        backgroundColor:'#d00000c1'
     },
     TextBtnCancelar:{
        color:'white',
-       fontWeight:'600' 
+       fontWeight:'300' 
     }
 });
