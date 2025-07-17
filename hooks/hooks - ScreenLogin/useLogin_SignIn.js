@@ -21,14 +21,12 @@ export const useLogin_SignIn = () =>{
         if((await LocalAuthentication.authenticateAsync()).success){
           
             await AsyncStorage.getItem('Password').then( async (D)=>{
-                console.log(D)
                 SignIn({
                 CredentialShow:CredentialShow,
                 camposVacios:camposVacios,
                 correoInvalido:correoInvalido,
                 Password:D,
                });Keyboard.dismiss();
-                setTextPassword('')
             })
         };
     };

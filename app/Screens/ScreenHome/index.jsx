@@ -1,4 +1,4 @@
-import { Text, View,ScrollView,FlatList} from "react-native";
+import { Text, View,ScrollView,FlatList, TouchableOpacity} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState} from "react";
 import { BackHandler } from "react-native";
@@ -167,6 +167,10 @@ export default function index() {
         setDeploAboutEvent(false);
         
        }} />
+
+       <TouchableOpacity style={{position:'absolute'}} >
+        <Text>R</Text>
+       </TouchableOpacity>
 
         <StatusBar style="auto"/>
     </SafeAreaProvider>

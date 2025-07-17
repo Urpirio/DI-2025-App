@@ -1,6 +1,6 @@
 import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator, Keyboard} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useEffect} from "react";
+import { useCallback, useEffect} from "react";
 import { StyleLoginForm } from "../style/Style - ScreenLogin/StyleLoginForm";
 import { StatusBar } from "expo-status-bar";
 import { useStyleLogin } from "../hooks/hooks - ScreenLogin/useStyleLogin";
@@ -11,6 +11,7 @@ import Checkbox from "expo-checkbox";
 import { useLogin_SignIn } from "../hooks/hooks - ScreenLogin/useLogin_SignIn";
 import * as Crypto from 'expo-crypto';
 import CryptoJS from "crypto-js";
+import { useFocusEffect } from "expo-router";
 
 export default function LoginForm() {
 
@@ -34,15 +35,16 @@ export default function LoginForm() {
    CorreoInValido,
   } = useStyleLogin();
 
-  useEffect(()=>{
+  useFocusEffect(useCallback(()=>{
     const DatosUsuario = async () =>{
       const Email = await AsyncStorage.getItem('Email');
       if(Email){
       setTextEmail(Email);
       }
     };
-    DatosUsuario();
-  },[])
+    DatosUsuario()
+  },[]))
+
 
 
   const BtnSignIn = ({Bio}) =>{
