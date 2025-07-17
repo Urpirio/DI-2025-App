@@ -104,16 +104,22 @@ export const StyleScreenEventos = StyleSheet.create({
     },
     BtnSeleccionadoFiltros:{
         paddingVertical:10,
-        paddingHorizontal:15,
+        paddingHorizontal:5,
         borderRadius:5,
         marginRight:5,
         backgroundColor:'#007AFF',
+        width:'32.25%',
+        justifyContent:'center',
+        alignItems:'center'
     },
     BtnNoSeleccionadoFiltros:{
         paddingVertical:10,
-        paddingHorizontal:15,
+        paddingHorizontal:5,
         borderRadius:5,
-        marginRight:5
+        marginRight:5,
+        width:'32.25%',
+        justifyContent:'center',
+        alignItems:'center'
     },
     TextBtnSeleccionadoFiltros:{
         fontSize:14,
@@ -128,7 +134,9 @@ export const StyleScreenEventos = StyleSheet.create({
         borderColor:'#dee2e6',
         flexDirection:'row',
         width:'100%',
-        padding:5,
-        borderRadius:5
+        paddingHorizontal:5,
+        paddingVertical:5,
+        borderRadius:5,
+        justifyContent:'space-between'
     },
 });
