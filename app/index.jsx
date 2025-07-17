@@ -1,29 +1,22 @@
 import { Text, View,TouchableOpacity,Image, TextInput, Pressable, ActivityIndicator, Keyboard} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import {useState ,useCallback, useEffect} from "react";
+import { useEffect} from "react";
 import { StyleLoginForm } from "../style/Style - ScreenLogin/StyleLoginForm";
 import { StatusBar } from "expo-status-bar";
-import { useLogin } from "../hooks/hooks - ScreenLogin/useLogin";
 import { useStyleLogin } from "../hooks/hooks - ScreenLogin/useStyleLogin";
-import { useNetInfo } from "@react-native-community/netinfo";
 import ModalConnectRed from "../Components/components - Login/Modales/ModalConnectRed";
 import { BlurView } from "expo-blur";
-import * as LocalAuthentication from 'expo-local-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Checkbox from "expo-checkbox";
-import { useFocusEffect } from "expo-router";
+import { useLogin_SignIn } from "../hooks/hooks - ScreenLogin/useLogin_SignIn";
+import * as Crypto from 'expo-crypto';
+import CryptoJS from "crypto-js";
 
 export default function LoginForm() {
 
-
-  const HaveInternet = useNetInfo();
-  const [StatusConnect,setStatusConnect] = useState(false);
-  const [CheckboxSave,setCheckBoxSave] = useState(false);
-
-  const [TextEmail,setTextEmail] = useState();
-  const [TextPassword,setTextPassword] = useState();
-
-  const {PostUserCredential, LoadingLOGIN,Token} = useLogin();
+ const {SignIn,ValidarInformacion,LoadingLOGIN,
+ setTextEmail,setTextPassword,setStatusConnect,
+ TextEmail,TextPassword,setCheckBoxSave,CheckboxSave,StatusConnect} = useLogin_SignIn();
 
  const {
    ChangeVisibilidyPassword,
@@ -44,71 +37,43 @@ export default function LoginForm() {
   useEffect(()=>{
     const DatosUsuario = async () =>{
       const Email = await AsyncStorage.getItem('Email');
-      const Password = await  AsyncStorage.getItem('Password')
       if(Email){
       setTextEmail(Email);
-      setTextPassword(Password)
       }
     };
     DatosUsuario();
   },[])
- 
-  const SignIn = async ()=>{
-
-    
-    //condicional de error
-    if(!TextEmail.includes('@') && (TextEmail != '' && TextPassword != '')){
-      CredentialShow({Status:true});
-      camposVacios({Status:true});
-      correoInvalido({Status:false});
 
 
-
-
-      //condicional de todo correcto
-    }else if(HaveInternet.isConnected && (TextEmail != '' && TextPassword != '') ){
-        camposVacios({Status:true});
-        correoInvalido({Status:true});
-        PostUserCredential({Email:TextEmail,Password:TextPassword,ErrorFunction: CredentialShow});
-
-        if(CheckboxSave){
-          await AsyncStorage.setItem('Email',TextEmail);
-          await AsyncStorage.setItem('Password',TextPassword);
-        };
-
-
-        //Condicional de error
-    }else if(!HaveInternet.isConnected &&(TextEmail != '' && TextPassword != '')){
-        if(!StatusConnect){
-          setStatusConnect(true);
-        }else{
-          setStatusConnect(false)
-          setTimeout(()=>{
-            setStatusConnect(true)
-          },2000)
-        }
-        //Condicional de error
-    }else if(HaveInternet.isConnected && (TextEmail == '' && TextPassword == '')){
-        camposVacios({Status:false});
-        CredentialShow({Status:true});
-        correoInvalido({Status:true});
+  const BtnSignIn = ({Bio}) =>{
+    if(Bio){
+      ValidarInformacion({
+      CredentialShow:CredentialShow,
+      camposVacios:camposVacios,
+      correoInvalido:correoInvalido
+      })
+    }else{
+      SignIn({
+      CredentialShow:CredentialShow,
+      camposVacios:camposVacios,
+      correoInvalido:correoInvalido
+      });Keyboard.dismiss();
     }
   };
 
-
-  const ValidarInformacion = async () =>{
-
-
-  };
-
+  const ContentBtnSignIn = () =>{
+   switch(LoadingLOGIN){
+    case true: 
+      return <ActivityIndicator size={'small'} color={"white"}/>
+    case false:
+      return  <Text style={StyleLoginForm.TextBtnSignIn}>Iniciar sesion</Text>
+ }}
  
 
+
   return (
-    <SafeAreaProvider style={{backgroundColor: 'white'}}>
+    <SafeAreaProvider style={{backgroundColor: 'white',paddingTop:40}}>
         <View>
-          <View style={StyleLoginForm.Section1}>
-            {/* <Text style={StyleLoginForm.TextSection1}>Inicie sesión en su cuenta de staff</Text> */}
-          </View>
           <View style={StyleLoginForm.SectionForm}>
             <View style={{gap:20}}>
               <View>
@@ -158,15 +123,15 @@ export default function LoginForm() {
 
             <View style={{gap:20,paddingVertical:30}}>
               <View style={StyleLoginForm.ContainerBtnSignIn}>
+
                 <TouchableOpacity style={StyleLoginForm.BtnSignIn} 
-                  onPress={()=>{SignIn();Keyboard.dismiss();}}>
-                  {LoadingLOGIN ? 
-                  <ActivityIndicator size={'small'} color={"white"}/> 
-                  : 
-                  <Text style={StyleLoginForm.TextBtnSignIn}>Iniciar sesion</Text>
-                  }
+                  onPress={()=>BtnSignIn({Bio:false})}>
+
+                  <ContentBtnSignIn/>
+
                 </TouchableOpacity>
-                <TouchableOpacity onPress={ValidarInformacion} >
+
+                <TouchableOpacity onPress={()=>BtnSignIn({Bio:true})} >
                   <Text style={{color:'#033E8A'}}>Iniciar con datos biometricos</Text>
                 </TouchableOpacity>
               </View>

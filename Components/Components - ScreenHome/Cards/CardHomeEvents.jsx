@@ -41,7 +41,14 @@ export default function CardHomeEvents({
        
         <Image style={{height:180,width:'100%',borderRadius:10}} source={{uri:'https://i.pinimg.com/1200x/58/b6/d8/58b6d806c99691c9f26f86ee623a9b19.jpg'}}/>
 
-            <TouchableOpacity  onLongPress={()=>DeployAboutEvent()} style={{width:'100%',gap:5,height:'100%',justifyContent:'space-between',position:'absolute',zIndex:30}}>
+            <TouchableOpacity 
+            onPress={()=>{
+            Router.navigate({pathname: 'Screens/ScreenParticipantes',params:{
+                NombreEvento: NombreEvento,TokenAccess: LocalData.TokenAccess,
+                profile_picture: LocalData.profile_picture, FirstName: LocalData.FirstName,
+                LastName: LocalData.LastName,IDEvents: IDEvents,StaffId: LocalData.StaffId
+            }})}}
+            onLongPress={()=>DeployAboutEvent()} style={{width:'100%',gap:5,height:'100%',justifyContent:'space-between',position:'absolute',zIndex:30}}>
                  {/* <TouchableOpacity 
                     onLongPress={()=>DeployAboutEvent}
                     style={{zIndex:20,height:'100%',width:'100%',position:'absolute',backgroundColor:'gray'}}>
@@ -81,15 +88,10 @@ export default function CardHomeEvents({
                         <Text style={{color:'white',fontWeight:'300'}}>{Localizacion ? Localizacion : 'No disponible'}</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={StyleHome.BtnInCardEvent} onPress={()=>{
-                    Router.navigate({pathname: 'Screens/ScreenParticipantes',params:{
-                        NombreEvento: NombreEvento,TokenAccess: LocalData.TokenAccess,
-                        profile_picture: LocalData.profile_picture, FirstName: LocalData.FirstName,
-                        LastName: LocalData.LastName,IDEvents: IDEvents,StaffId: LocalData.StaffId
-                    }})}}>
+                {/* <TouchableOpacity style={StyleHome.BtnInCardEvent} >
                
                     <Text style={{color:'white'}}>Entrar</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
              </BlurView>
         </TouchableOpacity >
         

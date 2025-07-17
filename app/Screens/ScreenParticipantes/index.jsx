@@ -130,13 +130,13 @@ export default function index() {
             </BlurView>
         </View>
 
-        <ScrollView horizontal 
+        <View horizontal 
             style={StyleScreenEventos.ContainerFiltros}>
             <TouchableOpacity 
                 onPress={()=>{setFiltroEstado('Todos los usuarios')}}
                 style={FiltroEstado === 'Todos los usuarios' ? StyleScreenEventos.BtnSeleccionadoFiltros : StyleScreenEventos.BtnNoSeleccionadoFiltros}>
                 <Text style={FiltroEstado === 'Todos los usuarios' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>
-                Todos los usuarios</Text>
+                Todos</Text>
             </TouchableOpacity>
              {/* <TouchableOpacity 
                 onPress={()=>{setFiltroEstado('Participantes en el evento')}}
@@ -146,14 +146,14 @@ export default function index() {
              <TouchableOpacity 
                 onPress={()=>{setFiltroEstado('Usuarios no inscritos')}}
                 style={FiltroEstado === 'Usuarios no inscritos' ? StyleScreenEventos.BtnSeleccionadoFiltros : StyleScreenEventos.BtnNoSeleccionadoFiltros}>
-                <Text style={FiltroEstado === 'Usuarios no inscritos' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>Usuarios no inscritos</Text>
+                <Text style={FiltroEstado === 'Usuarios no inscritos' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>No inscritos</Text>
             </TouchableOpacity>
             <TouchableOpacity 
                 onPress={()=>{setFiltroEstado('Usuarios Inscritos')}}
                 style={FiltroEstado === 'Usuarios Inscritos' ? StyleScreenEventos.BtnSeleccionadoFiltros : StyleScreenEventos.BtnNoSeleccionadoFiltros}>
-                <Text style={FiltroEstado === 'Usuarios Inscritos' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>Usuarios inscritos</Text>
+                <Text style={FiltroEstado === 'Usuarios Inscritos' ? StyleScreenEventos.TextBtnSeleccionadoFiltros : StyleScreenEventos.TextBtnNoSeleccionadoFiltros }>Inscritos</Text>
             </TouchableOpacity>
-        </ScrollView>
+        </View>
         </View>}
 
         renderItem={({item})=>{
