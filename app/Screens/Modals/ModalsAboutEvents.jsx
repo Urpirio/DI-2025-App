@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { BlurView } from "expo-blur";
-import { useModalAboutEvents } from "../../../hooks/hooks - ScreenParticipantes/useModalAboutEven0t";
+import { useModalAboutEvents } from "../../../hooks/hooks - ScreenParticipantes/useModalAboutEvent";
 import { StyleModalAboutEvents } from "../../../style/Style - ScreenParticipantes/StyleModalAboutEvents";
 
 // Crear un documento con los estilos en otro lado
