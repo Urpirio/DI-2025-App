@@ -1,24 +1,22 @@
 import { useState } from "react";
 
-const useDeployCerrarSesion = () =>{
+const useDeployCerrarSesion = () => {
+  const [CSesion, setCSesion] = useState(false);
+  const [cerrarSesion, setcerrarSesion] = useState(true);
 
-    const [CSesion,setCSesion] = useState(false);
-    const [cerrarSesion, setcerrarSesion] = useState(true);
+  const Deploy = () => {
+    setCSesion(!CSesion);
+  };
 
-    const Deploy = () =>{
-        setCSesion(!CSesion);
-    };
+  const CS = () => {
+    setcerrarSesion(false);
+  };
 
-    const CS = () => {
-        setcerrarSesion(false)
-    };
-
-
-    return({
-        DeployModalCerrarS: Deploy,
-        StateCerrarS: CSesion,
-        cerrarSesion: cerrarSesion,
-        CS: CS,
-    })
+  return {
+    DeployModalCerrarS: Deploy,
+    StateCerrarS: CSesion,
+    cerrarSesion: cerrarSesion,
+    CS: CS,
+  };
 };
 export default useDeployCerrarSesion;
