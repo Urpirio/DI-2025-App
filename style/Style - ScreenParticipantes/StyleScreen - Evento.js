@@ -44,31 +44,7 @@ export const StyleScreenEventos = StyleSheet.create({
         fontSize:16,
         width:'80%'
     },
-    ContenedorDropDown:{
-        width:'100%',
-        flexDirection:'row',
-        borderWidth:1,
-        gap:5
-    },
-    DropDownEstado:{
-        flexDirection:'row',
-        justifyContent:'center',
 
-    },
-    ButtondeployDropDownBuscador:{
-        width:'100%',
-        borderWidth:1,
-        paddingVertical:10,
-        paddingHorizontal: 5,
-        justifyContent:'space-between',
-        borderRadius:10,
-        borderColor:ColorBorder,
-        flexDirection:'row',
-        backgroundColor:'white',
-    },
-    ButtondeployDropDownEstado:{
-      
-    },
     IconDropDown:{
         height:20,
         width:20,
