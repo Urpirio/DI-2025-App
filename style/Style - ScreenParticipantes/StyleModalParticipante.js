@@ -8,7 +8,6 @@ export const StyleModalParticipante = StyleSheet.create({
     },
     Blur:{
         flex:1,
-        // filter:'blur(50px)',
         backgroundColor:'white',
         width:'100%',
         opacity:0.1
