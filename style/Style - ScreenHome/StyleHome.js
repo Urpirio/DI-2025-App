@@ -1,92 +1,108 @@
 import { StyleSheet } from "react-native";
 
 export const StyleHome = StyleSheet.create({
-    ContainerFilter:{
-        justifyContent:'center',
-        alignItems:'flex-start',
+  Header: {
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    flexDirection: "row",
 
-    },
-    ContainerNotFilter:{
-        display: 'none'
-    },
-    ContainerBtnFiltrosShow:{
-        position:'absolute',
-        marginTop:240,
-        borderColor:'#ced4da',
-        width:150,
-        height:200,
-        backgroundColor:'#ffffff',
-        padding:5,
-        gap:5,
-        borderRadius: 5,
-        borderWidth:1,
-        zIndex:30,
-        
-    },
-    ContainerBtnFiltrosNotShow:{
-        display:'none'
-    },
-    BtnSelectFilter:{
-        backgroundColor:'white',
-        borderBottomWidth:1,
-        borderColor: '#ced4da',
-        padding:5,
-        borderRadius: 5,
-        flexDirection:'row',
-        justifyContent:'space-between'
+    zIndex: 10,
+  },
+  IconBack: {
+    height: 50,
+    width: 50,
+    tintColor: "#007AFF",
+  },
+  TitlesHeader: {
+    fontSize: 26,
+    fontWeight: "600",
+    color: "#007AFF",
+  },
+  ImgProfile: {
+    height: 50,
+    width: 50,
+    borderRadius: 100,
+  },
 
-    },
-    TextBtnSelectFilter:{
-        color:'#007AFF',
-        fontWeight:'600'
-    },
-    BtnFilterDeploy:{
-        borderColor:'#ced4da',
-        paddingVertical:2,
-        borderRadius:10,
-        paddingHorizontal: 20,
-        width:150,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'space-between',
-        boxShadow:'0px 0px 1px 0px gray',
-        backgroundColor:'white'
-    },
-    IconBtnFilter:{
-        height:30,
-        width:30
-    },
-    TextBtnFilter:{
-
-    },
-    CardEvent:{
-        justifyContent:'center',
-        // padding:10,
-        marginBottom:10,
-        borderRadius:10,
-        gap:10,
-        flexGrow: 1,
-        flexBasis:0,
-        backgroundColor:'#001233',
-        position:'relative',
-        alignItems:'center'
-
-    },
-    //Cambiar el nombre XD
-    CardEventBtns:{
-        alignItems:'center',
-        justifyContent:'space-between',
-        width:'100%',
-        padding:10,
-        flexDirection:'row',
-        
-    },
-    BtnInCardEvent:{
-        borderRadius:10,
-        paddingVertical:5,
-        paddingHorizontal:20,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#007AFF'
-    },
+  ContainerSearch: {
+    borderRadius: 10,
+    height: 50,
+    flexDirection: "row",
+    borderColor: "#ced4da",
+    width: `100%`,
+    marginBottom: 10,
+    backgroundColor: "#E4E5E7",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  IconSearch: {
+    height: 25,
+    width: 25,
+    objectFit: "contain",
+    tintColor: "#919192",
+  },
+  InputSearch: {
+    fontSize: 16,
+    width: `90%`,
+  },
+  ConatinerFilter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  SubContainerFilter: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  ContainerNotFilter: {
+    display: "none",
+  },
+  ContainerBtnFiltrosShow: {
+    position: "absolute",
+    marginTop: 240,
+    borderColor: "#ced4da",
+    width: 150,
+    height: 200,
+    backgroundColor: "#ffffff",
+    padding: 5,
+    gap: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    zIndex: 30,
+  },
+  ContainerBtnFiltrosNotShow: {
+    display: "none",
+  },
+  BtnSelectFilter: {
+    backgroundColor: "white",
+    borderBottomWidth: 1,
+    borderColor: "#ced4da",
+    padding: 5,
+    borderRadius: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  TextBtnSelectFilter: {
+    color: "#007AFF",
+    fontWeight: "600",
+  },
+  BtnFilterDeploy: {
+    borderColor: "#ced4da",
+    paddingVertical: 2,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    width: 150,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    boxShadow: "0px 0px 1px 0px gray",
+    backgroundColor: "white",
+  },
+  IconBtnFilter: {
+    height: 30,
+    width: 30,
+  },
 });

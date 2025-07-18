@@ -1,11 +1,7 @@
-import { router, Stack, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { Image, View,TouchableOpacity,Text, StatusBar } from "react-native";
-import MenuProfile from "../Components/Components - Globales/Menus/MenuProfile";
-import { StyleLayoutEvent } from "../style/Style - Layout/StyleLayoutEvents";
 import useDeployPerfil from "../hooks/hooks - Globales/useDeployPerfil";
 import useDeployCerrarSesion from "../hooks/hooks - Globales/useDeployCerrarSesion";
-import { funcionRefresh } from "./Screens/ScreenHome";
-import { StyleLayoutHome } from "../style/Style - ScreenHome/StyleLayoutHome";
 
 export let CheckMenuPerfil;
 export let funcionChangeStateMenuPerfil;
@@ -56,114 +52,58 @@ export default function _layout() {
             },
         }}/>
         <Stack.Screen name="Screens/ScreenHome/index" options={{
-            header:({route})=>{
-                const FirstName = route.params.FirstName.split(" ");
-                const LastName = route.params.LastName.split(" ");
-                const ImageP = route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : {uri:'https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg'};
-
-                return(
-                    <View style={{paddingTop: StatusBar.currentHeight,}}>
-                        <View style={StyleLayoutHome.Header}>
-                        <View>
-                            <Text style={StyleLayoutHome.TitlesHeader}>Eventos</Text>
-                        </View>
-                            <TouchableOpacity onPress={DeployMenuPerfil}>
-                                <Image style={StyleLayoutHome.ImgProfile}
-                                    source={ImageP}/>
-                            </TouchableOpacity>
-                        </View>
-
-                        <MenuProfile
-                        StyleMenuProfile={StyleMenuProfile}
-                        DeployProfileMenu={DeployMenuPerfil}
-                        FCerrarSesion={()=>{
-                            DeployModalCerrarS();
-                            funcionRefresh();
-                        }}
-                        FirstName={FirstName}
-                        LastName={LastName}
-                        />
-                    </View>
-                )
-            },
+            header:()=>{return <View style={{height:30}}/>}
             
         }} />
         <Stack.Screen name="Screens/ScreenParticipantes/index" options={{
-            header:({route})=>{
-
-                const ArrayNombreEvento = route.params.NombreEvento.split('');
-                const FirstName = route.params.FirstName.split(" ");
-                const LastName = route.params.LastName.split(" ");
-                const ImageP = route.params?.profile_picture ? { uri:`https://directus-prueba.dominicanainnova.gob.do/assets/${route.params.profile_picture}`} : {uri:'https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg'};
-
+            header:()=>{
                 return(
-                    <View style={{paddingTop: StatusBar.currentHeight,}}>
-                        <View style={StyleLayoutEvent.Header}>
-
-                            <TouchableOpacity onPress={()=>{
-                                Router.back();
-                                if(!StatusMenuProfile){
-                                    DeployMenuPerfil();
-                                    
-                                }
-                            }}>
-                                <Image style={StyleLayoutEvent.IconBack} 
-                                source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
-                            </TouchableOpacity>
-                            
-                            <Text style={StyleLayoutEvent.TitlesHeader}>
-                                {ArrayNombreEvento.length > 16 ?
-                                    route.params.NombreEvento.slice(0,16) + '...'
-                                    :
-                                    route.params.NombreEvento.slice(0,16)}
-                            </Text>
-
-                            <TouchableOpacity onPress={DeployMenuPerfil}>
-                                <Image style={StyleLayoutEvent.ImgProfile}
-                                    source={ImageP}/>
-                            </TouchableOpacity>
-
-                        </View>
-                        <MenuProfile
-                        StyleMenuProfile={StyleMenuProfile}
-                        DeployProfileMenu={DeployMenuPerfil}
-                        FCerrarSesion={()=>{
-                            router.back();
-                            DeployModalCerrarS();
-                        }}
-                        FirstName={FirstName}
-                        LastName = {LastName}
-                        />
-                    </View>
+                    <View style={{height:30}}/>
                 )
             },
             
         }}/>
 
         <Stack.Screen name="Screens/ScreenCheckIn/CheckIn" options={{
+            animation:'slide_from_bottom',
             header:()=>{
 
                 return(
-                    <View style={{
+                    <View >
+                        <View style={{height:30}}/>
+                        <View style={{
                         alignItems:'center',
                         paddingHorizontal: 10,
                         justifyContent:'Flex-end',
                         backgroundColor:'white',
                         flexDirection:'row',
                         gap: 20,
-                        paddingTop: StatusBar.currentHeight,
                         }}>
-                        <TouchableOpacity onPress={()=>{
-                            Router.back();  
-                        }}>
+                            <TouchableOpacity onPress={()=>Router.back()}>
                             <Image style={{height:50,width:50,tintColor:'#007AFF'}} 
                             source={require('../assets/IconNavegation/arrow-left-stroke.png')} />
-                        </TouchableOpacity>
-                        <Text style={{fontSize:20,color:'#007AFF',fontWeight:'600'}}>
-                            Scanner QR
-                        </Text>
+                            </TouchableOpacity>
+                            <Text style={{fontSize:20,color:'#007AFF',fontWeight:'600'}}>
+                                Scanner QR
+                            </Text>
+                        </View>
                     </View>
                 )
+            },
+        }}/>
+        <Stack.Screen name="Screens/Modals/ModalsAboutEvents" options={{
+            presentation:'transparentModal',
+            animation:'slide_from_bottom',
+            header:()=>{
+                return <View style={{height:30}}/>
+            },
+            
+        }}/>
+        <Stack.Screen name="Screens/Modals/ModalCerrarSesion" options={{
+            presentation:'transparentModal',
+            animation:'slide_from_left',
+            header:()=>{
+                return <View style={{height:30}}/>
             },
         }}/>
         
