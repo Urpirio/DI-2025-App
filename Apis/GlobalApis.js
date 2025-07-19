@@ -8,4 +8,4 @@ export const GlobalApis = {
     ApiUser_Event: 'https://directus-prueba.dominicanainnova.gob.do/items/user_event/',
     ApiToken: 'https://directus-prueba.dominicanainnova.gob.do/auth/login/',
     ApiInfoUser: 'https://directus-prueba.dominicanainnova.gob.do/users/me'
-}
+};
