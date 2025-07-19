@@ -1,82 +1,40 @@
 import { Modal, TouchableOpacity, View, Text } from "react-native";
+import { StyleModalConnect } from "../../../style/Style - ScreenLogin/StyleModalConnect";
+import { BlurView } from "expo-blur";
 
 export default function ModalConnectRed({ StatusModal, OnPress, OnCancel }) {
   return (
     <Modal visible={StatusModal} transparent={true}>
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View
+      <View style={StyleModalConnect.bodyContainer}>
+        <BlurView
+          intensity={5}
           style={{
             flex: 1,
             backgroundColor: "gray",
             width: "100%",
-            opacity: 0.3,
+            // opacity: 0.3,
           }}
-        ></View>
-        <View style={{ paddingHorizontal: 30, position: "absolute" }}>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#ced4da",
-              padding: 10,
-              borderRadius: 10,
-              gap: 20,
-              backgroundColor: "white",
-            }}
-          >
-            <View
-              style={{ justifyContent: "center", alignItems: "center", gap: 5 }}
-            >
-              <Text
-                style={{ fontSize: 22, color: "#ff9900ff", fontWeight: "400" }}
-              >
+        ></BlurView>
+        <View style={StyleModalConnect.MainConteiner}>
+          <View style={StyleModalConnect.MainConteiner}>
+            <View style={StyleModalConnect.TextWnn}>
+              <Text style={StyleModalConnect.TextTitleWnn}>
                 Conexión requerida
               </Text>
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: "gray",
-                  fontWeight: "300",
-                }}
-              >
+              <Text style={StyleModalConnect.TextDescription}>
                 Para continuar, necesitas estar conectado a una red. Por favor,
                 verifica tu conexión y vuelve a intentarlo.
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                width: "100%",
-                justifyContent: "space-between",
-              }}
-            >
+            <View style={StyleModalConnect.containerBtn}>
               <TouchableOpacity
-                style={{
-                  borderRadius: 10,
-                  height: 30,
-                  width: "48%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#007AFF",
-                }}
+                style={StyleModalConnect.BtnReintentar}
                 onPress={OnPress}
               >
                 <Text style={{ color: "white" }}>Reintentar</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderRadius: 10,
-                  height: 30,
-                  width: "48%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#d00000c4",
-                }}
+                style={StyleModalConnect.BtnCancelar}
                 onPress={OnCancel}
               >
                 <Text style={{ color: "white" }}>Cancelar</Text>
