@@ -5,10 +5,12 @@ import { GlobalApis } from "../../Apis/GlobalApis";
 
 export  function useSendPart() {
     const LocalData = useLocalSearchParams();
+    const [loading,setloading] = useState(true);
 
     const ConfirmarAsistencia = ({userEventId}) => {
 
         const date = new Date().toISOString();
+        setloading(true);
 
         fetch(GlobalApis.ApiUser_Event + userEventId,{
             method:'PATCH',
@@ -27,10 +29,11 @@ export  function useSendPart() {
             console.error(err)
         }) 
         .finally(()=>{
-            // funcionRefresh();
+            setloading(false)
         })    
     };
     return({
         ConfirmarAsistencia,
+        loading,
     })
 }

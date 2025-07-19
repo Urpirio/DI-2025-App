@@ -20,7 +20,6 @@ export const useModalAboutEvents = () =>{
                         }
                     })
                     .then((Data) => {
-                        //  console.log(Data)
                         const Registrados = Data.data?.filter(D => D.checkin != null);
                         setRegistrados(Registrados);
                         setInscritos(Data?.data)
@@ -38,7 +37,6 @@ export const useModalAboutEvents = () =>{
                     .then((Data) => {
         
                         const ElEvento = Data.data?.filter(D => D.id == IDEvents);
-                        console.log(ElEvento)
                         setInformacionEvento(ElEvento[0])
                     })
                     .catch(() => {

@@ -11,8 +11,7 @@ import { StyleModalAboutEvents } from "../../../style/Style - ScreenParticipante
 export default function ModalsAboutEvents() {
   const LocalData = useLocalSearchParams();
 
-  const { GetInformationAbout, InformacionEvento, Inscritos, Registrados } =
-    useModalAboutEvents();
+  const { GetInformationAbout, InformacionEvento, Inscritos, Registrados } = useModalAboutEvents();
 
   useEffect(() => {
     GetInformationAbout({

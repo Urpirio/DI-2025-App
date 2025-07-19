@@ -4,6 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
 import { StyleModalCerrarSesion } from "../../../style/Style - ScreenParticipantes/StyleModalCerrarSesion";
 
+// Esta es el modal que se despliega cuando se quiere cerrar sesion.
 export default function ModalCerrarSesion() {
   const LocalData = useLocalSearchParams();
   const ImageP = LocalData?.profile_picture

@@ -1,8 +1,14 @@
 import { StyleSheet } from "react-native";
 
 export const StyleCardhome = StyleSheet.create({
-  BackImage: {
+  conatainerBackImage: {
     height: 150,
+    width: "100%",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  BackImage: {
+    height: '100%',
     width: "100%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
