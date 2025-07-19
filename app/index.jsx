@@ -9,7 +9,7 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { StyleLoginForm } from "../style/Style - ScreenLogin/StyleLoginForm";
 import { StatusBar } from "expo-status-bar";
 import { useStyleLogin } from "../hooks/hooks - ScreenLogin/useStyleLogin";
@@ -18,6 +18,7 @@ import { BlurView } from "expo-blur";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Checkbox from "expo-checkbox";
 import { useLogin_SignIn } from "../hooks/hooks - ScreenLogin/useLogin_SignIn";
+import { useFocusEffect } from "expo-router";
 
 export default function LoginForm() {
   const {
@@ -50,7 +51,7 @@ export default function LoginForm() {
     CorreoInValido,
   } = useStyleLogin();
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     const DatosUsuario = async () => {
       const Email = await AsyncStorage.getItem("Email");
       if (Email) {
@@ -58,10 +59,10 @@ export default function LoginForm() {
       }
     };
     DatosUsuario();
-  }, []);
-
+  }, []))
   const BtnSignIn = ({ Bio }) => {
     if (Bio) {
+      // alert('funciona')
       ValidarInformacion({
         CredentialShow: CredentialShow,
         camposVacios: camposVacios,
