@@ -23,15 +23,15 @@ export const useLogin_SignIn = () => {
     LocalAuthentication.authenticateAsync();
     if ((await LocalAuthentication.authenticateAsync()).success) {
       await AsyncStorage.getItem("Password").then(async (D) => {
-        console.log(D);
+        console.log('funciona')
         SignIn({
           CredentialShow: CredentialShow,
           camposVacios: camposVacios,
           correoInvalido: correoInvalido,
           Password: D,
         });
+        console.log(D)
         Keyboard.dismiss();
-        setTextPassword("");
       });
     }
   };
@@ -42,18 +42,17 @@ export const useLogin_SignIn = () => {
     correoInvalido,
     Password,
   }) => {
+
     //condicional de error
     if (!TextEmail.includes("@") && TextEmail != "" && TextPassword != "") {
+     
       CredentialShow({ Status: true });
       camposVacios({ Status: true });
       correoInvalido({ Status: false });
 
       //condicional de todo correcto
-    } else if (
-      HaveInternet.isConnected &&
-      TextEmail != "" &&
-      TextPassword != ""
-    ) {
+    } else if (HaveInternet.isConnected && TextEmail != "" && TextPassword == "" || TextPassword != "") {
+
       camposVacios({ Status: true });
       correoInvalido({ Status: true });
       if (Password) {
@@ -62,7 +61,7 @@ export const useLogin_SignIn = () => {
           Password: Password,
           ErrorFunction: CredentialShow,
         });
-      } else {
+      } else{
         PostUserCredential({
           Email: TextEmail,
           Password: TextPassword,
@@ -76,11 +75,8 @@ export const useLogin_SignIn = () => {
       }
 
       //Condicional de error
-    } else if (
-      !HaveInternet.isConnected &&
-      TextEmail != "" &&
-      TextPassword != ""
-    ) {
+    } else if (!HaveInternet.isConnected && TextEmail != "" && TextPassword != "") {
+      
       if (!StatusConnect) {
         setStatusConnect(true);
       } else {
@@ -90,11 +86,7 @@ export const useLogin_SignIn = () => {
         }, 2000);
       }
       //Condicional de error
-    } else if (
-      HaveInternet.isConnected &&
-      TextEmail == "" &&
-      TextPassword == ""
-    ) {
+    } else if (HaveInternet.isConnected && TextEmail == "" && TextPassword == "") {
       camposVacios({ Status: false });
       CredentialShow({ Status: true });
       correoInvalido({ Status: true });
