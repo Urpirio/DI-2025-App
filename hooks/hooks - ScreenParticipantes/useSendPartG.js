@@ -1,12 +1,15 @@
 import { useLocalSearchParams } from "expo-router";
 import { GlobalApis } from "../../Apis/GlobalApis";
+import { useState } from "react";
 
 export const useSendPartG = () =>{
 
         const LocalData = useLocalSearchParams();
+        const [LoadignG,setLoadignG] = useState(false);
+        
 
         const AsistenciaStaff = ({userID}) => {
-
+            setLoadignG(true);
             const date = new Date().toISOString();
             fetch(GlobalApis.ApiUser_Event,{
                 method:'POST',
@@ -28,7 +31,7 @@ export const useSendPartG = () =>{
             })
             .catch((err)=>{
                 console.error(err)
-            });    
+            })  
         };
     
         const AsistenciaParticipante = ({Id,userID}) => {
@@ -49,11 +52,15 @@ export const useSendPartG = () =>{
             })
             .catch((err)=>{
                 console.error(err)
+            })
+            .finally(()=>{
+                setLoadignG(false)
             });
         };
 
 
     return({
         AsistenciaStaff,
+        LoadignG,
     })
 }
