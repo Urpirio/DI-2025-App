@@ -106,6 +106,11 @@ export default function _layout() {
                 return <View style={{height:30}}/>
             },
         }}/>
+        <Stack.Screen name="Screens/Modals/ModalRegistrarAsistencia" options={{
+            presentation:'transparentModal',
+            animation:'fade',
+            header:()=><View style={{height:30}}/>,
+        }}/>
         
     </Stack>
   )
